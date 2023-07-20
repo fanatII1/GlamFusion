@@ -30,6 +30,7 @@
   justify-content: space-between;
   background-color: #000;
   color: #fff;
+  z-index: 3;
 }
 
 .logo-letter{
