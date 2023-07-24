@@ -7,7 +7,7 @@
       <div :class="{ 'menu-item': true, 'active': activeNavItem === 'home' }" @click="setActiveNavItem('home')">Home</div>
       <div :class="{ 'menu-item': true, 'active': activeNavItem === 'about' }" @click="setActiveNavItem('about')">About</div>
       <div :class="{ 'menu-item': true, 'active': activeNavItem === 'bookings' }" @click="setActiveNavItem('bookings')">
-        Bookings
+        Services
       </div>
       <div :class="{ 'menu-item': true, 'active': activeNavItem === 'blog' }" @click="setActiveNavItem('blog')">Blog</div>
     </div>
