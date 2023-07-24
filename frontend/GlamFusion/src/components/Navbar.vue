@@ -1,15 +1,32 @@
+<script setup>
+import { RouterLink, RouterView } from 'vue-router';
+import { ref } from 'vue';
+
+const activeNavItem = ref('home');
+
+function setActiveNavItem(item) {
+  activeNavItem.value = item;
+}
+</script>
+
 <template>
   <nav class="navbar">
     <div class="logo nav-item-1">
       <p class="logo-letter">G | <span class="logo-text">G l a m f u s i o n</span></p>
     </div>
     <div class="menu nav-item-2">
-      <div :class="{ 'menu-item': true, 'active': activeNavItem === 'home' }" @click="setActiveNavItem('home')">Home</div>
-      <div :class="{ 'menu-item': true, 'active': activeNavItem === 'about' }" @click="setActiveNavItem('about')">About</div>
-      <div :class="{ 'menu-item': true, 'active': activeNavItem === 'bookings' }" @click="setActiveNavItem('bookings')">
-        Services
+      <div :class="{ 'menu-item': true, 'active': activeNavItem === 'home' }" @click="setActiveNavItem('home')">
+        <RouterLink to="/">Home</RouterLink>
       </div>
-      <div :class="{ 'menu-item': true, 'active': activeNavItem === 'blog' }" @click="setActiveNavItem('blog')">Blog</div>
+      <div :class="{ 'menu-item': true, 'active': activeNavItem === 'about' }" @click="setActiveNavItem('about')">
+        <RouterLink to="/about">About</RouterLink>
+      </div>
+      <div :class="{ 'menu-item': true, 'active': activeNavItem === 'services' }" @click="setActiveNavItem('services')">
+        <RouterLink to="/services">Services</RouterLink>
+      </div>
+      <div :class="{ 'menu-item': true, 'active': activeNavItem === 'blog' }" @click="setActiveNavItem('blog')">
+        <RouterLink to="/blog">Blog</RouterLink>
+      </div>
     </div>
     <div class="user-profile nav-item-3">
       <div class="profile-image-container">
@@ -19,16 +36,6 @@
     </div>
   </nav>
 </template>
-
-<script setup>
-import { ref } from 'vue';
-
-const activeNavItem = ref('home');
-
-function setActiveNavItem(item) {
-  activeNavItem.value = item;
-}
-</script>
 
 <style>
 .navbar {
@@ -42,6 +49,10 @@ function setActiveNavItem(item) {
   background-color: #000;
   color: #fff;
   z-index: 3;
+}
+
+.navbar a{
+  color: #fff;
 }
 
 .logo-letter{
@@ -85,7 +96,7 @@ function setActiveNavItem(item) {
   font-weight: bold;
 }
 
-.menu-item.active{
+.menu-item.active a{
   color:#d69c4a;
 }
 
