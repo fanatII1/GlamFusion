@@ -107,6 +107,7 @@ onBeforeUnmount(() => {
   color: #fff;
   padding: 12px 24px;
   font-size: 16px;
+  font-weight: bold;
   text-decoration: none;
   border: none;
   border-radius: 30px;
@@ -140,7 +141,7 @@ onBeforeUnmount(() => {
   transform: translateY(-50%) scaleX(0);
   transform-origin: left;
   transition: transform 0.3s;
-  font-weight: bold;
+  font-weight: bolder;
 }
 
 .button:hover::after {

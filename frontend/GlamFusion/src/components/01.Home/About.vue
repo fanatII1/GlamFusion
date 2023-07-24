@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="aboutText">
-                <h3 class="AboutTextHeading">Glamorous Fusion - Your Style, Your Way!</h3>
+                <h3 class="AboutTextHeading">Glamorous Fusion - <span class="textHeadingSpan">Your Style, Your Way!</span></h3>
                 <p class="aboutTextDescription">
                     At Glamorous Fusion, we are passionate about bringing out the best version of you. 
                     Our team of skilled professionals is dedicated to unlocking your inner glamour and enhancing your natural beauty. 
@@ -36,13 +36,14 @@
 <style scoped>
 #About{
     height: 55%;
+    padding-top: 2%;
 }
 .AboutHeading{
     color: #fff;
     text-align: center;
     font-size: 2rem;
     width: 10%;
-    margin: 0 auto;
+    margin: 0.5% auto;
 }
 
 .underline{
@@ -50,6 +51,7 @@
     height: 5px;
     background-color: #d69c4a;
     margin: 0 auto;
+    border-radius: 2px;
 }
 
 /* @media screen and (max-width: 1440px) {
@@ -109,7 +111,11 @@
 
 .AboutTextHeading{
     color: #fff;
-    font-size: 2.1rem;
+    font-size: 3rem;
+}
+
+.textHeadingSpan{
+    color: #d69c4a
 }
 
 .aboutTextDescription{

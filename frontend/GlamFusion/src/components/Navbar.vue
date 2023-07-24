@@ -4,20 +4,31 @@
       <p class="logo-letter">G | <span class="logo-text">G l a m f u s i o n</span></p>
     </div>
     <div class="menu nav-item-2">
-      <div class="menu-item">Home</div>
-      <div class="menu-item">About</div>
-      <div class="dropdown menu-item">
+      <div :class="{ 'menu-item': true, 'active': activeNavItem === 'home' }" @click="setActiveNavItem('home')">Home</div>
+      <div :class="{ 'menu-item': true, 'active': activeNavItem === 'about' }" @click="setActiveNavItem('about')">About</div>
+      <div :class="{ 'menu-item': true, 'active': activeNavItem === 'bookings' }" @click="setActiveNavItem('bookings')">
         Bookings
-        <div class="dropdown-content">
-          <a href="#">Salon</a>
-          <a href="#">Haircut</a>
-        </div>
       </div>
-      <div class="menu-item">Blog</div>
+      <div :class="{ 'menu-item': true, 'active': activeNavItem === 'blog' }" @click="setActiveNavItem('blog')">Blog</div>
     </div>
-    <div class="user-profile nav-item-3">User Profile</div>
+    <div class="user-profile nav-item-3">
+      <div class="profile-image-container">
+        <img src="../assets/img/background-1.webp" alt="" class="profile-image">
+      </div>
+      <p class="username">Login</p>
+    </div>
   </nav>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+
+const activeNavItem = ref('home');
+
+function setActiveNavItem(item) {
+  activeNavItem.value = item;
+}
+</script>
 
 <style>
 .navbar {
@@ -70,8 +81,12 @@
 .menu-item {
   margin: 0 10px;
   cursor: pointer;
-  transition: box-shadow 0.2s ease-in-out;
+  transition: 0.6s ease-in-out;
   font-weight: bold;
+}
+
+.menu-item.active{
+  color:#d69c4a;
 }
 
 .menu-item:hover {
@@ -82,31 +97,23 @@
   position: relative;
 }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  min-width: 120px;
-  z-index: 1;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown-item {
-  padding: 10px;
-  color: #333;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-item:hover {
-  background-color: #ddd;
-}
-
-.user-profile{
+.user-profile{    
   font-weight: bold;
+  padding: 0.4%;
+  border: 1px solid #fff;
+  border-radius: 55px;
+  display: flex;
+}
+
+.profile-image-container, .username{
+  width: 50%;
+}
+
+.profile-image{
+  display: block;
+  width: 100%;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
 }
 </style>
