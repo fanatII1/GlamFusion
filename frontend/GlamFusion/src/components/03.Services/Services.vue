@@ -6,36 +6,42 @@
             <div class="service s-1">
                 <div class="service-overlay"></div>
                 <p>HAIRCUT</p>
-                <button class="service-btn">SEE MORE</button>
+                <button class="service-btn">
+                    <RouterLink to="/services/haircut">SEE MORE</RouterLink>
+                </button>
             </div>
             <div class="service s-2">
                 <div class="service-overlay"></div>
                 <p>HAIR SALON</p>
-                <button class="service-btn">SEE MORE</button>
+                <button class="service-btn">
+                    <RouterLink to="/services/hairsalon">SEE MORE</RouterLink>
+                </button>
             </div>
             <div class="service s-3">
                 <div class="service-overlay"></div>
                 <p>MAKE-UP</p>
-                <button class="service-btn">SEE MORE</button>
+                <button class="service-btn">
+                    <RouterLink to="/services/makeup">SEE MORE</RouterLink>
+                </button>
             </div>
             <div class="service s-4">
                 <div class="service-overlay"></div>
                 <p>NAIL SALON</p>
-                <button class="service-btn">SEE MORE</button>
+                <button class="service-btn">
+                    <RouterLink to="/services/nailsalon">SEE MORE</RouterLink>
+                </button>
             </div>
         </div>
     </main>
 </template>
 
 <script setup>
+import { RouterLink, RouterView } from 'vue-router';
+
 
 </script>
 
-<style>
-body{
-    background-color: #fff;
-}
-
+<style scoped>
 #services-container{
     height: 100%;
     max-height: 865px;
@@ -107,6 +113,10 @@ body{
 .service button:hover{
     cursor: pointer;
     transform: scale(1.05);
+}
+
+.service button a {
+    color: #fff;
 }
 
 .s-1{
