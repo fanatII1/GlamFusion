@@ -9,35 +9,115 @@ console.log(service)
 <template>
     <main id="stores-container">
         <h1 class="service">Looking for {{ service }}?</h1>
-        <div class="direction-rating">
-            <p class="directions">Directions</p>
-        </div>
+
         <form id="search-form">
             <input type="text" placeholder="Store..." name="query-store" class="search-input query-store">
             <input type="text" name="location" placeholder="Location..." value="Current Location" class="search-input location">
             <input type="submit" value="Q" class="search-input submit-search">
         </form>
 
-        <section id="stores-content">
-            <div class="stores">
-                <div class="store">
-                    <div class="store-img-wrapper">
-                        <img src="" alt="" class="store-img">
-                    </div>
-                    <div class="store-summary">
-                        <p class="store-name">Name</p>
-                        <p class="store-distance">85km</p>
-                        <ul class="rating-list">
-                            <li class="star"><i class="fa-solid fa-star"></i></li>
-                            <li class="star"><i class="fa-solid fa-star"></i></li>
-                            <li class="star"><i class="fa-solid fa-star"></i></li>
-                        </ul>
-                    </div>
-
+        <section id="stores">
+            <div class="store">
+                <div class="store-img-wrapper">
+                    <img src="../../assets/img/background-2.webp" alt="" class="store-img">
                 </div>
+                <p class="store-name">Store Name</p>
+                <p class="store-location">Greenfield <span id='distance'>1.2km</span></p>
+                <ul class="rating">
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                </ul>
+                <ul class="top-services">
+                    <li class="service">Service 1</li>
+                    <li class="service">Service 2</li>
+                    <li class="service">Service 3</li>
+                </ul>
             </div>
-            <div class="store-info">
-
+            <div class="store">
+                <div class="store-img-wrapper">
+                    <img src="../../assets/img/background-2.webp" alt="" class="store-img">
+                </div>
+                <p class="store-name">Store Name</p>
+                <p class="store-location">Greenfield <span id='distance'>1.2km</span></p>
+                <ul class="rating">
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                </ul>
+                <ul class="top-services">
+                    <li class="service">Service 1</li>
+                    <li class="service">Service 2</li>
+                    <li class="service">Service 3</li>
+                </ul>
+            </div>
+            <div class="store">
+                <div class="store-img-wrapper">
+                    <img src="../../assets/img/background-2.webp" alt="" class="store-img">
+                </div>
+                <p class="store-name">Store Name</p>
+                <p class="store-location">Greenfield <span id='distance'>1.2km</span></p>
+                <ul class="rating">
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                </ul>
+                <ul class="top-services">
+                    <li class="service">Service 1</li>
+                    <li class="service">Service 2</li>
+                    <li class="service">Service 3</li>
+                </ul>
+            </div>
+            <div class="store">
+                <div class="store-img-wrapper">
+                    <img src="../../assets/img/background-2.webp" alt="" class="store-img">
+                </div>
+                <p class="store-name">Store Name</p>
+                <p class="store-location">Greenfield <span id='distance'>1.2km</span></p>
+                <ul class="rating">
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                </ul>
+                <ul class="top-services">
+                    <li class="service">Service 1</li>
+                    <li class="service">Service 2</li>
+                    <li class="service">Service 3</li>
+                </ul>
+            </div>
+            <div class="store">
+                <div class="store-img-wrapper">
+                    <img src="../../assets/img/background-2.webp" alt="" class="store-img">
+                </div>
+                <p class="store-name">Store Name</p>
+                <p class="store-location">Greenfield <span id='distance'>1.2km</span></p>
+                <ul class="rating">
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                </ul>
+                <ul class="top-services">
+                    <li class="service">Service 1</li>
+                    <li class="service">Service 2</li>
+                    <li class="service">Service 3</li>
+                </ul>
+            </div>
+            <div class="store">
+                <div class="store-img-wrapper">
+                    <img src="../../assets/img/background-2.webp" alt="" class="store-img">
+                </div>
+                <p class="store-name">Store Name</p>
+                <p class="store-location">Greenfield <span id='distance'>1.2km</span></p>
+                <ul class="rating">
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                </ul>
+                <ul class="top-services">
+                    <li class="service">Service 1</li>
+                    <li class="service">Service 2</li>
+                    <li class="service">Service 3</li>
+                </ul>
             </div>
         </section>
     </main>
@@ -60,12 +140,7 @@ console.log(service)
     color: #fff;
 }
 
-.directions {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.fa-solid{
+.fa-star{
     color: #d69c4a;
     font-size: 16px;
 }
@@ -106,63 +181,63 @@ input[type="submit"]{
     display: flex;
 }
 
-.stores{
-    height: 100%;
-    width: 40%;
-}
-
-.store-info{
-    height: 100%;
-    width: 60%;
-    /* background-color: #fff; */
-}
-
-.store{
-    height: 20%;
-    display: flex;
-    color: #000;
-    background-color: #997452;
-}
-
-.store-img-wrapper{
-    display: flex;
-    width: 20%;
-    height: 100%;
-    align-items: center;
-}
-
-.store-img{
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-width: 110px;
-    max-height: 110px;
-    object-fit: cover;
-}
-
-.store-summary{
+#stores{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(195px, 410px));
+    grid-auto-rows: 40%;
+    gap: 3%;
     flex: 1;
 }
 
+.store-img-wrapper{
+    height: 40%;
+}
+
+.store-img-wrapper img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .store-name{
-    font-size: 1.2rem;
-    font-weight: 520;
-    padding-left: 1%;
+    color: #ababab;
+    margin: 5px 0 0 0;
+    font-size: 1.03rem;
+    font-weight: bold;
 }
-
-.store-distance{
-    padding-left: 1%;
-    font-weight: 100;
+.store-location{
+    color: #ababab;
     font-style: italic;
-}
 
-.rating-list{
+};
+
+.rating {
     display: flex;
-    padding: 0;
-    list-style: none;
 }
 
-.rating-list li {
-    margin: 0 1%;
+.rating{
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+.rating .star {
+    margin-right: 1%;
+}
+
+
+.top-services{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 0;
+}
+
+.top-services li{
+    border-radius: 5px;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 1%;
 }
 </style>
