@@ -1,34 +1,34 @@
 <template>
-    <main id="services-container">
-        <h1 class="services-heading">Services</h1>
+    <main id='services-container'>
+        <h1 class='services-heading'>Services</h1>
 
-        <div class="offered-services service-grid">
-            <div class="service s-1">
-                <div class="service-overlay"></div>
+        <div class='offered-services service-grid'>
+            <div class='service s-1'>
+                <div class='service-overlay'></div>
                 <p>HAIRCUT</p>
-                <button class="service-btn">
-                    <RouterLink to="/services/haircut">SEE MORE</RouterLink>
+                <button class='service-btn'>
+                    <RouterLink to='/services/haircut'>SEE MORE</RouterLink>
                 </button>
             </div>
-            <div class="service s-2">
-                <div class="service-overlay"></div>
+            <div class='service s-2'>
+                <div class='service-overlay'></div>
                 <p>HAIR SALON</p>
-                <button class="service-btn">
-                    <RouterLink to="/services/hairsalon">SEE MORE</RouterLink>
+                <button class='service-btn'>
+                    <RouterLink to='/services/hairsalon'>SEE MORE</RouterLink>
                 </button>
             </div>
-            <div class="service s-3">
-                <div class="service-overlay"></div>
+            <div class='service s-3'>
+                <div class='service-overlay'></div>
                 <p>MAKE-UP</p>
-                <button class="service-btn">
-                    <RouterLink to="/services/makeup">SEE MORE</RouterLink>
+                <button class='service-btn'>
+                    <RouterLink to='/services/makeup'>SEE MORE</RouterLink>
                 </button>
             </div>
-            <div class="service s-4">
-                <div class="service-overlay"></div>
+            <div class='service s-4'>
+                <div class='service-overlay'></div>
                 <p>NAIL SALON</p>
-                <button class="service-btn">
-                    <RouterLink to="/services/nailsalon">SEE MORE</RouterLink>
+                <button class='service-btn'>
+                    <RouterLink to='/services/nailsalon'>SEE MORE</RouterLink>
                 </button>
             </div>
         </div>
@@ -120,18 +120,18 @@ import { RouterLink, RouterView } from 'vue-router';
 }
 
 .s-1{
-    background: url("../../assets/img/haircut_2.webp") no-repeat center / cover;
+    background: url('../../assets/img/haircut_2.webp') no-repeat center / cover;
 }
 
 .s-2{
-    background: url("../../assets/img/hairstyle_2.jpg") no-repeat center / cover;
+    background: url('../../assets/img/hairstyle_2.jpg') no-repeat center / cover;
 }
 
 .s-3{
-    background: url("../../assets/img/make-up_2.jpg") no-repeat center / cover;
+    background: url('../../assets/img/make-up_2.jpg') no-repeat center / cover;
 }
 
 .s-4{
-    background: url("../../assets/img/nail_tech_2.webp") no-repeat center / cover;
+    background: url('../../assets/img/nail_tech_2.webp') no-repeat center / cover;
 }
 </style>

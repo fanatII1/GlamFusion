@@ -20,17 +20,23 @@ const router = createRouter({
     {
       path: '/services',
       name: 'services',
-      component: () => import('../views/ServicesView.vue')
+      component: () => import('../views/ServicesView.vue'),
     },
     {
       path: '/services/:id',
-      component: () => import('../views/StoresView.vue')
+      component: () => import('../views/StoresView.vue'),
+    },
+    {
+      path: "/services/:id/:store",
+      props: route => ({store: route.query.store, location: route.query.location}),
+      component: () => import('../views/ServiceStoreView.vue')
     },
     {
       path: '/about',
       name: 'about',
       component: () => import('../views/ServicesView.vue')
     },
+    
     {
       path: '/blog',
       name: 'blog',

@@ -1,122 +1,137 @@
 <script setup>
 import { useRoute } from 'vue-router';
+import router from '../../router';
+import { ref } from 'vue';
 
 const route = useRoute();
 const service = route.params.id;
-console.log(service)
+const storeName = ref(null);
+const storeLocation = ref(null);
+
+function viewStore(e){
+    e.preventDefault();
+    const store_name = storeName.value.textContent;
+    const store_location = storeLocation.value.textContent;
+    let path = `/services/${service}/${store_name}`;
+
+    // console.log(path)
+    router.push({path, query: {store: store_name, location: store_location}});
+}
+
+
 </script>
 
 <template>
-    <main id="stores-container">
-        <h1 class="service">Looking for {{ service }}?</h1>
+    <main id='stores-container'>
+        <h1 class='service'>Looking for {{ service }}?</h1>
 
-        <form id="search-form">
-            <input type="text" placeholder="Store..." name="query-store" class="search-input query-store">
-            <input type="text" name="location" placeholder="Location..." value="Current Location" class="search-input location">
-            <input type="submit" value="Q" class="search-input submit-search">
+        <form id='search-form'>
+            <input type='text' placeholder='Store...' name='query-store' class='search-input query-store'>
+            <input type='text' name='location' placeholder='Location...' value='Current Location' class='search-input location'>
+            <input type='submit' value='Q' class='search-input submit-search'>
         </form>
 
-        <section id="stores">
-            <div class="store">
-                <div class="store-img-wrapper">
-                    <img src="../../assets/img/background-2.webp" alt="" class="store-img">
+        <section id='stores'>
+            <div class='store' @click='viewStore'>
+                <div class='store-img-wrapper'>
+                    <img src='../../assets/img/background-2.webp' alt='' class='store-img'>
                 </div>
-                <p class="store-name">Store Name</p>
-                <p class="store-location">Greenfield <span id='distance'>1.2km</span></p>
-                <ul class="rating">
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                <p ref='storeName' class='store-name'>Store 1</p>
+                <p ref='storeLocation' class='store-location'>Greenfield <span id='distance'>1.2km</span></p>
+                <ul class='rating'>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
                 </ul>
-                <ul class="top-services">
-                    <li class="service">Service 1</li>
-                    <li class="service">Service 2</li>
-                    <li class="service">Service 3</li>
+                <ul class='top-services'>
+                    <li class='service'>Service 1</li>
+                    <li class='service'>Service 2</li>
+                    <li class='service'>Service 3</li>
                 </ul>
             </div>
-            <div class="store">
-                <div class="store-img-wrapper">
-                    <img src="../../assets/img/background-2.webp" alt="" class="store-img">
+            <div class='store' @click='viewStore'>
+                <div class='store-img-wrapper'>
+                    <img src='../../assets/img/background-2.webp' alt='' class='store-img'>
                 </div>
-                <p class="store-name">Store Name</p>
-                <p class="store-location">Greenfield <span id='distance'>1.2km</span></p>
-                <ul class="rating">
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                <p class='store-name'>Store 2</p>
+                <p class='store-location'>Greenfield <span id='distance'>1.2km</span></p>
+                <ul class='rating'>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
                 </ul>
-                <ul class="top-services">
-                    <li class="service">Service 1</li>
-                    <li class="service">Service 2</li>
-                    <li class="service">Service 3</li>
+                <ul class='top-services'>
+                    <li class='service'>Service 1</li>
+                    <li class='service'>Service 2</li>
+                    <li class='service'>Service 3</li>
                 </ul>
             </div>
-            <div class="store">
-                <div class="store-img-wrapper">
-                    <img src="../../assets/img/background-2.webp" alt="" class="store-img">
+            <div class='store' @click='viewStore'>
+                <div class='store-img-wrapper'>
+                    <img src='../../assets/img/background-2.webp' alt='' class='store-img'>
                 </div>
-                <p class="store-name">Store Name</p>
-                <p class="store-location">Greenfield <span id='distance'>1.2km</span></p>
-                <ul class="rating">
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                <p class='store-name'>Store 3</p>
+                <p class='store-location'>Greenfield <span id='distance'>1.2km</span></p>
+                <ul class='rating'>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
                 </ul>
-                <ul class="top-services">
-                    <li class="service">Service 1</li>
-                    <li class="service">Service 2</li>
-                    <li class="service">Service 3</li>
+                <ul class='top-services'>
+                    <li class='service'>Service 1</li>
+                    <li class='service'>Service 2</li>
+                    <li class='service'>Service 3</li>
                 </ul>
             </div>
-            <div class="store">
-                <div class="store-img-wrapper">
-                    <img src="../../assets/img/background-2.webp" alt="" class="store-img">
+            <div class='store' @click='viewStore'>
+                <div class='store-img-wrapper'>
+                    <img src='../../assets/img/background-2.webp' alt='' class='store-img'>
                 </div>
-                <p class="store-name">Store Name</p>
-                <p class="store-location">Greenfield <span id='distance'>1.2km</span></p>
-                <ul class="rating">
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                <p class='store-name'>Store 4</p>
+                <p class='store-location'>Greenfield <span id='distance'>1.2km</span></p>
+                <ul class='rating'>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
                 </ul>
-                <ul class="top-services">
-                    <li class="service">Service 1</li>
-                    <li class="service">Service 2</li>
-                    <li class="service">Service 3</li>
+                <ul class='top-services'>
+                    <li class='service'>Service 1</li>
+                    <li class='service'>Service 2</li>
+                    <li class='service'>Service 3</li>
                 </ul>
             </div>
-            <div class="store">
-                <div class="store-img-wrapper">
-                    <img src="../../assets/img/background-2.webp" alt="" class="store-img">
+            <div class='store' @click='viewStore'>
+                <div class='store-img-wrapper'>
+                    <img src='../../assets/img/background-2.webp' alt='' class='store-img'>
                 </div>
-                <p class="store-name">Store Name</p>
-                <p class="store-location">Greenfield <span id='distance'>1.2km</span></p>
-                <ul class="rating">
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                <p class='store-name'>Store 5</p>
+                <p class='store-location'>Greenfield <span id='distance'>1.2km</span></p>
+                <ul class='rating'>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
                 </ul>
-                <ul class="top-services">
-                    <li class="service">Service 1</li>
-                    <li class="service">Service 2</li>
-                    <li class="service">Service 3</li>
+                <ul class='top-services'>
+                    <li class='service'>Service 1</li>
+                    <li class='service'>Service 2</li>
+                    <li class='service'>Service 3</li>
                 </ul>
             </div>
-            <div class="store">
-                <div class="store-img-wrapper">
-                    <img src="../../assets/img/background-2.webp" alt="" class="store-img">
+            <div class='store' @click='viewStore'>
+                <div class='store-img-wrapper'>
+                    <img src='../../assets/img/background-2.webp' alt='' class='store-img'>
                 </div>
-                <p class="store-name">Store Name</p>
-                <p class="store-location">Greenfield <span id='distance'>1.2km</span></p>
-                <ul class="rating">
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
-                    <li class="star"><i class="fa-solid fa-star"></i></li>
+                <p class='store-name'>Store 6</p>
+                <p class='store-location'>Greenfield <span id='distance'>1.2km</span></p>
+                <ul class='rating'>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
+                    <li class='star'><i class='fa-solid fa-star'></i></li>
                 </ul>
-                <ul class="top-services">
-                    <li class="service">Service 1</li>
-                    <li class="service">Service 2</li>
-                    <li class="service">Service 3</li>
+                <ul class='top-services'>
+                    <li class='service'>Service 1</li>
+                    <li class='service'>Service 2</li>
+                    <li class='service'>Service 3</li>
                 </ul>
             </div>
         </section>
@@ -157,7 +172,7 @@ console.log(service)
     outline: none;
 }
 
-.search-input[type="text"]{
+.search-input[type='text']{
     background-color: #d69c4a;
     color: #fff;
     font-size: 0.85rem;
@@ -168,7 +183,7 @@ input::placeholder{
     font-size: 0.85rem;
 }
 
-input[type="submit"]{
+input[type='submit']{
     border-radius: 0;
     border: 1px solid #d68c4a;
     background-color: transparent;
@@ -221,10 +236,10 @@ input[type="submit"]{
     list-style: none;
     padding: 0;
 }
+
 .rating .star {
     margin-right: 1%;
 }
-
 
 .top-services{
     list-style: none;
