@@ -36,7 +36,7 @@ function updateDynamicImage(index) {
        <h2 class="storeName">{{ storeName }}</h2>
        <h3 class="storeLocation">{{ storeLocation }}</h3> 
 
-       <div class="store-img-service-display">
+       <section id="store-img-service-display">
         <transition name="image-slide" mode="out-in">
             <img :key="dynamicStoreImage" :src="dynamicStoreImage" alt="" class="store-img-service" />
         </transition>
@@ -45,9 +45,9 @@ function updateDynamicImage(index) {
             <div class="image-window"></div>
             <div ref="btn2" class="btn2 btn" @click="changeImage(btn2)"> <i class="fa-solid fa-chevron-right"></i> </div>
         </div>
-       </div>
+       </section>
 
-       <div class="store-img-service-select">
+       <section id="store-img-service-select">
         <div class="service-img-select-1">
             <img :src="storeImages[0]" alt="" class="service-img" @click="updateDynamicImage(0)">
         </div>
@@ -57,16 +57,31 @@ function updateDynamicImage(index) {
         <div class="service-img-select-3">
             <img :src="storeImages[2]" alt="" class="service-img" @click="updateDynamicImage(2)">
         </div>
-       </div>
+       </section>
+
+       <section id="customer-related-info">
+        <div class="services-reviews-about-wrapper">
+            <div class="services-reviews-about">
+                <p class="service-heading">Services</p>
+                <p class="reviews-heading">Reviews</p>
+                <p class="about-heading">About</p>
+            </div>
+
+            <div class="services-offered">
+                <p class="service-name">Service Offered</p>
+                <p class="duration">30 min</p>
+                <p class="price">R50</p>
+                <p class="more-info-modal">More Info</p>
+            </div>
+        </div>
+        <div class="booking-info"></div>
+       </section>
     </main>
 </template>
 
 <style scoped>
 #service-store-wrapper {
   height: 100%;
-  max-height: 900px;
-  display: flex;
-  flex-direction: column;
 }
 
 .storeName {
@@ -77,7 +92,7 @@ function updateDynamicImage(index) {
   color: #d69c4a;
 }
 
-.store-img-service-display {
+#store-img-service-display {
   height: 60%;
   position: relative;
   overflow: hidden;
@@ -129,7 +144,7 @@ function updateDynamicImage(index) {
   font-size: 1.4rem;
 }
 
-.store-img-service-select{
+#store-img-service-select{
     height: 25%;
     display: flex;
     justify-content: space-between;
@@ -150,5 +165,45 @@ function updateDynamicImage(index) {
 
 .service-img-select-1:hover img, .service-img-select-2:hover, .service-img-select-3:hover img{
     transform: scale(1.05);
+}
+
+#customer-related-info{
+    display: flex;
+    height: 100%;
+    margin-top: 2%;
+}
+
+.services-reviews-about-wrapper{
+    width: 65%;
+}
+
+.services-reviews-about{
+    display: flex;
+    justify-content: space-between;
+}
+
+.service-heading, .reviews-heading, .about-heading{
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.05rem;
+    
+}
+
+.services-offered{
+    background: #d69c4a;
+    color: #fff;
+}
+
+.service-name{
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.duration, .price, .more-info-modal{
+    font-style: italic;
+}
+
+.booking-info{
+    width: 35%;
 }
 </style>
