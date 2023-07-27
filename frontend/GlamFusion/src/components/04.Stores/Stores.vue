@@ -187,8 +187,8 @@ input[type="submit"]{
     grid-auto-rows: 40%;
     gap: 3%;
     flex: 1;
+    padding-top: 1%;
 }
-
 .store-img-wrapper{
     height: 40%;
 }

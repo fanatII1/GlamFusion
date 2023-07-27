@@ -188,4 +188,18 @@ onBeforeUnmount(() => {
   width: 100%;
   z-index: 2;
 }
+
+@media screen and (min-width: 1024px) {
+  .intro-heading {
+    font-size: 2rem;
+    margin: 30% auto 0;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .intro-heading {
+    font-size: 1.75rem;
+    margin: 30% auto 0;
+  }
+}
 </style>
