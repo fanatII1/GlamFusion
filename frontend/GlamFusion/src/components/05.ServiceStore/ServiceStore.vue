@@ -68,10 +68,15 @@ function updateDynamicImage(index) {
             </div>
 
             <div class="services-offered">
-                <p class="service-name">Service Offered</p>
-                <p class="duration">30 min</p>
-                <p class="price">R50</p>
-                <p class="more-info-modal">More Info</p>
+                <div class="service-look">
+                    <img src="../../assets/img/hairstyle_2.jpg" alt="" class="service-look-img">
+                </div>
+                <div class="service-details">
+                    <p class="service-name">Service Offered</p>
+                    <p class="duration">Time: 30 min</p>
+                    <p class="price">Price: R50</p>
+                    <p class="more-info-modal"><span id="more-info">More Info</span></p>
+                </div>
             </div>
         </div>
         <div class="booking-info"></div>
@@ -153,6 +158,9 @@ function updateDynamicImage(index) {
 
 .service-img-select-1, .service-img-select-2, .service-img-select-3{
     width: 25%;
+    border: 3px solid #d69c4a;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .service-img-select-1 img, .service-img-select-2 img, .service-img-select-3 img {
@@ -163,7 +171,7 @@ function updateDynamicImage(index) {
     transition: .4s;
 }
 
-.service-img-select-1:hover img, .service-img-select-2:hover, .service-img-select-3:hover img{
+.service-img-select-1:hover img, .service-img-select-2:hover img, .service-img-select-3:hover img{
     transform: scale(1.05);
 }
 
@@ -192,11 +200,46 @@ function updateDynamicImage(index) {
 .services-offered{
     background: #d69c4a;
     color: #fff;
+    display: flex;
+    border-radius: 15px;
+}
+
+.service-look{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.service-look img {
+    display: block;
+    width: 50%;
+    height: 134px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.service-details{
+    width: 70%;
+    background: #fff;
+    color: #d69c4a;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 1%;
+}
+
+.service-details p{
+    margin: 0 0 1%;
 }
 
 .service-name{
     font-weight: 600;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
+    border-bottom: 4px double;
+}
+
+#more-info{
+    border-bottom: 1px solid;
 }
 
 .duration, .price, .more-info-modal{
