@@ -13,15 +13,6 @@ const storeLocation = location;
 const storeImages = [image1, image2, image3];
 const changeImageNo = ref(0);
 const dynamicStoreImage = ref(storeImages[0]);
-const btn1 = ref(null);
-const btn2 = ref(null);
-
-//change image when buttons are clicked
-function changeImage(btn) {
-  const offset = btn.className.includes('btn1') ? -1 : 1;
-  changeImageNo.value = (changeImageNo.value + offset + storeImages.length) % storeImages.length;
-  dynamicStoreImage.value = storeImages[changeImageNo.value];
-}
 
 //change/update images when they are selected(clicked)
 function updateDynamicImage(index) {
@@ -40,21 +31,19 @@ function updateDynamicImage(index) {
         <transition name="image-slide" mode="out-in">
             <img :key="dynamicStoreImage" :src="dynamicStoreImage" alt="" class="store-img-service" />
         </transition>
-        <div class="change-image-btns-wrapper">
-            <div ref="btn1" class="btn1 btn" @click="changeImage(btn1)"> <i class="fa-solid fa-chevron-left"></i> </div>
-            <div class="image-window"></div>
-            <div ref="btn2" class="btn2 btn" @click="changeImage(btn2)"> <i class="fa-solid fa-chevron-right"></i> </div>
-        </div>
        </section>
 
        <section id="store-img-service-select">
         <div class="service-img-select-1">
+            <div class="display-image-overlay"></div>
             <img :src="storeImages[0]" alt="" class="service-img" @click="updateDynamicImage(0)">
         </div>
         <div class="service-img-select-2">
+            <div class="display-image-overlay"></div>
             <img :src="storeImages[1]" alt="" class="service-img" @click="updateDynamicImage(1)">
         </div>
         <div class="service-img-select-3">
+            <div class="display-image-overlay"></div>
             <img :src="storeImages[2]" alt="" class="service-img" @click="updateDynamicImage(2)">
         </div>
        </section>
@@ -78,8 +67,71 @@ function updateDynamicImage(index) {
                     <p class="more-info-modal"><span id="more-info">More Info</span></p>
                 </div>
             </div>
+            <div class="services-offered">
+                <div class="service-look">
+                    <img src="../../assets/img/hairstyle_2.jpg" alt="" class="service-look-img">
+                </div>
+                <div class="service-details">
+                    <p class="service-name">Service Offered</p>
+                    <p class="duration">Time: 30 min</p>
+                    <p class="price">Price: R50</p>
+                    <p class="more-info-modal"><span id="more-info">More Info</span></p>
+                </div>
+            </div>
+            <div class="services-offered">
+                <div class="service-look">
+                    <img src="../../assets/img/hairstyle_2.jpg" alt="" class="service-look-img">
+                </div>
+                <div class="service-details">
+                    <p class="service-name">Service Offered</p>
+                    <p class="duration">Time: 30 min</p>
+                    <p class="price">Price: R50</p>
+                    <p class="more-info-modal"><span id="more-info">More Info</span></p>
+                </div>
+            </div>
+            <div class="services-offered">
+                <div class="service-look">
+                    <img src="../../assets/img/hairstyle_2.jpg" alt="" class="service-look-img">
+                </div>
+                <div class="service-details">
+                    <p class="service-name">Service Offered</p>
+                    <p class="duration">Time: 30 min</p>
+                    <p class="price">Price: R50</p>
+                    <p class="more-info-modal"><span id="more-info">More Info</span></p>
+                </div>
+            </div>
+            <div class="services-offered">
+                <div class="service-look">
+                    <img src="../../assets/img/hairstyle_2.jpg" alt="" class="service-look-img">
+                </div>
+                <div class="service-details">
+                    <p class="service-name">Service Offered</p>
+                    <p class="duration">Time: 30 min</p>
+                    <p class="price">Price: R50</p>
+                    <p class="more-info-modal"><span id="more-info">More Info</span></p>
+                </div>
+            </div>
+            <div class="services-offered">
+                <div class="service-look">
+                    <img src="../../assets/img/hairstyle_2.jpg" alt="" class="service-look-img">
+                </div>
+                <div class="service-details">
+                    <p class="service-name">Service Offered</p>
+                    <p class="duration">Time: 30 min</p>
+                    <p class="price">Price: R50</p>
+                    <p class="more-info-modal"><span id="more-info">More Info</span></p>
+                </div>
+            </div>
         </div>
-        <div class="booking-info"></div>
+        <div class="booking-info-wrapper">
+            <div class="booking-info">
+                <div class="booking-btn-wrapper">
+                    <button class="booking-btn">Book Now</button>
+                </div>
+                <p class="operating-status"><span id='status'>Closed</span> opens at <span id="operating-status-time"> 09:00</span></p>
+                <a class="location" href="#">{{ location }}</a>
+            </div>
+        </div>
        </section>
     </main>
 </template>
@@ -109,6 +161,7 @@ function updateDynamicImage(index) {
   width: 100%;
   object-fit: cover;
   transition: transform 0.5s ease-in-out; /* Add sliding transition effect */
+  border-radius: 20px;
 }
 
 /* Custom transition class for the sliding effect */
@@ -120,26 +173,6 @@ function updateDynamicImage(index) {
 .image-slide-enter-from,
 .image-slide-leave-to {
   transform: translateX(100%); /* Slide in from right during enter, slide out to right during leave */
-}
-
-.change-image-btns-wrapper {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  background-color: #ffffff23;
-  display: flex;
-  justify-content: space-between;
-}
-
-.btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 5%;
-  background-color: #ffffff41;
 }
 
 .fa-chevron-left,
@@ -157,6 +190,7 @@ function updateDynamicImage(index) {
 }
 
 .service-img-select-1, .service-img-select-2, .service-img-select-3{
+    position: relative;
     width: 25%;
     border: 3px solid #d69c4a;
     border-radius: 10px;
@@ -175,10 +209,29 @@ function updateDynamicImage(index) {
     transform: scale(1.05);
 }
 
+.display-image-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.247);
+}
+
 #customer-related-info{
     display: flex;
-    height: 100%;
+    height: 800px;
+    /* max-height: 710px; */
     margin-top: 2%;
+    overflow-y: scroll;
+}
+
+#customer-related-info::-webkit-scrollbar {
+  width: 10px;
+}
+
+#customer-related-info::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Change the color of the scrollbar thumb */
 }
 
 .services-reviews-about-wrapper{
@@ -198,10 +251,12 @@ function updateDynamicImage(index) {
 }
 
 .services-offered{
-    background: #d69c4a;
     color: #fff;
     display: flex;
     border-radius: 15px;
+    box-shadow: 0 4px 8px orange;
+    padding: 2%;
+    margin-bottom: 5%;
 }
 
 .service-look{
@@ -217,15 +272,17 @@ function updateDynamicImage(index) {
     height: 134px;
     border-radius: 50%;
     object-fit: cover;
+    border: 5px solid #d69c4a;
 }
 
 .service-details{
     width: 70%;
-    background: #fff;
-    color: #d69c4a;
+    color: white;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     padding: 1%;
+    font-family: initial;
+    line-height: 2;
 }
 
 .service-details p{
@@ -235,18 +292,34 @@ function updateDynamicImage(index) {
 .service-name{
     font-weight: 600;
     font-size: 1.6rem;
-    border-bottom: 4px double;
+    border-bottom: 1px solid;
 }
 
 #more-info{
     border-bottom: 1px solid;
+    display: inline-block;
 }
 
 .duration, .price, .more-info-modal{
     font-style: italic;
 }
 
-.booking-info{
+.booking-info-wrapper{
     width: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.booking-btn-wrapper{
+    display: flex;
+    justify-content: center;
+    margin: 3% 0;
+}
+
+.booking-info{
+    width: 70%;
+    height: 60%;
+    background: #fff;
 }
 </style>
