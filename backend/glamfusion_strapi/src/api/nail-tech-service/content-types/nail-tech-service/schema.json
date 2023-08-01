@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "nail_tech_services",
+  "info": {
+    "singularName": "nail-tech-service",
+    "pluralName": "nail-tech-services",
+    "displayName": "NailTechService"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "NailStyle": {
+      "type": "string"
+    },
+    "Price": {
+      "type": "decimal"
+    },
+    "StyleImage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "owning_technicians": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::nail-tech-store.nail-tech-store",
+      "mappedBy": "nail_tech_services"
+    }
+  }
+}

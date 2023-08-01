@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "store_services",
+  "info": {
+    "singularName": "store-service",
+    "pluralName": "store-services",
+    "displayName": "BarberService",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ServicePrice": {
+      "type": "biginteger",
+      "required": true
+    },
+    "ServiceName": {
+      "type": "string",
+      "required": true
+    },
+    "ServiceImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "owning_barbers": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::store.store",
+      "mappedBy": "barber_services"
+    },
+    "owning_braiders": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::braiding-store.braiding-store",
+      "mappedBy": "braiding_services"
+    }
+  }
+}

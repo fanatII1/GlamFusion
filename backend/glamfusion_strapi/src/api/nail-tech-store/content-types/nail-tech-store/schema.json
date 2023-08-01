@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "nail_tech_stores",
+  "info": {
+    "singularName": "nail-tech-store",
+    "pluralName": "nail-tech-stores",
+    "displayName": "NailTechStore",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "NailsStoreName": {
+      "type": "string"
+    },
+    "Location": {
+      "type": "string"
+    },
+    "StoreImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "nail_tech_services": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::nail-tech-service.nail-tech-service",
+      "inversedBy": "owning_technicians"
+    }
+  }
+}

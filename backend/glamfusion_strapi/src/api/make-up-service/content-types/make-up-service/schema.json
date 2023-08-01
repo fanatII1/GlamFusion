@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "make_up_services",
+  "info": {
+    "singularName": "make-up-service",
+    "pluralName": "make-up-services",
+    "displayName": "MakeUpService"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "MakeUpStyle": {
+      "type": "string"
+    },
+    "Price": {
+      "type": "decimal"
+    },
+    "StyleImage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "owning_artists": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::make-up-store.make-up-store",
+      "mappedBy": "make_up_services"
+    }
+  }
+}

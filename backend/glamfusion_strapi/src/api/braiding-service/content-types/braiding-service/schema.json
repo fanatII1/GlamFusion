@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "braiding_services",
+  "info": {
+    "singularName": "braiding-service",
+    "pluralName": "braiding-services",
+    "displayName": "BraidingService"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "BraidingStyleName": {
+      "type": "string"
+    },
+    "Price": {
+      "type": "decimal"
+    },
+    "owning_braiders": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::braiding-store.braiding-store",
+      "mappedBy": "braiding_services"
+    }
+  }
+}

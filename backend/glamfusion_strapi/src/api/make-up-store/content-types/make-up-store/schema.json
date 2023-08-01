@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "make_up_stores",
+  "info": {
+    "singularName": "make-up-store",
+    "pluralName": "make-up-stores",
+    "displayName": "MakeUpStore",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "StoreName": {
+      "type": "string"
+    },
+    "StoreLocation": {
+      "type": "string"
+    },
+    "StoreImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "make_up_services": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::make-up-service.make-up-service",
+      "inversedBy": "owning_artists"
+    }
+  }
+}
