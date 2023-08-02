@@ -4,7 +4,8 @@
   "info": {
     "singularName": "barbers-store",
     "pluralName": "barbers-stores",
-    "displayName": "BarbersStore"
+    "displayName": "BarbersStore",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -14,18 +15,19 @@
     "StoreName": {
       "type": "string"
     },
-    "Location": {
+    "StoreLocation": {
       "type": "string"
     },
     "StoreImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "barber_services": {
       "type": "relation",

@@ -24,12 +24,6 @@
         "images"
       ]
     },
-    "owning_braiders": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::braiding-store.braiding-store",
-      "mappedBy": "braiding_services"
-    },
     "ServicePrice": {
       "type": "decimal"
     },

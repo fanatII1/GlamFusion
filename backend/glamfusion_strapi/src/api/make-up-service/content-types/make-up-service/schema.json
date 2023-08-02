@@ -4,28 +4,30 @@
   "info": {
     "singularName": "make-up-service",
     "pluralName": "make-up-services",
-    "displayName": "MakeUpService"
+    "displayName": "MakeUpService",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "MakeUpStyle": {
+    "ServiceName": {
       "type": "string"
     },
     "Price": {
       "type": "decimal"
     },
     "StyleImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "owning_artists": {
       "type": "relation",

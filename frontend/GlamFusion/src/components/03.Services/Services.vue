@@ -14,21 +14,21 @@
                 <div class='service-overlay'></div>
                 <p>HAIR SALON</p>
                 <button class='service-btn'>
-                    <RouterLink to='/services/hairsalon'>SEE MORE</RouterLink>
+                    <RouterLink to='/services/braiding-stores'>SEE MORE</RouterLink>
                 </button>
             </div>
             <div class='service s-3'>
                 <div class='service-overlay'></div>
                 <p>MAKE-UP</p>
                 <button class='service-btn'>
-                    <RouterLink to='/services/makeup'>SEE MORE</RouterLink>
+                    <RouterLink to='/services/make-up-stores'>SEE MORE</RouterLink>
                 </button>
             </div>
             <div class='service s-4'>
                 <div class='service-overlay'></div>
                 <p>NAIL SALON</p>
                 <button class='service-btn'>
-                    <RouterLink to='/services/nailsalon'>SEE MORE</RouterLink>
+                    <RouterLink to='/services/nail-tech-stores'>SEE MORE</RouterLink>
                 </button>
             </div>
         </div>

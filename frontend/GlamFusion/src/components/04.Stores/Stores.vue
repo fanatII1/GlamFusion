@@ -9,6 +9,13 @@ const storeName = ref(null);
 const storeLocation = ref(null);
 const stores = ref([]);
 const loading = ref(true);
+const baseURL = ref('http://localhost:1337');
+// const imageName = ref('my-image.jpg');
+
+const getImageUrl = () => {
+  return `${baseUrl.value}${imageName.value}`;
+};
+
 
 function viewStore(e){
     e.preventDefault();
@@ -38,7 +45,7 @@ async function fetchData() {
 
     return { id, attributes: { ...cleanedAttributes, services }};
     });
-    console.log('CLEAN', cleanedBarberShops)
+    console.log('CLEAN', cleanedBarberShops[0].attributes)
     stores.value = cleanedBarberShops;
     loading.value = false;
   } catch (error) {
@@ -67,10 +74,10 @@ onMounted(() => {
         <section id='stores' v-if="!loading">
             <div class='store' v-for="store in stores" @click='viewStore'>
                 <div class='store-img-wrapper'>
-                    <img src='../../assets/img/background-2.webp' alt='' class='store-img'>
+                    <img :src="baseURL + store.attributes?.StoreImage?.data?.attributes?.url" alt='' class='store-img'>
                 </div>
                 <p ref='storeName' class='store-name'>{{ store?.attributes?.StoreName }}</p>
-                <p ref='storeLocation' class='store-location'>{{ store?.attributes?.Location }} <span id='distance'>1.2km</span></p>
+                <p ref='storeLocation' class='store-location'>{{ store?.attributes?.StoreLocation }} <span id='distance'>1.2km</span></p>
                 <ul class='rating'>
                     <li class='star'><i class='fa-solid fa-star'></i></li>
                     <li class='star'><i class='fa-solid fa-star'></i></li>
@@ -80,75 +87,6 @@ onMounted(() => {
                     <li v-for="service in store.attributes.services.data" class='service'>{{service.attributes.ServiceName}}</li>
                 </ul>
             </div>
-            <!-- <div class='store' @click='viewStore'>
-                <div class='store-img-wrapper'>
-                    <img src='../../assets/img/background-2.webp' alt='' class='store-img'>
-                </div>
-                <p class='store-name'>Store 2</p>
-                <p class='store-location'>Greenfield <span id='distance'>1.2km</span></p>
-                <ul class='rating'>
-                    <li class='star'><i class='fa-solid fa-star'></i></li>
-                    <li class='star'><i class='fa-solid fa-star'></i></li>
-                    <li class='star'><i class='fa-solid fa-star'></i></li>
-                </ul>
-                <ul class='top-services'>
-                    <li class='service'>Service 1</li>
-                    <li class='service'>Service 2</li>
-                    <li class='service'>Service 3</li>
-                </ul>
-            </div>
-            <div class='store' @click='viewStore'>
-                <div class='store-img-wrapper'>
-                    <img src='../../assets/img/background-2.webp' alt='' class='store-img'>
-                </div>
-                <p class='store-name'>Store 3</p>
-                <p class='store-location'>Greenfield <span id='distance'>1.2km</span></p>
-                <ul class='rating'>
-                    <li class='star'><i class='fa-solid fa-star'></i></li>
-                    <li class='star'><i class='fa-solid fa-star'></i></li>
-                    <li class='star'><i class='fa-solid fa-star'></i></li>
-                </ul>
-                <ul class='top-services'>
-                    <li class='service'>Service 1</li>
-                    <li class='service'>Service 2</li>
-                    <li class='service'>Service 3</li>
-                </ul>
-            </div>
-            <div class='store' @click='viewStore'>
-                <div class='store-img-wrapper'>
-                    <img src='../../assets/img/background-2.webp' alt='' class='store-img'>
-                </div>
-                <p class='store-name'>Store 4</p>
-                <p class='store-location'>Greenfield <span id='distance'>1.2km</span></p>
-                <ul class='rating'>
-                    <li class='star'><i class='fa-solid fa-star'></i></li>
-                    <li class='star'><i class='fa-solid fa-star'></i></li>
-                    <li class='star'><i class='fa-solid fa-star'></i></li>
-                </ul>
-                <ul class='top-services'>
-                    <li class='service'>Service 1</li>
-                    <li class='service'>Service 2</li>
-                    <li class='service'>Service 3</li>
-                </ul>
-            </div>
-            <div class='store' @click='viewStore'>
-                <div class='store-img-wrapper'>
-                    <img src='../../assets/img/background-2.webp' alt='' class='store-img'>
-                </div>
-                <p class='store-name'>Store 5</p>
-                <p class='store-location'>Greenfield <span id='distance'>1.2km</span></p>
-                <ul class='rating'>
-                    <li class='star'><i class='fa-solid fa-star'></i></li>
-                    <li class='star'><i class='fa-solid fa-star'></i></li>
-                    <li class='star'><i class='fa-solid fa-star'></i></li>
-                </ul>
-                <ul class='top-services'>
-                    <li class='service'>Service 1</li>
-                    <li class='service'>Service 2</li>
-                    <li class='service'>Service 3</li>
-                </ul>
-            </div>
-            <div class='store' @click='viewStore'>
                 <div class='store-img-wrapper'>
                     <img src='../../assets/img/background-2.webp' alt='' class='store-img'>
                 </div>

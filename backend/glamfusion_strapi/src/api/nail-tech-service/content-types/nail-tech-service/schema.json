@@ -4,28 +4,30 @@
   "info": {
     "singularName": "nail-tech-service",
     "pluralName": "nail-tech-services",
-    "displayName": "NailTechService"
+    "displayName": "NailTechService",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "NailStyle": {
+    "ServiceName": {
       "type": "string"
     },
     "Price": {
       "type": "decimal"
     },
     "StyleImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "owning_technicians": {
       "type": "relation",
