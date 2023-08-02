@@ -102,7 +102,7 @@ onMounted(() => {
                     <li class='service'>Service 2</li>
                     <li class='service'>Service 3</li>
                 </ul>
-            </div> -->
+            </div>
         </section>
     </main>
 </template>
