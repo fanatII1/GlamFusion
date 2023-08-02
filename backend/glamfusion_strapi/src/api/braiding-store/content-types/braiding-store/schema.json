@@ -32,7 +32,7 @@
     "braiding_services": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::braiding-service.braiding-service",
+      "target": "api::store-service.store-service",
       "inversedBy": "owning_braiders"
     }
   }

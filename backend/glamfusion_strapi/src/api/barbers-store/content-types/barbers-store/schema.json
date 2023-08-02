@@ -1,11 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "stores",
+  "collectionName": "barbers_stores",
   "info": {
-    "singularName": "store",
-    "pluralName": "stores",
-    "displayName": "BarberStore",
-    "description": ""
+    "singularName": "barbers-store",
+    "pluralName": "barbers-stores",
+    "displayName": "BarbersStore"
   },
   "options": {
     "draftAndPublish": true
@@ -16,24 +15,23 @@
       "type": "string"
     },
     "Location": {
-      "type": "text"
+      "type": "string"
     },
-    "StoreBuildingImage": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
+    "StoreImage": {
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ]
+      ],
+      "type": "media",
+      "multiple": false
     },
     "barber_services": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::store-service.store-service",
-      "inversedBy": "owning_barbers"
+      "inversedBy": "owning_barber"
     }
   }
 }

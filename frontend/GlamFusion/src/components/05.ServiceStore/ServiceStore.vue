@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref } from 'vue';
+import { defineProps, ref, onMounted } from 'vue';
 import image1 from '../../assets/img/background-1.webp';
 import image2 from '../../assets/img/background-2.webp';
 import image3 from '../../assets/img/background-3.jfif';
@@ -14,11 +14,13 @@ const storeImages = [image1, image2, image3];
 const changeImageNo = ref(0);
 const dynamicStoreImage = ref(storeImages[0]);
 
-//change/update images when they are selected(clicked)
+//change or update images when they are selected(clicked)
 function updateDynamicImage(index) {
   changeImageNo.value = index;
   dynamicStoreImage.value = storeImages[index];
 }
+
+
 </script>
 
 <template>

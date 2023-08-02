@@ -7,7 +7,7 @@
                 <div class='service-overlay'></div>
                 <p>HAIRCUT</p>
                 <button class='service-btn'>
-                    <RouterLink to='/services/haircut'>SEE MORE</RouterLink>
+                    <RouterLink to='/services/barbers-stores'>SEE MORE</RouterLink>
                 </button>
             </div>
             <div class='service s-2'>

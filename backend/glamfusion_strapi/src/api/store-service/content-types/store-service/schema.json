@@ -12,10 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "ServicePrice": {
-      "type": "biginteger",
-      "required": true
-    },
     "ServiceName": {
       "type": "string",
       "required": true
@@ -28,17 +24,20 @@
         "images"
       ]
     },
-    "owning_barbers": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::store.store",
-      "mappedBy": "barber_services"
-    },
     "owning_braiders": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::braiding-store.braiding-store",
       "mappedBy": "braiding_services"
+    },
+    "ServicePrice": {
+      "type": "decimal"
+    },
+    "owning_barber": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::barbers-store.barbers-store",
+      "mappedBy": "barber_services"
     }
   }
 }
