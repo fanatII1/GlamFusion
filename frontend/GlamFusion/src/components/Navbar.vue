@@ -5,8 +5,7 @@ import { useAuthStore } from '../stores/authentication';
 import { auth } from '../../firebase';
 
 const activeNavItem = ref('home');
-const authStore = useAuthStore;
-
+const authStore = useAuthStore();
 
 //check authentication 
 function checkAuth(){
