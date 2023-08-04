@@ -1,8 +1,19 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
 import { ref } from 'vue';
+import { useAuthStore } from '../stores/authentication';
+import { auth } from '../../firebase';
 
 const activeNavItem = ref('home');
+const authStore = useAuthStore;
+
+
+//check authentication 
+function checkAuth(){
+  console.log(authStore.user)
+  authStore.setLoginState();
+}
+
 
 function setActiveNavItem(item) {
   activeNavItem.value = item;
@@ -29,7 +40,7 @@ function setActiveNavItem(item) {
       </div>
     </div>
     <div class="nav-item-3">
-    <button class="profile-btn">My Profile</button>
+    <button @click="checkAuth" class="profile-btn">My Profile</button>
     <div class="dropdown">
       <a href="#">My Profile</a>
       <a href="#">Logout</a>
