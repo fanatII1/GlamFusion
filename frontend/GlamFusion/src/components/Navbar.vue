@@ -28,12 +28,13 @@ function setActiveNavItem(item) {
         <RouterLink to="/blog">Blog</RouterLink>
       </div>
     </div>
-    <div class="user-profile nav-item-3">
-      <div class="profile-image-container">
-        <img src="../assets/img/background-1.webp" alt="" class="profile-image">
-      </div>
-      <p class="username">Login</p>
+    <div class="nav-item-3">
+    <button class="profile-btn">My Profile</button>
+    <div class="dropdown">
+      <a href="#">My Profile</a>
+      <a href="#">Logout</a>
     </div>
+  </div>
   </nav>
 </template>
 
@@ -104,10 +105,6 @@ function setActiveNavItem(item) {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.dropdown {
-  position: relative;
-}
-
 .user-profile{    
   font-weight: bold;
   padding: 0.4%;
@@ -126,5 +123,57 @@ function setActiveNavItem(item) {
   height: 40px;
   width: 40px;
   border-radius: 100%;
+}
+
+.nav-item-3 {
+  position: relative;
+}
+
+.profile-btn {
+  background-color: transparent;
+  color: #d69c4a;
+  border: none;
+  border-bottom: 1px solid #d69c4a;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: fadeInDown 0.3s ease forwards;
+}
+
+.dropdown a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.2s;
+}
+
+.dropdown a:hover {
+  background-color: #f0f0f0;
+}
+
+.nav-item-3:hover .dropdown {
+  display: block;
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

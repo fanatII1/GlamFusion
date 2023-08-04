@@ -1,94 +1,50 @@
-<template>
-    <main id="auth-wrapper">
-        <div class="container" :class="{ 'sign-up-mode': isSignUpMode }">
-            <div class="signin-signup">
-                <form action="" class="sign-in-form">
-                    <h2 class="title">Sign in</h2>
-                    <div class="input-field">
-                        <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Username">
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="Password">
-                    </div>
-                    <input type="submit" value="Login" class="btn">
-                    <p class="social-text">Or Sign in with social platform</p>
-                    <div class="social-media">
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-google"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </div>
-                    <p class="account-text">Don't have an account? <a href="#" id="sign-up-btn2">Sign up</a></p>
-                </form>
-                <form action="" class="sign-up-form">
-                    <h2 class="title">Sign up</h2>
-                    <div class="input-field">
-                        <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Username">
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-envelope"></i>
-                        <input type="text" placeholder="Email">
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="Password">
-                    </div>
-                    <input type="submit" value="Sign up" class="btn">
-                    <p class="social-text">Or Sign in with social platform</p>
-                    <div class="social-media">
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-google"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </div>
-                    <p class="account-text">Already have an account? <a href="#" id="sign-in-btn2">Sign in</a></p>
-                </form>
-            </div>
-            <div class="panels-container">
-                <div class="panel left-panel">
-                    <div class="content">
-                        <h3>Elevate Your Look - Unlock Your Account</h3>
-                        <p>Step into a world of glamour and style. Unlock your account and book with us effortlessly!</p>
-                        <button class="btn" id="sign-in-btn">Sign in</button>
-                    </div>
-                    <img src="signin.svg" alt="" class="image">
-                </div>
-                <div class="panel right-panel">
-                    <div class="content">
-                        <h3><span>Elevate Your Look</span> - Unlock Your Account</h3>
-                        <p>Step into a world of glamour and style. Unlock your account and book with us effortlessly!</p>
-                        <button class="btn" id="sign-up-btn">Sign up</button>
-                    </div>
-                    <img src="signup.svg" alt="" class="image">
-                </div>
-            </div>
-        </div>
-    </main>
-</template>
-  
 <script setup>
 import { ref, onMounted } from "vue";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
+import { auth } from '../../../firebase'
+
 
 const isSignUpMode = ref(false);
+const email = ref('');
+const password = ref('');
+
+const googleProvider = new GoogleAuthProvider();
+const facebookAuthProvider = new FacebookAuthProvider();
+
+//signUp with email and password
+const emailPasswordSignUpSubmit = () => {
+    console.log('SIGN UP', email.value, password.value)
+    createUserWithEmailAndPassword(auth, email.value, password.value)
+    .then((userCredential)=> console.log(userCredential))
+    .catch((error) => console.log(`error in sign up: ${error}`))
+}
+
+//signIn with email and password
+const emailPasswordSignInSubmit = () => {
+    console.log('SIGN IN', email.value, password.value)
+}
+
+//signIn with Google
+const signInWithGoogle = () => {
+    signInWithPopup(auth, googleProvider)
+    .then((result) => console.log(result.user))
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('ERROR:', errorCode, errorMessage)
+    })
+}
+
+//signIn with Twitter
+const signInWithTwitter = () => {
+    signInWithPopup(auth, facebookAuthProvider)
+    .then((result) => console.log(result.user))
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('ERROR', errorCode, errorMessage)
+    })
+}
 
 const toggleMode = () => {
     isSignUpMode.value = !isSignUpMode.value;
@@ -107,6 +63,77 @@ onMounted(() => {
     sign_in_btn2.addEventListener("click", toggleMode);
 });
 </script>
+
+<template>
+    <main id="auth-wrapper">
+        <div class="container" :class="{ 'sign-up-mode': isSignUpMode }">
+            <div class="signin-signup">
+                <form @submit.prevent="emailPasswordSignUpSubmit" class="sign-in-form">
+                    <h2 class="title">Sign in</h2>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input v-model="email" type="text" placeholder="Email">
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input v-model="password" type="password" placeholder="Password">
+                    </div>
+                    <input type="submit" value="Login" class="btn">
+                    <p class="social-text">Or Sign in with social platform</p>
+                    <div class="social-media">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-facebook"  @click="signInWithTwitter"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-google"  @click="signInWithGoogle"></i>
+                        </a>
+                    </div>
+                    <p class="account-text">Don't have an account? <a href="#" id="sign-up-btn2">Sign up</a></p>
+                </form>
+                <form @submit.prevent="emailPasswordSignInSubmit" class="sign-up-form">
+                    <h2 class="title">Sign up</h2>
+                    <div class="input-field">
+                        <i class="fas fa-envelope"></i>
+                        <input v-model="email" type="text" placeholder="Email">
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input v-model="password" type="password" placeholder="Password">
+                    </div>
+                    <input type="submit" value="Sign up" class="btn">
+                    <p class="social-text">Or Sign in with social platform</p>
+                    <div class="social-media">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-facebook"  @click="signInWithTwitter"></i>
+                        </a>
+                        <a href="#" class="social-icon" onclick="signInWithGoogle">
+                            <i class="fab fa-google"></i>
+                        </a>
+                    </div>
+                    <p class="account-text">Already have an account? <a href="#" id="sign-in-btn2">Sign in</a></p>
+                </form>
+            </div>
+            <div class="panels-container">
+                <div class="panel left-panel">
+                    <div class="content">
+                        <h3>Elevate Your Look - Unlock Your Account</h3>
+                        <p>Step into a world of glamour and style. Unlock your account and book with us effortlessly!</p>
+                        <button class="btn" id="sign-in-btn">Sign in</button>
+                    </div>
+                    <!-- <img src="signin.svg" alt="" class="image"> -->
+                </div>
+                <div class="panel right-panel">
+                    <div class="content">
+                        <h3><span>Elevate Your Look</span> - Unlock Your Account</h3>
+                        <p>Step into a world of glamour and style. Unlock your account and book with us effortlessly!</p>
+                        <button class="btn" id="sign-up-btn">Sign up</button>
+                    </div>
+                    <!-- <img src="signup.svg" alt="" class="image"> -->
+                </div>
+            </div>
+        </div>
+    </main>
+</template>
   
 <style>
 #auth-wrapper {
@@ -403,5 +430,6 @@ a {
     form {
         width: 90%;
     }
-}</style>
+}
+</style>
   
