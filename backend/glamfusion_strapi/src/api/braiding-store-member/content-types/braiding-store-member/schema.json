@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "braiding_store_members",
+  "info": {
+    "singularName": "braiding-store-member",
+    "pluralName": "braiding-store-members",
+    "displayName": "BraidingStoreMember"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "email"
+    },
+    "PhoneNumber": {
+      "type": "biginteger"
+    },
+    "braiding_store": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::braiding-store.braiding-store",
+      "inversedBy": "members"
+    }
+  }
+}

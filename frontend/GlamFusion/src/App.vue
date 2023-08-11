@@ -14,9 +14,10 @@ onMounted(() => {
   onAuthStateChanged(auth, (user)=>{
     if(user){
       console.log('logged in')
-      authStore.setLoginState()
+      authStore.setLoginState(user)
     }
     else{
+      authStore.setLoginState(user)
       console.log('not logged in')
     }
   })

@@ -34,6 +34,12 @@
       "relation": "manyToMany",
       "target": "api::braiding-service.braiding-service",
       "inversedBy": "owning_braiders"
+    },
+    "members": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::braiding-store-member.braiding-store-member",
+      "mappedBy": "braiding_store"
     }
   }
 }

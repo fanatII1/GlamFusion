@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "make_up_store_members",
+  "info": {
+    "singularName": "make-up-store-member",
+    "pluralName": "make-up-store-members",
+    "displayName": "MakeUpStoreMember"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "email"
+    },
+    "PhoneNumber": {
+      "type": "biginteger"
+    },
+    "make_up_store": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::make-up-store.make-up-store",
+      "inversedBy": "members"
+    }
+  }
+}

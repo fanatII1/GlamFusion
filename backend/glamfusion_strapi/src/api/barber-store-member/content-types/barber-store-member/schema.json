@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "barber_store_members",
+  "info": {
+    "singularName": "barber-store-member",
+    "pluralName": "barber-store-members",
+    "displayName": "BarberStoreMember",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "email"
+    },
+    "PhoneNumber": {
+      "type": "biginteger"
+    },
+    "barbers_store": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::barbers-store.barbers-store",
+      "inversedBy": "members"
+    }
+  }
+}

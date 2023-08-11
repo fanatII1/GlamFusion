@@ -9,8 +9,14 @@ export const useAuthStore = defineStore('authStore', {
     user: null
   }),
   actions : {
-    setLoginState(){
-      this.loginState = true;
+    setLoginState(loginStatus){
+      if(loginStatus){
+        this.loginState = true;
+        console.log('stat', this.loginState)
+      }
+      else{
+        this.loginState = false;
+      }
     }
   }
 })

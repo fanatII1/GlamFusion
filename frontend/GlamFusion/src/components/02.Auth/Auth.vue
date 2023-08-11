@@ -3,11 +3,11 @@ import { ref, onMounted } from "vue";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
 import { auth } from '../../../firebase'
 
-
 const isSignUpMode = ref(false);
 const email = ref('');
 const password = ref('');
 
+//providers
 const googleProvider = new GoogleAuthProvider();
 const facebookAuthProvider = new FacebookAuthProvider();
 

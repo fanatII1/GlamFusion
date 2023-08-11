@@ -3,6 +3,7 @@ import { RouterLink, RouterView } from 'vue-router';
 import { ref } from 'vue';
 import { useAuthStore } from '../stores/authentication';
 import { auth } from '../../firebase';
+import { signOut } from 'firebase/auth';
 
 const activeNavItem = ref('home');
 const authStore = useAuthStore();
@@ -10,7 +11,16 @@ const authStore = useAuthStore();
 //check authentication 
 function checkAuth(){
   console.log(authStore.user)
-  authStore.setLoginState();
+  authStore.setLoginState(authStore.user);
+}
+
+function logout(){
+  signOut(auth)
+  .then(() => {
+    auth.setLoginState(authStore.user);
+    alert('You have logged out')
+  })
+  .catch((error) => alert('error logging out' + " " + error.code ))
 }
 
 
@@ -42,7 +52,7 @@ function setActiveNavItem(item) {
     <button @click="checkAuth" class="profile-btn">My Profile</button>
     <div class="dropdown">
       <a href="#">My Profile</a>
-      <a href="#">Logout</a>
+      <a href="#" @click="logout">Logout</a>
     </div>
   </div>
   </nav>

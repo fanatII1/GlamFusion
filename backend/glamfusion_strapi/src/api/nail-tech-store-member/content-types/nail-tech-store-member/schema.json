@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "nail_tech_store_members",
+  "info": {
+    "singularName": "nail-tech-store-member",
+    "pluralName": "nail-tech-store-members",
+    "displayName": "NailTechStoreMember"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "email"
+    },
+    "PhoneNumber": {
+      "type": "biginteger"
+    },
+    "nail_tech_store": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::nail-tech-store.nail-tech-store",
+      "inversedBy": "members"
+    }
+  }
+}
