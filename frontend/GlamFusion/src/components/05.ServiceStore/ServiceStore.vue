@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import image1 from '../../assets/img/background-1.webp';
 import image2 from '../../assets/img/background-2.webp';
 import image3 from '../../assets/img/background-3.jfif';
@@ -9,10 +9,10 @@ const {store, location} = props;
 const storeName = store;
 const storeLocation = location;
 
-
 const storeImages = [image1, image2, image3];
 const changeImageNo = ref(0);
 const dynamicStoreImage = ref(storeImages[0]);
+const bookAppointmentModal = ref(null);
 
 //change or update images when they are selected(clicked)
 function updateDynamicImage(index) {
@@ -20,7 +20,16 @@ function updateDynamicImage(index) {
   dynamicStoreImage.value = storeImages[index];
 }
 
-
+//book appointment
+function bookAppointment(){
+    // console.log(bookAppointmentModal.value?.id)
+    Calendly.initPopupWidget({
+        url: 'https://calendly.com/bibomarwanqana/fanatii-cutz',
+        parentElement: bookAppointmentModal.value?.id,
+        prefill: {},
+        utm: {}
+});
+}
 </script>
 
 <template>
@@ -128,12 +137,13 @@ function updateDynamicImage(index) {
         <div class="booking-info-wrapper">
             <div class="booking-info">
                 <div class="booking-btn-wrapper">
-                    <button class="booking-btn">Book Now</button>
+                    <button id="bookAppointment-btn" class="booking-btn" @click.prevent="bookAppointment">Book Now</button>
                 </div>
                 <p class="operating-status"><span id='status'>Closed</span> opens at <span id="operating-status-time"> 09:00</span></p>
                 <a class="location" href="#">{{ location }}</a>
             </div>
         </div>
+        <div id="bookAppointmentModal" ref="bookAppointmentModal"></div>
        </section>
     </main>
 </template>
@@ -324,4 +334,13 @@ function updateDynamicImage(index) {
     height: 60%;
     background: #fff;
 }
+
+/* #bookAppointmentModal{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: red;
+    left: 0;
+    top: 0;
+} */
 </style>
