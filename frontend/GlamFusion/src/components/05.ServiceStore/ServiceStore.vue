@@ -39,9 +39,9 @@ function isCalendlyEvent(e) {
 };
 
 //listens to calendly events and sets the event value
-window.addEventListener("message", function(e) {
-  if(isCalendlyEvent(e)) calendlyEvent.value = e.data.event;
-});
+window.addEventListener('message', function(e){
+    if(isCalendlyEvent(e)) return e.data.event;
+})
 
 //if user has booked, make them pay
 watch(calendlyEvent, (newEvent, oldEvent)=>{

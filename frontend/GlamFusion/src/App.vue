@@ -4,7 +4,7 @@ import Navbar from './components/Navbar.vue'
 import { onMounted } from 'vue';
 import { auth } from '../firebase';
 import { useAuthStore } from './stores/authentication';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 
 const authStore = useAuthStore();
 onMounted(() => {

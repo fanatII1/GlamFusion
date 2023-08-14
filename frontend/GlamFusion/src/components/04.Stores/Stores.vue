@@ -2,28 +2,27 @@
 import { useRoute } from 'vue-router';
 import router from '../../router';
 import { ref, onMounted } from 'vue';
+import { useServiceProviderStore } from '../../stores/serviceProvider';
+
 
 const route = useRoute();
 const service = route.params.id;
-const storeName = ref(null);
-const storeLocation = ref(null);
 const stores = ref([]);
 const loading = ref(true);
 const baseURL = ref('http://localhost:1337');
-// const imageName = ref('my-image.jpg');
 
-const getImageUrl = () => {
-  return `${baseUrl.value}${imageName.value}`;
-};
+const serviceProviderStore = useServiceProviderStore();
+function viewStore(store){
+    const { id, attributes } = store;
+    const { StoreName, StoreLocation, StoreImage, members, services } = attributes;
+    const StoreMembers = members.data;
+    const StoreServices = services.data;
+    const storeImage =  `${baseURL.value + StoreImage.data.attributes.url}`;
+    const storeInfo = {StoreName, StoreLocation, storeImage, StoreMembers, StoreServices};
+    let path = `/services/${service}/${StoreName}`;
 
-
-function viewStore(e){
-    e.preventDefault();
-    const store_name = storeName.value.textContent;
-    const store_location = storeLocation.value.textContent;
-    let path = `/services/${service}/${store_name}`;
-    
-    router.push({path, query: {store: store_name, location: store_location}});
+    serviceProviderStore.setStoreInfo(storeInfo)
+    router.push({ path });
 }
 
 // Fetch Stores and remove specified properties from barberShop data
@@ -45,14 +44,13 @@ async function fetchData() {
 
     return { id, attributes: { ...cleanedAttributes, services }};
     });
-    console.log('CLEAN', cleanedBarberShops[0].attributes)
+    // console.log('CLEAN', cleanedBarberShops[0].attributes)
     stores.value = cleanedBarberShops;
     loading.value = false;
   } catch (error) {
     console.error('Error fetching data:', error);
   }
 }
-
 
 // Fetch data before the component renders
 onMounted(() => {
@@ -72,7 +70,7 @@ onMounted(() => {
         </form>
 
         <section id='stores' v-if="!loading">
-            <div class='store' v-for="store in stores" @click='viewStore'>
+            <div class='store' v-for="store in stores" @click='viewStore(store)'>
                 <div class='store-img-wrapper'>
                     <img :src="baseURL + store.attributes?.StoreImage?.data?.attributes?.url" alt='' class='store-img'>
                 </div>
