@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, watch } from 'vue';
 import image1 from '../../assets/img/background-1.webp';
 import image2 from '../../assets/img/background-2.webp';
 import image3 from '../../assets/img/background-3.jfif';
@@ -13,6 +13,7 @@ const storeImages = [image1, image2, image3];
 const changeImageNo = ref(0);
 const dynamicStoreImage = ref(storeImages[0]);
 const bookAppointmentModal = ref(null);
+const calendlyEvent = ref(null);
 
 //change or update images when they are selected(clicked)
 function updateDynamicImage(index) {
@@ -30,6 +31,22 @@ function bookAppointment(){
         utm: {}
 });
 }
+
+//checks if calendly event
+//check usage of function: https://help.calendly.com/hc/en-us/articles/223147027
+function isCalendlyEvent(e) {
+  return e.origin === "https://calendly.com" && e.data.event && e.data.event.indexOf("calendly.") === 0;
+};
+
+//listens to calendly events and sets the event value
+window.addEventListener("message", function(e) {
+  if(isCalendlyEvent(e)) calendlyEvent.value = e.data.event;
+});
+
+//if user has booked, make them pay
+watch(calendlyEvent, (newEvent, oldEvent)=>{
+    if(newEvent === 'calendly.event_scheduled') console.log('booked, now you can go and pay')
+})
 </script>
 
 <template>
