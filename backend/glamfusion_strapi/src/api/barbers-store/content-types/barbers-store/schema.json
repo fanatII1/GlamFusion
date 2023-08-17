@@ -40,6 +40,22 @@
       "relation": "oneToMany",
       "target": "api::barber-store-member.barber-store-member",
       "mappedBy": "barbers_store"
+    },
+    "bserv": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::bserv.bserv",
+      "mappedBy": "barbers_store"
+    },
+    "snd": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

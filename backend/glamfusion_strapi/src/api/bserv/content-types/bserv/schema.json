@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bservs",
+  "info": {
+    "singularName": "bserv",
+    "pluralName": "bservs",
+    "displayName": "Bserv"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "barbers_store": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::barbers-store.barbers-store",
+      "inversedBy": "bserv"
+    },
+    "sd": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    }
+  }
+}
