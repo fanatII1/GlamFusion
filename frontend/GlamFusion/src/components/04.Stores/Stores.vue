@@ -2,8 +2,6 @@
 import { useRoute } from 'vue-router';
 import router from '../../router';
 import { ref, onMounted } from 'vue';
-import { useServiceProviderStore } from '../../stores/serviceProvider';
-
 
 const route = useRoute();
 const service = route.params.id;
@@ -11,40 +9,55 @@ const stores = ref([]);
 const loading = ref(true);
 const baseURL = ref('http://localhost:1337');
 
-const serviceProviderStore = useServiceProviderStore();
-function viewStore(store){
-    const { id, attributes } = store;
-    const { StoreName, StoreLocation, StoreImage, members, services } = attributes;
-    const StoreMembers = members.data;
-    const StoreServices = services.data;
-    const storeImage =  `${baseURL.value + StoreImage.data.attributes.url}`;
-    const storeInfo = {StoreName, StoreLocation, storeImage, StoreMembers, StoreServices};
-    let path = `/services/${service}/${StoreName}`;
+function viewStore(store) {
+  const { id, attributes } = store;
+  const { StoreName, StoreLocation, StoreImage, members, services } = attributes;
+  const storeImage = baseURL.value + StoreImage.data.attributes.url;
+  const StoreMembers = members.data;
+  const StoreServices = services.data;
 
-    serviceProviderStore.setStoreInfo(storeInfo)
-    router.push({ path });
+  const storeInfo = {
+    StoreName,
+    StoreLocation,
+    storeImage,
+    StoreMembers,
+    StoreServices,
+  };
+
+  const cc = localStorage.setItem('storeInfo', JSON.stringify(storeInfo));
+
+//   console.log(JSON.parse(cc))
+  const path = `/services/${service}/${StoreName}`;
+  router.push({ path });
 }
 
-// Fetch Stores and remove specified properties from barberShop data
+
+// Fetch Stores and remove specified properties(attributes) from barberShop data
+//the queryin of strapi deeply populated data and media e.g files can be found here:
+//https://docs.strapi.io/dev-docs/api/rest/populate-select#relations--media-fields 
+//https://stackoverflow.com/a/70251184/17908449
+//https://stackoverflow.com/questions/76905893/image-url-not-showing-in-strapinested-data/76922008#76922008
 async function fetchData() {
+  const baseURL = 'http://localhost:1337';
+  const service = 'barbers-stores';
+
   try {
-    const baseURL = 'http://localhost:1337'
-    const response = await fetch(`${baseURL}/api/${service}?populate=*`);
+    const response = await fetch(`${baseURL}/api/${service}?populate[StoreImage]=*&populate[barber_services][populate]=*&populate[members][populate]=*&populate[services][populate]=*`);
     const data = await response.json();
     const barberShops = data.data;
 
     const cleanedBarberShops = barberShops.map(({ id, attributes }) => {
-    const {
+      const {
         createdAt, updatedAt, publishedAt,
         barber_services, nail_tech_services, make_up_services, braiding_services,
         ...cleanedAttributes
-    } = attributes;
+      } = attributes;
 
-    const services = barber_services || nail_tech_services || make_up_services || braiding_services;
+      const services = barber_services || nail_tech_services || make_up_services || braiding_services;
 
-    return { id, attributes: { ...cleanedAttributes, services }};
+      return { id, attributes: { ...cleanedAttributes, services }};
     });
-    // console.log('CLEAN', cleanedBarberShops[0].attributes)
+    console.log(cleanedBarberShops)
     stores.value = cleanedBarberShops;
     loading.value = false;
   } catch (error) {
@@ -52,7 +65,8 @@ async function fetchData() {
   }
 }
 
-// Fetch data before the component renders
+
+
 onMounted(() => {
   fetchData();
 });

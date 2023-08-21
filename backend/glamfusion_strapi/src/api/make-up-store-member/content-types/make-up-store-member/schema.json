@@ -4,7 +4,8 @@
   "info": {
     "singularName": "make-up-store-member",
     "pluralName": "make-up-store-members",
-    "displayName": "MakeUpStoreMember"
+    "displayName": "MakeUpStoreMember",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -25,6 +26,16 @@
       "relation": "manyToOne",
       "target": "api::make-up-store.make-up-store",
       "inversedBy": "members"
+    },
+    "MemberImage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

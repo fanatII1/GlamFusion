@@ -26,6 +26,16 @@
       "relation": "manyToOne",
       "target": "api::barbers-store.barbers-store",
       "inversedBy": "members"
+    },
+    "MemberImage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

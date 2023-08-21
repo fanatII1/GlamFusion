@@ -6,12 +6,12 @@ export const useServiceProviderStore = defineStore('serviceProvider', {
         StoreName: null,
         StoreLocation: null,
         StoreImage: null,
-        StoreMembers: [],
+        StoreMembers: null,
         StoreServices: []
     }),
     actions:{
         setStoreInfo(storeInfo){
-            console.log(storeInfo)
+            // console.log('ss', storeInfo.StoreMembers)
             this.StoreName = storeInfo.StoreName,
             this.StoreLocation = storeInfo.StoreLocation,
             this.StoreImage = storeInfo.StoreImage,

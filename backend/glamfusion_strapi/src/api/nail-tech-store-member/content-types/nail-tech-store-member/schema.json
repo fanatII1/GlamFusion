@@ -4,7 +4,8 @@
   "info": {
     "singularName": "nail-tech-store-member",
     "pluralName": "nail-tech-store-members",
-    "displayName": "NailTechStoreMember"
+    "displayName": "NailTechStoreMember",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -25,6 +26,16 @@
       "relation": "manyToOne",
       "target": "api::nail-tech-store.nail-tech-store",
       "inversedBy": "members"
+    },
+    "MemberImage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

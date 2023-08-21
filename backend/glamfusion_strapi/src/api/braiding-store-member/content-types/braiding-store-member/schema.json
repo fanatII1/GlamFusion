@@ -4,7 +4,8 @@
   "info": {
     "singularName": "braiding-store-member",
     "pluralName": "braiding-store-members",
-    "displayName": "BraidingStoreMember"
+    "displayName": "BraidingStoreMember",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -25,6 +26,16 @@
       "relation": "manyToOne",
       "target": "api::braiding-store.braiding-store",
       "inversedBy": "members"
+    },
+    "MemberImage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
