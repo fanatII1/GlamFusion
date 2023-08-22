@@ -420,6 +420,7 @@ const closeModal = (event) => {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+  /* transition: .4s; */
 }
 .member-img{
   display: block;
@@ -431,9 +432,12 @@ const closeModal = (event) => {
 }
 
 .member-image-wrapper:hover .member-img{
-  height: 150%;
-  width: 150%;
+  height: 140%;
+  width: 140%;
+}
 
+.member-image-wrapper:hover{
+  border: 5px solid #d69c4a;
 }
 
 .member-name{
