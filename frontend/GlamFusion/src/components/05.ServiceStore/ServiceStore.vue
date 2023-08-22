@@ -111,8 +111,8 @@ const closeModal = (event) => {
         <div class="services-reviews-about-wrapper">
             <div class="services-reviews-about">
                 <p class="service-heading">Services</p>
-                <p class="reviews-heading">Reviews</p>
-                <p class="about-heading">About</p>
+                <!-- <p class="reviews-heading">Reviews</p>
+                <p class="about-heading">About</p> -->
             </div>
 
             <div v-for="(service, index) in StoreServices" :key="index"  class="services-offered">
@@ -244,38 +244,41 @@ const closeModal = (event) => {
     overflow-y: scroll;
 }
 
-#customer-related-info::-webkit-scrollbar {
+.services-reviews-about-wrapper{
+  width: 65%;
+  overflow: scroll;
+}
+
+#customer-related-info::-webkit-scrollbar{
   width: 10px;
 }
 
-#customer-related-info::-webkit-scrollbar-thumb {
-  background-color: transparent; /* Change the color of the scrollbar thumb */
+.services-reviews-about-wrapper::-webkit-scrollbar{
+  width: 0;
 }
 
-.services-reviews-about-wrapper{
-    width: 65%;
+#customer-related-info::-webkit-scrollbar-thumb, .services-reviews-about-wrapper::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }
 
-.services-reviews-about{
-    display: flex;
-    justify-content: space-between;
-}
-
-.service-heading, .reviews-heading, .about-heading{
-    color: #fff;
-    font-weight: bold;
-    font-size: 1.05rem;
+.service-heading{
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.45rem;
+  text-align: center;
     
 }
 
 .services-offered{
-    color: #fff;
-    display: flex;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px orange;
-    padding: 2%;
-    margin-bottom: 5%;
-    max-width: 800px;
+  color: #fff;
+  display: flex;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px #ffd78f;
+  padding: 2%;
+  margin-bottom: 5%;
+  max-width: 1000px;
+  background: #d69c4a;
+  cursor: pointer;
 }
 
 .service-look{
@@ -309,18 +312,24 @@ const closeModal = (event) => {
 }
 
 .service-name{
-    font-weight: 600;
-    font-size: 1.6rem;
-    border-bottom: 1px solid;
+  font-weight: 700;
+  font-size: 1.4rem;
+  border-bottom: 4px double;
+  color: #000;
 }
 
 #more-info{
-    border-bottom: 1px solid;
     display: inline-block;
+    background: #000;
+    padding: 0.7%;
+    border-radius: 3px;
+    color: #fff;
+    font-weight: 400;
+    font-size: 0.84rem;
 }
 
 .duration, .price, .more-info-modal{
-    font-style: italic;
+    font-size: 1.03rem;
 }
 
 .booking-info-wrapper{
@@ -350,8 +359,9 @@ const closeModal = (event) => {
 
 .booking-info{
     width: 70%;
-    height: 60%;
+    height: 70%;
     background: #fff;
+    border-radius: 10px;
 }
 
 .operating-status{
