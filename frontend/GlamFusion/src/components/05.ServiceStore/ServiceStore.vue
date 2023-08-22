@@ -13,17 +13,9 @@ const dynamicStoreImage = ref(storeImage);
 const bookAppointmentModal = ref(null);
 const calendlyEvent = ref(null);
 const isModalOpen = ref(false);
+const isButtonDisabled = ref(true);
+const bookingBtn = ref('booking-btn-off')
 
-const openModal = () => {
-  isModalOpen.value = true;
-};
-
-const closeModal = (event) => {
-  if (event.target.id === 'bookAppointmentModal') {
-    isModalOpen.value = false;
-  }
-};
-kk
 //we will use the selected member to book an appointment.
 //after user clicks the member, we get their booking url from strapi. and make a calendly call using their booking url
 //by that i mean insert the booking url in the parameters of the calendly sdk.
@@ -34,6 +26,9 @@ kk
 //this will also allow us to get all members data from one single source of truth e.g get their schedules and all their images and all.
 //then we can take that members name from calendly and then set the name in the db for a booking that will be used in the dashboard
 function getMember(member){
+  bookingBtn.value = 'booking-btn-on';
+  isButtonDisabled.value = false;
+  console.log('disabledSTATUS:',  isButtonDisabled.value)
   console.log(member)
 }
 
@@ -74,6 +69,18 @@ watch(calendlyEvent, (newEvent, oldEvent) => {
     console.log('Booked, now you can go and pay');
   }
 });
+
+const openModal = () => {
+  isModalOpen.value = true;
+};
+
+const closeModal = (event) => {
+  if (event.target.id === 'bookAppointmentModal') {
+    bookingBtn.value = 'booking-btn-off';
+    isButtonDisabled.value = true;
+    isModalOpen.value = false;
+  }
+};
 
 </script>
 
@@ -140,7 +147,7 @@ watch(calendlyEvent, (newEvent, oldEvent) => {
                 <p class="member-name">{{ member.attributes.Name }}</p>
               </div>
             </div>
-            <button id="bookAppointment-btn" class="booking-btn" @click.prevent="bookAppointment">Book Now</button>
+            <button id="bookAppointment-btn" :class="bookingBtn" @click.prevent="bookAppointment" :disabled="isButtonDisabled">Book Now</button>
           </div>
         </div>
        </section>
@@ -406,9 +413,13 @@ watch(calendlyEvent, (newEvent, oldEvent) => {
   margin: 10% 2% 0% 2%;
 }
 
-
 .member-image-wrapper{
   height: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
 }
 .member-img{
   display: block;
@@ -416,6 +427,13 @@ watch(calendlyEvent, (newEvent, oldEvent) => {
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
+  transition: .4s;
+}
+
+.member-image-wrapper:hover .member-img{
+  height: 150%;
+  width: 150%;
+
 }
 
 .member-name{
@@ -423,7 +441,24 @@ watch(calendlyEvent, (newEvent, oldEvent) => {
   font-weight: 450;
 }
 
-.booking-btn{
+.booking-btn-off{
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  right: 50%;
+  transform: translate(-50%, -50%);
+  height: 8%;
+  width: 50%;
+  max-height: 45px;
+  background: #d69c4a63;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+}
+
+.booking-btn-on{
   position: absolute;
   left: 50%;
   bottom: 0;
