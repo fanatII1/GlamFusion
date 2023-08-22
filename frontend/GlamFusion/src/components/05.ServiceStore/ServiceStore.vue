@@ -23,7 +23,16 @@ const closeModal = (event) => {
     isModalOpen.value = false;
   }
 };
+kk
+//we will use the selected member to book an appointment.
+//after user clicks the member, we get their booking url from strapi. and make a calendly call using their booking url
+//by that i mean insert the booking url in the parameters of the calendly sdk.
 
+//but we need to find a way to ensure that when a team member is created in calendly,
+//that user is also added onto strapi so that we can manage the content of the app and get to see the selected members.
+//or else what can happen is that we can get the members of an organization from calendly directly when they are added onto the calendar.
+//this will also allow us to get all members data from one single source of truth e.g get their schedules and all their images and all.
+//then we can take that members name from calendly and then set the name in the db for a booking that will be used in the dashboard
 function getMember(member){
   console.log(member)
 }
