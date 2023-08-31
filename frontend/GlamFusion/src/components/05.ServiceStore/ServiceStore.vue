@@ -1,8 +1,5 @@
 <script setup>
 import { ref, watch } from 'vue';
-import image1 from '../../assets/img/background-1.webp';
-import image2 from '../../assets/img/background-2.webp';
-import image3 from '../../assets/img/background-3.jfif';
 
 const storeInfo = JSON.parse(localStorage.getItem('storeInfo'));
 const { StoreName, StoreLocation, storeImage, StoreMembers, StoreServices } = storeInfo;
@@ -16,7 +13,6 @@ const isModalOpen = ref(false);
 const isButtonDisabled = ref(true);
 const bookingBtn = ref('booking-btn-off');
 const bookedService = ref(null);
-const bookedMember = ref(null);
 const activeButton = ref(null);
 
 console.log(StoreName, StoreLocation, storeImage, StoreMembers, StoreServices);
@@ -25,31 +21,6 @@ function updateDynamicImage(index, image) {
   changeImageNo.value = index;
   dynamicStoreImage.value = image;
 }
-
-// Book appointment
-function bookAppointment() {
-  const { Name } = bookedMember.value.attributes;
-  console.log( bookedMember.value.attributes)
-  bookedService.value = null;
-  activeButton.value = null;
-  isModalOpen.value = null;
-  // Calendly.initPopupWidget({
-  //   url: 'https://calendly.com/bibomarwanqana/fanatii-cutz-duplicate',
-  //   parentElement: bookAppointmentModal.value?.id,
-  //   prefill: {},
-  //   utm: {},
-  // });
-}
-
-// Checks if it's a Calendly event
-function isCalendlyEvent(e) {
-  return e.origin === 'https://calendly.com' && e.data.event && e.data.event.indexOf('calendly.') === 0;
-}
-
-// Listens to Calendly events and sets the event value
-window.addEventListener('message', (e) => {
-  if (isCalendlyEvent(e)) return e.data.event;
-});
 
 // If the user has booked, prompt them to pay
 watch(calendlyEvent, (newEvent, oldEvent) => {
@@ -74,24 +45,6 @@ const closeModal = (event) => {
     isModalOpen.value = false;
   }
 };
-
-//we will use the selected member to book an appointment.
-//after user clicks the member, we get their booking url from strapi. and make a calendly call using their booking url
-//by that i mean insert the booking url in the parameters of the calendly sdk.
-
-//but we need to find a way to ensure that when a team member is created in calendly,
-//that user is also added onto strapi so that we can manage the content of the app and get to see the selected members.
-//or else what can happen is that we can get the members of an organization from calendly directly when they are added onto the calendar.
-//this will also allow us to get all members data from one single source of truth e.g get their schedules and all their images and all.
-//then we can take that members name from calendly and then set the name in the db for a booking that will be used in the dashboard
-function getMember(member) {
-  console.log(member)
-  bookingBtn.value = 'booking-btn-on';
-  isButtonDisabled.value = false;
-  bookedMember.value = member;
-  // console.log('disabledSTATUS:', isButtonDisabled.value);
-  // console.log('MEMBER:', member);
-}
 
 //able to select service to book and toggle between disabling service btns on selection of a service
 const selectService = (index, service) => {
