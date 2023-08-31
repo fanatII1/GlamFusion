@@ -15,24 +15,9 @@ const calendlyEvent = ref(null);
 const isModalOpen = ref(false);
 const isButtonDisabled = ref(true);
 const bookingBtn = ref('booking-btn-off');
-const infoBtn = ref('infoBtnOn')
+const bookedService = ref(null);
+const bookedMember = ref(null);
 const activeButton = ref(null);
-
-//we will use the selected member to book an appointment.
-//after user clicks the member, we get their booking url from strapi. and make a calendly call using their booking url
-//by that i mean insert the booking url in the parameters of the calendly sdk.
-
-//but we need to find a way to ensure that when a team member is created in calendly,
-//that user is also added onto strapi so that we can manage the content of the app and get to see the selected members.
-//or else what can happen is that we can get the members of an organization from calendly directly when they are added onto the calendar.
-//this will also allow us to get all members data from one single source of truth e.g get their schedules and all their images and all.
-//then we can take that members name from calendly and then set the name in the db for a booking that will be used in the dashboard
-function getMember(member) {
-  bookingBtn.value = 'booking-btn-on';
-  isButtonDisabled.value = false;
-  console.log('disabledSTATUS:', isButtonDisabled.value);
-  console.log(member);
-}
 
 console.log(StoreName, StoreLocation, storeImage, StoreMembers, StoreServices);
 
@@ -43,12 +28,17 @@ function updateDynamicImage(index, image) {
 
 // Book appointment
 function bookAppointment() {
-  Calendly.initPopupWidget({
-    url: 'https://calendly.com/bibomarwanqana/fanatii-cutz-duplicate',
-    parentElement: bookAppointmentModal.value?.id,
-    prefill: {},
-    utm: {},
-  });
+  const { Name } = bookedMember.value.attributes;
+  console.log( bookedMember.value.attributes)
+  bookedService.value = null;
+  activeButton.value = null;
+  isModalOpen.value = null;
+  // Calendly.initPopupWidget({
+  //   url: 'https://calendly.com/bibomarwanqana/fanatii-cutz-duplicate',
+  //   parentElement: bookAppointmentModal.value?.id,
+  //   prefill: {},
+  //   utm: {},
+  // });
 }
 
 // Checks if it's a Calendly event
@@ -69,7 +59,12 @@ watch(calendlyEvent, (newEvent, oldEvent) => {
 });
 
 const openModal = () => {
-  isModalOpen.value = true;
+  if(bookedService.value !== null){
+    isModalOpen.value = true;
+  }
+  else{
+    alert('You need to select a service in order to book.')
+  }
 };
 
 const closeModal = (event) => {
@@ -80,12 +75,33 @@ const closeModal = (event) => {
   }
 };
 
+//we will use the selected member to book an appointment.
+//after user clicks the member, we get their booking url from strapi. and make a calendly call using their booking url
+//by that i mean insert the booking url in the parameters of the calendly sdk.
+
+//but we need to find a way to ensure that when a team member is created in calendly,
+//that user is also added onto strapi so that we can manage the content of the app and get to see the selected members.
+//or else what can happen is that we can get the members of an organization from calendly directly when they are added onto the calendar.
+//this will also allow us to get all members data from one single source of truth e.g get their schedules and all their images and all.
+//then we can take that members name from calendly and then set the name in the db for a booking that will be used in the dashboard
+function getMember(member) {
+  console.log(member)
+  bookingBtn.value = 'booking-btn-on';
+  isButtonDisabled.value = false;
+  bookedMember.value = member;
+  // console.log('disabledSTATUS:', isButtonDisabled.value);
+  // console.log('MEMBER:', member);
+}
+
 //able to select service to book and toggle between disabling service btns on selection of a service
-const selectService = (index) => {
+const selectService = (index, service) => {
+  const { ServiceName, ServicePrice } = service.attributes;
   if (activeButton.value === index) {
     activeButton.value = null;
   } else {
     activeButton.value = index;
+    bookedService.value = ServiceName;
+    console.log(ServiceName, bookedService.value, service.attributes)
   }
 };
 </script>
@@ -135,7 +151,7 @@ const selectService = (index) => {
                 id="more-info-btn"
                 :class="{ infoBtnOn: activeButton === index, infoBtnOff: activeButton !== null && activeButton !== index }"
                 :disabled="activeButton !== null && activeButton !== index"
-                @click="selectService(index)"
+                @click="selectService(index, service)"
               >
                 +
               </button>
@@ -153,18 +169,7 @@ const selectService = (index) => {
         </div>
       </div>
       <div v-if="isModalOpen" id="bookAppointmentModal" ref="bookAppointmentModal" @click="closeModal">
-        <div class="select-members-container">
-          <p class="members-heading">SELECT MEMBERS</p>
-          <div class="members">
-            <div class="member" v-for="(member, index) in StoreMembers" @click="getMember(member)">
-              <div class="member-image-wrapper">
-                <img :src="baseUrl + member.attributes.MemberImage.data.attributes.url" alt="" class="member-img" />
-              </div>
-              <p class="member-name">{{ member.attributes.Name }}</p>
-            </div>
-          </div>
-          <button id="bookAppointment-btn" :class="bookingBtn" @click.prevent="bookAppointment" :disabled="isButtonDisabled">Book Now</button>
-        </div>
+        <iframe id="bookingCalendar" src="https://app.acuityscheduling.com/schedule.php?owner=30044803" title="Schedule Appointment" width="100%" height="800" frameBorder="0"></iframe>
       </div>
     </section>
   </main>
@@ -283,17 +288,16 @@ const selectService = (index) => {
 .service-heading {
   color: #fff;
   font-weight: bold;
-  font-size: 1.45rem;
+  font-size: 2rem;
   text-align: center;
 }
 
 .services-offered {
   color: #fff;
   display: flex;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px #ffd78f;
+  box-shadow: 0 6px 10px #ffd78f;
   padding: 2%;
-  margin-bottom: 5%;
+  margin: 2.5% 4% 4% 4%;
   max-width: 1000px;
   background: #d69c4a;
   cursor: pointer;
@@ -323,7 +327,6 @@ const selectService = (index) => {
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
   padding: 1%;
-  font-family: initial;
   line-height: 2;
 }
 
@@ -333,7 +336,7 @@ const selectService = (index) => {
 
 .service-name {
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.55rem;
   border-bottom: 4px double;
   color: #000;
 }
@@ -344,8 +347,8 @@ const selectService = (index) => {
   padding: 0.7%;
   border-radius: 3px;
   color: #fff;
-  font-weight: 400;
-  font-size: 0.84rem;
+  font-weight: 500;
+  font-size: 0.9rem;
   border: none;
 }
 
@@ -358,7 +361,10 @@ const selectService = (index) => {
   font-size: 0.84rem;
   text-align: center;
   border: none;
-  width: 4%;
+  width: 6%;
+  font-weight: bold;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .more-info-modal {
@@ -371,7 +377,7 @@ const selectService = (index) => {
 }
 
 .infoBtnOff {
-  background-color: red !important;
+  background-color: #000000a8!important;
 }
 
 .duration,
@@ -430,110 +436,13 @@ const selectService = (index) => {
   align-items: center;
 }
 
-.select-members-container {
-  width: 800px;
-  height: 600px;
-  background: #ffff;
-  border-radius: 25px;
-  overflow-y: scroll;
-  position: relative;
-}
-
-.select-members-container::-webkit-scrollbar {
-  width: 10px;
-}
-
-.select-members-container::-webkit-scrollbar-thumb {
-  background-color: transparent; /* Change the color of the scrollbar thumb */
-}
-
-.members-heading {
-  font-weight: 450;
-  font-size: 1.3rem;
-  text-align: center;
-}
-
-.members {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 260px));
-  grid-auto-rows: 40%;
-  gap: 3%;
-  padding-top: 1%;
-  height: 90%;
-}
-
-.member {
-  width: 80%;
-  height: 80%;
-  max-width: 170px;
-  border-radius: 50%;
-  max-height: 170px;
-  margin: 10% 2% 0% 2%;
-}
-
-.member-image-wrapper {
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  /* transition: .4s; */
-}
-.member-img {
+#bookingCalendar{
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  transition: 0.4s;
-}
-
-.member-image-wrapper:hover .member-img {
-  height: 140%;
-  width: 140%;
-}
-
-.member-image-wrapper:hover {
-  border: 5px solid #d69c4a;
-}
-
-.member-name {
-  text-align: center;
-  font-weight: 450;
-}
-
-.booking-btn-off {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  right: 50%;
-  transform: translate(-50%, -50%);
-  height: 8%;
   width: 50%;
-  max-height: 45px;
-  background: #d69c4a63;
-  color: #fff;
-  font-size: 1.2rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 10px;
 }
 
-.booking-btn-on {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  right: 50%;
-  transform: translate(-50%, -50%);
-  height: 8%;
-  width: 50%;
-  max-height: 45px;
-  background: #d69c4a;
-  color: #fff;
-  font-size: 1.2rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 10px;
+/*this is a class that lies in the iframe of the booking Calendar*/
+.no-touch{
+  overflow: hidden;
 }
 </style>
