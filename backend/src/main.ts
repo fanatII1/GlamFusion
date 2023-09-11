@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as ngrok from 'ngrok';
+import * as cors from 'cors';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,7 +12,9 @@ async function bootstrap() {
     // console.log(`Ngrok URL: ${ngrokUrl}`);
     // const subdomain = ngrokUrl.split('.')[0]; // Split the URL by periods and get the first part
     // console.log('Subdomain:', subdomain);
-
+    app.use(cors({
+      origin: '*',
+    }));
   await app.listen(3000);
 }
 bootstrap();

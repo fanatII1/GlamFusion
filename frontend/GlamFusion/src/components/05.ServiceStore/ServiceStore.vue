@@ -1,34 +1,73 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onBeforeMount } from 'vue';
+import { useAuthStore } from '../../stores/authentication';
+import { io } from 'socket.io-client';
 
+const authStore = useAuthStore();
 const storeInfo = JSON.parse(localStorage.getItem('storeInfo'));
 const { StoreName, StoreLocation, storeImage, StoreMembers, StoreServices } = storeInfo;
 
+const user = ref(authStore.user);
 const baseUrl = ref('http://localhost:1337');
+const serverUrl = ref('http://localhost:3000')
+const calendarUrl = ref('https://app.acuityscheduling.com/schedule.php?owner=')
+const calendarOwnerId = ref('30044803');
+const calendarParams = ref(null)
 const changeImageNo = ref(0);
 const dynamicStoreImage = ref(storeImage);
 const bookAppointmentModal = ref(null);
-const calendlyEvent = ref(null);
 const isModalOpen = ref(false);
 const isButtonDisabled = ref(true);
 const bookingBtn = ref('booking-btn-off');
 const bookedService = ref(null);
 const activeButton = ref(null);
+const calendarData = ref(null);
+const appointment = ref(null);
+//socket
+const socket = io('http://localhost:3000');
 
-console.log(StoreName, StoreLocation, storeImage, StoreMembers, StoreServices);
+
+onBeforeMount(() => {
+  socket.on('connect', (data, id) => {
+    console.log('Connected to WebSocket');
+    socket.emit('calendarListen');
+
+    socket.on('calendarData', async (data) => {
+      if(data){
+        calendarData.value = data;
+        const { id, appointmentTypeId, calendarId, action } = calendarData.value;
+        let headers = { 'Content-Type': 'application/json'}
+        let options = { method: 'POST', headers, body: JSON.stringify({ id })}
+        const getCalendar = await fetch(`${serverUrl.value}/actuity/appointments`, options);
+        appointment.value = await getCalendar.json();
+        console.log(appointment.value)
+        //if user has paid, we will implement a gateway
+        if(appointment.value.paid === 'no'){
+
+        }
+      }
+      else{
+        throw new Error('Could not get calendar webhook data');
+      }
+    })
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Disconnected from WebSocket');
+  });
+});
+
+//user parameters for calendar
+watch(() => authStore.user, (newUser) => {
+  user.value = newUser;
+});
+// console.log(StoreName, StoreLocation, storeImage, StoreMembers, StoreServices);
 
 function updateDynamicImage(index, image) {
   changeImageNo.value = index;
   dynamicStoreImage.value = image;
 }
-
-// If the user has booked, prompt them to pay
-watch(calendlyEvent, (newEvent, oldEvent) => {
-  if (newEvent === 'calendly.event_scheduled') {
-    console.log('Booked, now you can go and pay');
-  }
-});
-
+console.log(calendarUrl.value+calendarOwnerId.value)
 const openModal = () => {
   if(bookedService.value !== null){
     isModalOpen.value = true;
@@ -46,7 +85,8 @@ const closeModal = (event) => {
   }
 };
 
-//able to select service to book and toggle between disabling service btns on selection of a service
+//ability define fields(calendarParams) of calendar IF the user has booked a service(else statement)
+//also able to toggle between enabling/disabling service selected btns
 const selectService = (index, service) => {
   const { ServiceName, ServicePrice } = service.attributes;
   if (activeButton.value === index) {
@@ -54,6 +94,9 @@ const selectService = (index, service) => {
   } else {
     activeButton.value = index;
     bookedService.value = ServiceName;
+    const { displayName, email } = user.value;
+    calendarParams.value = {firstName: displayName, email, bookedService: bookedService.value};
+
     console.log(ServiceName, bookedService.value, service.attributes)
   }
 };
@@ -122,7 +165,18 @@ const selectService = (index, service) => {
         </div>
       </div>
       <div v-if="isModalOpen" id="bookAppointmentModal" ref="bookAppointmentModal" @click="closeModal">
-        <iframe id="bookingCalendar" src="https://app.acuityscheduling.com/schedule.php?owner=30044803" title="Schedule Appointment" width="100%" height="800" frameBorder="0"></iframe>
+        <!-- IFRAME SHOULD BE THE ONE FROM THE STORE DATABASE -->
+        <!-- WHEN THE PAGE LOADS WE WILL FETCH THE IFRAME FROM THE DB(get field id && ownerID from db) AND INSERT IT HERE -->
+        <!-- WE DO THIS CAUSE WHEN WE ONBOARD, WE WILL CREATE THE ACTUITY ACCOUNT FOR THE STORE -->
+        <!-- AFTER THAT WE WILL THEN STORE THE IFRAME(CALENDAR) OF THE STORE IN THE DATABSE AND ALL THE API KEYS RELATRD TO THE STORE-->
+        <iframe id="bookingCalendar" 
+          :src="calendarUrl + calendarOwnerId + '&' + 'firstName=' + calendarParams.firstName + '&' + 'email=' + calendarParams.email + '&' + 'field:13839855=' + calendarParams.bookedService" 
+          title="Schedule Appointment" 
+          width="100%" 
+          height="800" 
+          frameBorder="0"
+        >
+        </iframe>
       </div>
     </section>
   </main>
@@ -392,10 +446,5 @@ const selectService = (index, service) => {
 #bookingCalendar{
   display: block;
   width: 50%;
-}
-
-/*this is a class that lies in the iframe of the booking Calendar*/
-.no-touch{
-  overflow: hidden;
 }
 </style>
