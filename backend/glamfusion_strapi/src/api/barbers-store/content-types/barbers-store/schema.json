@@ -48,14 +48,19 @@
       "mappedBy": "barbers_store"
     },
     "snd": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "merchant_id": {
+      "type": "string",
+      "required": true
     }
   }
 }

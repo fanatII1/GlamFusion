@@ -3,9 +3,11 @@ import { ref, watch, onBeforeMount } from 'vue';
 import { useAuthStore } from '../../stores/authentication';
 import { io } from 'socket.io-client';
 
+//websocket
+const socket = io('http://localhost:3000');
 const authStore = useAuthStore();
 const storeInfo = JSON.parse(localStorage.getItem('storeInfo'));
-const { StoreName, StoreLocation, storeImage, StoreMembers, StoreServices } = storeInfo;
+const { StoreName, StoreLocation, storeImage, StoreMembers, StoreServices, merchant_id } = storeInfo;
 
 const user = ref(authStore.user);
 const baseUrl = ref('http://localhost:1337');
@@ -23,9 +25,22 @@ const bookedService = ref(null);
 const activeButton = ref(null);
 const calendarData = ref(null);
 const appointment = ref(null);
-//socket
-const socket = io('http://localhost:3000');
-
+const platformMerchantId = ref("10031040");
+const platformMerchantKey = ref("7eyrpgpdvwlgc");
+const amount = ref("30.00");
+const itemName = ref("Tester Product");
+const passPhrase = ref('LionelMess10')
+const payFastSignature = ref(null);
+const splitPayment = ref(`{"split_payment": {"merchant_id": ${merchant_id}, "percentage": 10, "min": 10, "max": 100000}}`);
+console.log(splitPayment.value)
+// {
+//           "split_payment" : {
+//             "merchant_id":10031041,
+//             "percentage":10,
+//             "min":10,
+//             "max":100000
+//           }
+//         }
 
 onBeforeMount(() => {
   socket.on('connect', (data, id) => {
@@ -61,7 +76,6 @@ onBeforeMount(() => {
 watch(() => authStore.user, (newUser) => {
   user.value = newUser;
 });
-// console.log(StoreName, StoreLocation, storeImage, StoreMembers, StoreServices);
 
 function updateDynamicImage(index, image) {
   changeImageNo.value = index;
@@ -98,6 +112,25 @@ const selectService = (index, service) => {
     calendarParams.value = {firstName: displayName, email, bookedService: bookedService.value};
 
     console.log(ServiceName, bookedService.value, service.attributes)
+  }
+};
+
+const submitForm = async () => {
+  try {
+    const response = await fetch(`${serverUrl.value}/payments/generate-signature`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({passPhrase: passPhrase.value})
+    });
+
+    if (response.ok) {
+      payFastSignature.value = await response.text();
+      console.log(payFastSignature.value)
+    } else {
+      console.error('Error generating signature');
+    }
+  } catch (error) {
+    console.error('Error generating signature:', error);
   }
 };
 </script>
@@ -178,6 +211,20 @@ const selectService = (index, service) => {
         >
         </iframe>
       </div>
+
+      <form  action="https://sandbox.payfast.co.za​/eng/process" method="post" @submit="submitForm">
+        <input type="hidden" name="merchant_id" :value="platformMerchantId" />
+        <input type="hidden" name="merchant_key" :value="platformMerchantKey" />
+        <input type="hidden" name="amount" :value="amount" />
+        <input type="hidden" name="item_name" :value="itemName" />
+        <!-- <input type="hidden" name="return_url" value="https://b410-197-184-168-227.ngrok-free.app/">
+        <input type="hidden" name="cancel_url" value="https://b410-197-184-168-227.ngrok-free.app/">
+        <input type="hidden" name="notify_url" value="https://b410-197-184-168-227.ngrok-free.app/"> -->
+        <input type="hidden" name="signature" :value="payFastSignature" />
+        <input type="hidden" name="setup" :value="splitPayment"/>
+        >
+        <input type="submit" value="Pay Now" />
+      </form>
     </section>
   </main>
 </template>

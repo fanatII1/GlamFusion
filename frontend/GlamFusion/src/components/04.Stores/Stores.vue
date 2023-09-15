@@ -11,7 +11,8 @@ const baseURL = ref('http://localhost:1337');
 
 function viewStore(store) {
   const { id, attributes } = store;
-  const { StoreName, StoreLocation, StoreImage, members, services } = attributes;
+  const { StoreName, StoreLocation, StoreImage, members, services, merchant_id } = attributes;
+  console.log(attributes)
   const storeImage = baseURL.value + StoreImage.data.attributes.url;
   const StoreMembers = members.data;
   const StoreServices = services.data;
@@ -22,11 +23,11 @@ function viewStore(store) {
     storeImage,
     StoreMembers,
     StoreServices,
+    merchant_id
   };
 
-  const cc = localStorage.setItem('storeInfo', JSON.stringify(storeInfo));
+  localStorage.setItem('storeInfo', JSON.stringify(storeInfo));
 
-//   console.log(JSON.parse(cc))
   const path = `/services/${service}/${StoreName}`;
   router.push({ path });
 }
@@ -99,21 +100,6 @@ onMounted(() => {
                     <li v-for="service in store.attributes.services.data" class='service'>{{service.attributes.ServiceName}}</li>
                 </ul>
             </div>
-                <div class='store-img-wrapper'>
-                    <img src='../../assets/img/background-2.webp' alt='' class='store-img'>
-                </div>
-                <p class='store-name'>Store 6</p>
-                <p class='store-location'>Greenfield <span id='distance'>1.2km</span></p>
-                <ul class='rating'>
-                    <li class='star'><i class='fa-solid fa-star'></i></li>
-                    <li class='star'><i class='fa-solid fa-star'></i></li>
-                    <li class='star'><i class='fa-solid fa-star'></i></li>
-                </ul>
-                <ul class='top-services'>
-                    <li class='service'>Service 1</li>
-                    <li class='service'>Service 2</li>
-                    <li class='service'>Service 3</li>
-                </ul>
         </section>
     </main>
 </template>
