@@ -32,15 +32,8 @@ const itemName = ref("Tester Product");
 const passPhrase = ref('LionelMess10')
 const payFastSignature = ref(null);
 const splitPayment = ref(`{"split_payment": {"merchant_id": ${merchant_id}, "percentage": 10, "min": 10, "max": 100000}}`);
-console.log(splitPayment.value)
-// {
-//           "split_payment" : {
-//             "merchant_id":10031041,
-//             "percentage":10,
-//             "min":10,
-//             "max":100000
-//           }
-//         }
+const paymentForm = ref(null);
+
 
 onBeforeMount(() => {
   socket.on('connect', (data, id) => {
@@ -54,11 +47,12 @@ onBeforeMount(() => {
         let headers = { 'Content-Type': 'application/json'}
         let options = { method: 'POST', headers, body: JSON.stringify({ id })}
         const getCalendar = await fetch(`${serverUrl.value}/actuity/appointments`, options);
-        appointment.value = await getCalendar.json();
-        console.log(appointment.value)
+        console.log("CALENDAR", await getCalendar.text())
+        // appointment.value = await getCalendar.json();
         //if user has paid, we will implement a gateway
-        if(appointment.value.paid === 'no'){
-
+        if(appointment.value.paid === 'yes'){
+          console.log('vvvv')
+          submitForm()
         }
       }
       else{
@@ -212,14 +206,14 @@ const submitForm = async () => {
         </iframe>
       </div>
 
-      <form  action="https://sandbox.payfast.co.za​/eng/process" method="post" @submit="submitForm">
+      <form ref="paymentForm" action="https://sandbox.payfast.co.za​/eng/process" method="post" @submit="submitForm">
         <input type="hidden" name="merchant_id" :value="platformMerchantId" />
         <input type="hidden" name="merchant_key" :value="platformMerchantKey" />
         <input type="hidden" name="amount" :value="amount" />
         <input type="hidden" name="item_name" :value="itemName" />
-        <!-- <input type="hidden" name="return_url" value="https://b410-197-184-168-227.ngrok-free.app/">
-        <input type="hidden" name="cancel_url" value="https://b410-197-184-168-227.ngrok-free.app/">
-        <input type="hidden" name="notify_url" value="https://b410-197-184-168-227.ngrok-free.app/"> -->
+        <input type="hidden" name="return_url" value="https://9a7d-197-184-165-220.ngrok-free.app">
+        <input type="hidden" name="cancel_url" value="https://9a7d-197-184-165-220.ngrok-free.app">
+        <input type="hidden" name="notify_url" value="https://9a7d-197-184-165-220.ngrok-free.app">
         <input type="hidden" name="signature" :value="payFastSignature" />
         <input type="hidden" name="setup" :value="splitPayment"/>
         >

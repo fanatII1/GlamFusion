@@ -21,6 +21,7 @@ export class ActuityController {
       const headersArray = Object.keys(headers);
       const actuitySignatureHeader = headersArray.includes('x-acuity-signature');
       if(actuitySignatureHeader){
+        // console.log(data)
         connectedClient.emit('calendarData', data)
       }
       else{
@@ -43,6 +44,7 @@ export class ActuityController {
       }
       let response = await fetch(`${baseUrl}`, options);
       let userAppointmentData = await response.json();
+      console.log(userAppointmentData)
       return userAppointmentData;
     }
 }
