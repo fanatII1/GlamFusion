@@ -24,7 +24,7 @@ const bookingBtn = ref('booking-btn-off');
 const bookedService = ref(null);
 const activeButton = ref(null);
 const calendarData = ref(null);
-const appointment = ref(null);
+// const appointment = ref(null);
 const platformMerchantId = ref("10031040");
 const platformMerchantKey = ref("7eyrpgpdvwlgc");
 const amount = ref("30.00");
@@ -44,15 +44,19 @@ onBeforeMount(() => {
       if(data){
         calendarData.value = data;
         const { id, appointmentTypeId, calendarId, action } = calendarData.value;
-        let headers = { 'Content-Type': 'application/json'}
-        let options = { method: 'POST', headers, body: JSON.stringify({ id })}
+        const headers = { 'Content-Type': 'application/json'};
+        const options = { method: 'POST', headers, body: JSON.stringify({ id })};
         const getCalendar = await fetch(`${serverUrl.value}/actuity/appointments`, options);
-        console.log("CALENDAR", await getCalendar.text())
-        // appointment.value = await getCalendar.json();
+        const bookedCalendar = await getCalendar.text();
+        const parsedBookedCalendar = JSON.parse(bookedCalendar);
+        const formData = calendarFormToObj(parsedBookedCalendar);
+
+        
         //if user has paid, we will implement a gateway
-        if(appointment.value.paid === 'yes'){
-          console.log('vvvv')
-          submitForm()
+        if(formData['Would you like to pay now (online)?'] === 'yes'){
+          // console.log('WOULD LIKE TO IMPLEMENT THE PAYMENT GATEWAY')
+          await submitForm();
+          paymentForm.value.submit();
         }
       }
       else{
@@ -65,6 +69,21 @@ onBeforeMount(() => {
     console.log('Disconnected from WebSocket');
   });
 });
+
+//takes the formsText data from the parsedBookedCalendar(formsText object property) & converts to an object
+function calendarFormToObj(parsedBookedCalendar){
+  const lines = parsedBookedCalendar.formsText.split('\n');
+  const extractedData = {};
+  
+  for (const line of lines) {
+    const [key, value] = line.split(': ');
+    if (key && value) {
+      extractedData[key] = value;
+    }
+  }
+
+  return extractedData
+}
 
 //user parameters for calendar
 watch(() => authStore.user, (newUser) => {
@@ -211,9 +230,9 @@ const submitForm = async () => {
         <input type="hidden" name="merchant_key" :value="platformMerchantKey" />
         <input type="hidden" name="amount" :value="amount" />
         <input type="hidden" name="item_name" :value="itemName" />
-        <input type="hidden" name="return_url" value="https://9a7d-197-184-165-220.ngrok-free.app">
+        <!-- <input type="hidden" name="return_url" value="https://9a7d-197-184-165-220.ngrok-free.app">
         <input type="hidden" name="cancel_url" value="https://9a7d-197-184-165-220.ngrok-free.app">
-        <input type="hidden" name="notify_url" value="https://9a7d-197-184-165-220.ngrok-free.app">
+        <input type="hidden" name="notify_url" value="https://9a7d-197-184-165-220.ngrok-free.app"> -->
         <input type="hidden" name="signature" :value="payFastSignature" />
         <input type="hidden" name="setup" :value="splitPayment"/>
         >
