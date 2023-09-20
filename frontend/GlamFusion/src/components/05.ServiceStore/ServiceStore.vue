@@ -1,14 +1,19 @@
 <script setup>
-import { ref, watch, onBeforeMount } from 'vue';
+import { ref, watch, onBeforeMount, onMounted } from 'vue';
 import { useAuthStore } from '../../stores/authentication';
 import { io } from 'socket.io-client';
+import mapboxgl from 'mapbox-gl';
+import { ZoomControl } from 'mapbox-gl-controls';
+import { CompassControl } from 'mapbox-gl-controls';
+
 
 //websocket
 const socket = io('http://localhost:3000');
 const authStore = useAuthStore();
 const storeInfo = JSON.parse(localStorage.getItem('storeInfo'));
-const { StoreName, StoreLocation, storeImage, StoreMembers, StoreServices, merchant_id } = storeInfo;
+const { StoreName, StoreLocation, storeImage, StoreMembers, StoreServices, merchant_id, Longitude, Latitude } = storeInfo;
 
+let map = null;
 const user = ref(authStore.user);
 const baseUrl = ref('http://localhost:1337');
 const serverUrl = ref('http://localhost:3000')
@@ -31,42 +36,6 @@ const passPhrase = ref('LionelMess10')
 const payFastSignature = ref(null);
 const splitPayment = ref(`{"split_payment": {"merchant_id": ${merchant_id}, "percentage": 10, "min": 10, "max": 100000}}`);
 const paymentForm = ref(null);
-
-
-onBeforeMount(() => {
-  socket.on('connect', (data, id) => {
-    console.log('Connected to WebSocket');
-    socket.emit('calendarListen');
-
-    socket.on('calendarData', async (data) => {
-      if(data){
-        calendarData.value = data;
-        const { id, appointmentTypeId, calendarId, action } = calendarData.value;
-        const headers = { 'Content-Type': 'application/json'};
-        const options = { method: 'POST', headers, body: JSON.stringify({ id })};
-        const getCalendar = await fetch(`${serverUrl.value}/actuity/appointments`, options);
-        const bookedCalendar = await getCalendar.text();
-        const parsedBookedCalendar = JSON.parse(bookedCalendar);
-        const formData = calendarFormToObj(parsedBookedCalendar);
-
-        
-        //if user has paid, we implement a gateway
-        if(formData['Would you like to pay now (online)?'] === 'yes'){
-          await submitForm();
-          paymentForm.value.submit();
-          bookedService.value =  null;
-        }
-      }
-      else{
-        throw new Error('Could not get calendar webhook data');
-      }
-    })
-  });
-
-  socket.on('disconnect', () => {
-    console.log('Disconnected from WebSocket');
-  });
-});
 
 //takes the formsText data from the parsedBookedCalendar(formsText object property) & converts to an object
 function calendarFormToObj(parsedBookedCalendar){
@@ -144,103 +113,178 @@ const submitForm = async () => {
     console.error('Error generating signature:', error);
   }
 };
+
+onBeforeMount(() => {
+  socket.on('connect', (data, id) => {
+    console.log('Connected to WebSocket');
+    socket.emit('calendarListen');
+
+    socket.on('calendarData', async (data) => {
+      if(data){
+        calendarData.value = data;
+        const { id, appointmentTypeId, calendarId, action } = calendarData.value;
+        const headers = { 'Content-Type': 'application/json'};
+        const options = { method: 'POST', headers, body: JSON.stringify({ id })};
+        const getCalendar = await fetch(`${serverUrl.value}/actuity/appointments`, options);
+        const bookedCalendar = await getCalendar.text();
+        const parsedBookedCalendar = JSON.parse(bookedCalendar);
+        const formData = calendarFormToObj(parsedBookedCalendar);
+
+        
+        //if user has paid, we implement a gateway
+        if(formData['Would you like to pay now (online)?'] === 'yes'){
+          await submitForm();
+          paymentForm.value.submit();
+          bookedService.value =  null;
+        }
+      }
+      else{
+        throw new Error('Could not get calendar webhook data');
+      }
+    })
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Disconnected from WebSocket');
+  });
+});
+
+onMounted(() => {
+  // Set your Mapbox access token
+  mapboxgl.accessToken = 'pk.eyJ1IjoibWFuZGxlbmtvc2kxMCIsImEiOiJjbG1yZW9ua2QwNjVmMnRtbXhha2xoajBrIn0.3asiCXAhz1w2nw90g37YNg';
+  var directions = new MapboxDirections({
+    accessToken: mapboxgl.accessToken
+  })
+
+  // Create a new map instance
+  map = new mapboxgl.Map({
+    container: 'map', // container ID
+    style: 'mapbox://styles/mapbox/streets-v12', // style URL
+    center: [Longitude, Latitude], // starting position...store location [lng, lat]
+    zoom: 9, // starting zoom
+  });
+
+  map.addControl(new CompassControl(), 'top-right');
+  map.addControl(new ZoomControl(), 'top-right');
+  map.addControl(directions, 'top-left');
+})
 </script>
 
 <template>
   <main id="service-store-wrapper">
-    <h2 class="storeName">{{ StoreName }}</h2>
-    <h3 class="storeLocation">{{ StoreLocation }}</h3>
-
-    <section id="store-img-service-display">
-      <transition name="image-slide" mode="out-in">
-        <img :key="dynamicStoreImage" :src="dynamicStoreImage" alt="" class="store-img-service" />
-      </transition>
-    </section>
-
-    <section id="store-img-service-select">
-      <div v-for="(image, index) in StoreServices" :key="index" class="service-img-select">
-        <div class="display-image-overlay"></div>
-        <img
-          :src="baseUrl + image.attributes.ServiceImage.data.attributes.url"
-          alt=""
-          class="service-img"
-          @click="updateDynamicImage(index, baseUrl + image.attributes.ServiceImage.data.attributes.url)"
-        />
-      </div>
-    </section>
-
-    <section id="customer-related-info">
-      <div class="services-reviews-about-wrapper">
-        <div class="services-reviews-about">
-          <p class="service-heading">Services</p>
-          <!-- <p class="reviews-heading">Reviews</p>
-                <p class="about-heading">About</p> -->
+    <div id="storeDetails">
+      <h2 class="storeName">{{ StoreName }}</h2>
+      <h3 class="storeLocation">{{ StoreLocation }}</h3>
+  
+      <section id="store-img-service-display">
+        <transition name="image-slide" mode="out-in">
+          <img :key="dynamicStoreImage" :src="dynamicStoreImage" alt="" class="store-img-service" />
+        </transition>
+      </section>
+  
+      <section id="store-img-service-select">
+        <div v-for="(image, index) in StoreServices" :key="index" class="service-img-select">
+          <div class="display-image-overlay"></div>
+          <img
+            :src="baseUrl + image.attributes.ServiceImage.data.attributes.url"
+            alt=""
+            class="service-img"
+            @click="updateDynamicImage(index, baseUrl + image.attributes.ServiceImage.data.attributes.url)"
+          />
         </div>
-
-        <div v-for="(service, index) in StoreServices" :key="index" class="services-offered">
-          <div class="service-look">
-            <img :src="baseUrl + service.attributes.ServiceImage.data.attributes.url" alt="" class="service-look-img" />
+      </section>
+  
+      <section id="customer-related-info">
+        <div class="services-reviews-about-wrapper">
+          <div class="services-reviews-about">
+            <p class="service-heading">Services</p>
+            <!-- <p class="reviews-heading">Reviews</p>
+                  <p class="about-heading">About</p> -->
           </div>
-          <div class="service-details">
-            <p class="service-name">{{ service.attributes.ServiceName }}</p>
-            <p class="duration">Time: 30 min</p>
-            <p class="price">Price: {{ service.attributes.ServicePrice }}</p>
-            <div class="more-info-modal">
-              <span id="more-info">More Info</span>
-              <button
-                id="more-info-btn"
-                :class="{ infoBtnOn: activeButton === index, infoBtnOff: activeButton !== null && activeButton !== index }"
-                :disabled="activeButton !== null && activeButton !== index"
-                @click="selectService(index, service)"
-              >
-                +
-              </button>
+  
+          <div v-for="(service, index) in StoreServices" :key="index" class="services-offered">
+            <div class="service-look">
+              <img :src="baseUrl + service.attributes.ServiceImage.data.attributes.url" alt="" class="service-look-img" />
+            </div>
+            <div class="service-details">
+              <p class="service-name">{{ service.attributes.ServiceName }}</p>
+              <p class="duration">Time: 30 min</p>
+              <p class="price">Price: {{ service.attributes.ServicePrice }}</p>
+              <div class="more-info-modal">
+                <span id="more-info">More Info</span>
+                <button
+                  id="more-info-btn"
+                  :class="{ infoBtnOn: activeButton === index, infoBtnOff: activeButton !== null && activeButton !== index }"
+                  :disabled="activeButton !== null && activeButton !== index"
+                  @click="selectService(index, service)"
+                >
+                  +
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="booking-info-wrapper">
-        <div class="booking-info">
-          <div class="booking-btn-wrapper">
-            <button id="bookAppointment-btn" class="booking-btn-modal" @click.prevent="openModal">Book Now</button>
+        <div class="booking-info-wrapper">
+          <div class="booking-info">
+            <div class="booking-btn-wrapper">
+              <button id="bookAppointment-btn" class="booking-btn-modal" @click.prevent="openModal">Book Now</button>
+            </div>
+            <p class="operating-status"><span id="status">Closed</span> opens at <span id="operating-status-time"> 09:00</span></p>
+            <a class="location" href="#">{{ location }}</a>
           </div>
-          <p class="operating-status"><span id="status">Closed</span> opens at <span id="operating-status-time"> 09:00</span></p>
-          <a class="location" href="#">{{ location }}</a>
         </div>
-      </div>
-      <div v-if="isModalOpen" id="bookAppointmentModal" ref="bookAppointmentModal" @click="closeModal">
-        <!-- IFRAME SHOULD BE THE ONE FROM THE STORE DATABASE -->
-        <!-- WHEN THE PAGE LOADS WE WILL FETCH THE IFRAME FROM THE DB(get field id && ownerID from db) AND INSERT IT HERE -->
-        <!-- WE DO THIS CAUSE WHEN WE ONBOARD, WE WILL CREATE THE ACTUITY ACCOUNT FOR THE STORE -->
-        <!-- AFTER THAT WE WILL THEN STORE THE IFRAME(CALENDAR) OF THE STORE IN THE DATABSE AND ALL THE API KEYS RELATRD TO THE STORE-->
-        <iframe id="bookingCalendar" 
-          :src="calendarUrl + calendarOwnerId + '&' + 'firstName=' + calendarParams.firstName + '&' + 'email=' + calendarParams.email + '&' + 'field:13839855=' + calendarParams.bookedService" 
-          title="Schedule Appointment" 
-          width="100%" 
-          height="800" 
-          frameBorder="0"
-        >
-        </iframe>
-      </div>
+        <div v-if="isModalOpen" id="bookAppointmentModal" ref="bookAppointmentModal" @click="closeModal">
+          <!-- IFRAME SHOULD BE THE ONE FROM THE STORE DATABASE -->
+          <!-- WHEN THE PAGE LOADS WE WILL FETCH THE IFRAME FROM THE DB(get field id && ownerID from db) AND INSERT IT HERE -->
+          <!-- WE DO THIS CAUSE WHEN WE ONBOARD, WE WILL CREATE THE ACTUITY ACCOUNT FOR THE STORE -->
+          <!-- AFTER THAT WE WILL THEN STORE THE IFRAME(CALENDAR) OF THE STORE IN THE DATABSE AND ALL THE API KEYS RELATRD TO THE STORE-->
+          <iframe id="bookingCalendar" 
+            :src="calendarUrl + calendarOwnerId + '&' + 'firstName=' + calendarParams.firstName + '&' + 'email=' + calendarParams.email + '&' + 'field:13839855=' + calendarParams.bookedService" 
+            title="Schedule Appointment" 
+            width="100%" 
+            height="800" 
+            frameBorder="0"
+          >
+          </iframe>
+        </div>
+  
+        <form v-if="bookedService" ref="paymentForm" action="https://sandbox.payfast.co.za​/eng/process" method="post" @submit="submitForm">
+          <input type="hidden" name="merchant_id" :value="platformMerchantId" />
+          <input type="hidden" name="merchant_key" :value="platformMerchantKey" />
+          <input type="hidden" name="amount" :value="amount" />
+          <input type="hidden" name="item_name" :value="bookedService.ServiceName" />
+          <!-- <input type="hidden" name="return_url" value="https://9a7d-197-184-165-220.ngrok-free.app">
+          <input type="hidden" name="cancel_url" value="https://9a7d-197-184-165-220.ngrok-free.app">
+          <input type="hidden" name="notify_url" value="https://9a7d-197-184-165-220.ngrok-free.app"> -->
+          <input type="hidden" name="signature" :value="payFastSignature" />
+          <input type="hidden" name="setup" :value="splitPayment"/>
+        </form>
+      </section>
+    </div>
 
-      <form ref="paymentForm" action="https://sandbox.payfast.co.za​/eng/process" method="post" @submit="submitForm">
-        <input type="hidden" name="merchant_id" :value="platformMerchantId" />
-        <input type="hidden" name="merchant_key" :value="platformMerchantKey" />
-        <input type="hidden" name="amount" :value="amount" />
-        <input type="hidden" name="item_name" :value="bookedService.ServiceName" />
-        <!-- <input type="hidden" name="return_url" value="https://9a7d-197-184-165-220.ngrok-free.app">
-        <input type="hidden" name="cancel_url" value="https://9a7d-197-184-165-220.ngrok-free.app">
-        <input type="hidden" name="notify_url" value="https://9a7d-197-184-165-220.ngrok-free.app"> -->
-        <input type="hidden" name="signature" :value="payFastSignature" />
-        <input type="hidden" name="setup" :value="splitPayment"/>
-      </form>
-    </section>
+    <!-- MAP -->
+    <div id="map">
+
+    </div>
   </main>
 </template>
 
 <style scoped>
-#service-store-wrapper {
+#service-store-wrapper, #storeDetails, #map {
   height: 100%;
+}
+
+#service-store-wrapper{
+  display: flex;
+  column-gap: 2%;
+}
+
+#storeDetails, #map{
+  width: 50%;
+}
+
+#storeDetails{
+  overflow-y: scroll;
 }
 
 .storeName {
@@ -339,12 +383,13 @@ const submitForm = async () => {
   width: 10px;
 }
 
-.services-reviews-about-wrapper::-webkit-scrollbar {
+.services-reviews-about-wrapper::-webkit-scrollbar, #storeDetails::-webkit-scrollbar {
   width: 0;
 }
 
 #customer-related-info::-webkit-scrollbar-thumb,
-.services-reviews-about-wrapper::-webkit-scrollbar-thumb {
+.services-reviews-about-wrapper::-webkit-scrollbar-thumb, 
+#storeDetails::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
 

@@ -11,7 +11,7 @@ const baseURL = ref('http://localhost:1337');
 
 function viewStore(store) {
   const { id, attributes } = store;
-  const { StoreName, StoreLocation, StoreImage, members, services, merchant_id } = attributes;
+  const { StoreName, StoreLocation, StoreImage, members, services, merchant_id, Longitude, Latitude } = attributes;
   console.log(attributes)
   const storeImage = baseURL.value + StoreImage.data.attributes.url;
   const StoreMembers = members.data;
@@ -25,7 +25,9 @@ function viewStore(store) {
     storeImage,
     StoreMembers,
     StoreServices,
-    merchant_id
+    merchant_id, 
+    Longitude,
+    Latitude
   };
 
   localStorage.setItem('storeInfo', JSON.stringify(storeInfo));
