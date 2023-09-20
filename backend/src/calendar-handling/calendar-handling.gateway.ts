@@ -1,6 +1,5 @@
 import { WebSocketGateway, WebSocketServer, SubscribeMessage, MessageBody, OnGatewayConnection, OnGatewayDisconnect, ConnectedSocket } from '@nestjs/websockets';
 import { CalendarHandlingService } from './calendar-handling.service';
-import { CreateCalendarHandlingDto } from './dto/create-calendar-handling.dto';
 import { Socket, Server } from 'socket.io';
 
 @WebSocketGateway({ cors : { origin: '*'}})

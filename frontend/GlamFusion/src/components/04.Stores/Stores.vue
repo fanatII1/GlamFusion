@@ -17,6 +17,8 @@ function viewStore(store) {
   const StoreMembers = members.data;
   const StoreServices = services.data;
 
+  //all store information that wll be accessed in the ServiceStore.vue(the specific store that was clicked)
+  //the merchant_id is used to identify the payfast account that will will split payments
   const storeInfo = {
     StoreName,
     StoreLocation,
@@ -34,7 +36,7 @@ function viewStore(store) {
 
 
 // Fetch Stores and remove specified properties(attributes) from barberShop data
-//the queryin of strapi deeply populated data and media e.g files can be found here:
+//the querying of strapi's deeply populated data and media e.g files can be found here:
 //https://docs.strapi.io/dev-docs/api/rest/populate-select#relations--media-fields 
 //https://stackoverflow.com/a/70251184/17908449
 //https://stackoverflow.com/questions/76905893/image-url-not-showing-in-strapinested-data/76922008#76922008

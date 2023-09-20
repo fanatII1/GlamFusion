@@ -27,6 +27,7 @@ function logout(){
 function setActiveNavItem(item) {
   activeNavItem.value = item;
 }
+
 </script>
 
 <template>

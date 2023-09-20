@@ -24,11 +24,9 @@ const bookingBtn = ref('booking-btn-off');
 const bookedService = ref(null);
 const activeButton = ref(null);
 const calendarData = ref(null);
-// const appointment = ref(null);
 const platformMerchantId = ref("10031040");
 const platformMerchantKey = ref("7eyrpgpdvwlgc");
 const amount = ref("30.00");
-const itemName = ref("Tester Product");
 const passPhrase = ref('LionelMess10')
 const payFastSignature = ref(null);
 const splitPayment = ref(`{"split_payment": {"merchant_id": ${merchant_id}, "percentage": 10, "min": 10, "max": 100000}}`);
@@ -52,11 +50,11 @@ onBeforeMount(() => {
         const formData = calendarFormToObj(parsedBookedCalendar);
 
         
-        //if user has paid, we will implement a gateway
+        //if user has paid, we implement a gateway
         if(formData['Would you like to pay now (online)?'] === 'yes'){
-          // console.log('WOULD LIKE TO IMPLEMENT THE PAYMENT GATEWAY')
           await submitForm();
           paymentForm.value.submit();
+          bookedService.value =  null;
         }
       }
       else{
@@ -229,14 +227,12 @@ const submitForm = async () => {
         <input type="hidden" name="merchant_id" :value="platformMerchantId" />
         <input type="hidden" name="merchant_key" :value="platformMerchantKey" />
         <input type="hidden" name="amount" :value="amount" />
-        <input type="hidden" name="item_name" :value="itemName" />
+        <input type="hidden" name="item_name" :value="bookedService.ServiceName" />
         <!-- <input type="hidden" name="return_url" value="https://9a7d-197-184-165-220.ngrok-free.app">
         <input type="hidden" name="cancel_url" value="https://9a7d-197-184-165-220.ngrok-free.app">
         <input type="hidden" name="notify_url" value="https://9a7d-197-184-165-220.ngrok-free.app"> -->
         <input type="hidden" name="signature" :value="payFastSignature" />
         <input type="hidden" name="setup" :value="splitPayment"/>
-        >
-        <input type="submit" value="Pay Now" />
       </form>
     </section>
   </main>

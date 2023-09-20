@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class CalendarHandlingService {
+  //send calendar webhook data to the frontend
   handleCalendarData(calendarData, client?) {
-    console.log(calendarData)
     return calendarData;
   }
 }
