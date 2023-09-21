@@ -4,9 +4,17 @@ import { ref } from 'vue';
 import { useAuthStore } from '../stores/authentication';
 import { auth } from '../../firebase';
 import { signOut } from 'firebase/auth';
+import { useI18n } from 'vue-i18n';
 
 const activeNavItem = ref('home');
 const authStore = useAuthStore();
+const { t, locale } = useI18n();
+
+const homeHeading = t('Navbar.homeHeading');
+const aboutHeading = t('Navbar.aboutHeading');
+const servicesHeading = t('Navbar.servicesHeading');
+const blogHeading = t('Navbar.blogHeading');
+const profile = t('Navbar.profile')
 
 //check authentication 
 function checkAuth(){
@@ -37,22 +45,22 @@ function setActiveNavItem(item) {
     </div>
     <div class="menu nav-item-2">
       <div :class="{ 'menu-item': true, 'active': activeNavItem === 'home' }" @click="setActiveNavItem('home')">
-        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/">{{ homeHeading }}</RouterLink>
       </div>
       <div :class="{ 'menu-item': true, 'active': activeNavItem === 'about' }" @click="setActiveNavItem('about')">
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/about">{{ aboutHeading }}</RouterLink>
       </div>
       <div :class="{ 'menu-item': true, 'active': activeNavItem === 'services' }" @click="setActiveNavItem('services')">
-        <RouterLink to="/services">Services</RouterLink>
+        <RouterLink to="/services">{{ servicesHeading }}</RouterLink>
       </div>
       <div :class="{ 'menu-item': true, 'active': activeNavItem === 'blog' }" @click="setActiveNavItem('blog')">
-        <RouterLink to="/blog">Blog</RouterLink>
+        <RouterLink to="/blog">{{ blogHeading }}</RouterLink>
       </div>
     </div>
     <div class="nav-item-3">
-    <button @click="checkAuth" class="profile-btn">My Profile</button>
+    <button @click="checkAuth" class="profile-btn">{{  profile }}</button>
     <div class="dropdown">
-      <a href="#">My Profile</a>
+      <a href="#">{{ profile }}</a>
       <a href="#" @click="logout">Logout</a>
     </div>
   </div>

@@ -2,12 +2,22 @@
 import { useRoute } from 'vue-router';
 import router from '../../router';
 import { ref, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 
+const { t, locale } = useI18n();
 const route = useRoute();
-const service = route.params.id;
+const service = ref(route.params.id);
 const stores = ref([]);
 const loading = ref(true);
 const baseURL = ref('http://localhost:1337');
+
+//translation text
+const introBarberText = t('ServiceStores.introBarberText');
+const introSalonText = t('ServiceStores.introSalonText');
+const introNailsText = t('ServiceStores.introNailsText');
+const introMakeupText = t('ServiceStores.introMakeUpText');
+const locationPlaceholder = t('ServiceStores.CurrentLocationPlaceholder');
+const queryStorePlaceholder = t('ServiceStores.Store');
 
 function viewStore(store) {
   const { id, attributes } = store;
@@ -71,20 +81,36 @@ async function fetchData() {
 }
 
 
-
 onMounted(() => {
   fetchData();
+
+  //print .service text of page based on the route.params.id()
+  switch (route.params.id) {
+    case 'barbers-stores':
+        service.value = introBarberText
+        break;
+    case 'braiding-stores':
+        service.value = introSalonText;
+        break;
+    case 'make-up-stores':
+        service.value = introMakeupText;
+        break;
+    case 'nail-tech-stores':
+        service.value = introNailsText
+    default:
+        break;
+  }
 });
 
 </script>
 
 <template>
     <main id='stores-container'>
-        <h1 class='service'>Looking for {{ service }}?</h1>
+        <h1 class='service'> {{ service }} </h1>
 
         <form id='search-form'>
-            <input type='text' placeholder='Store...' name='query-store' class='search-input query-store'>
-            <input type='text' name='location' placeholder='Location...' value='Current Location' class='search-input location'>
+            <input type='text' :placeholder='queryStorePlaceholder' name='query-store' class='search-input query-store'>
+            <input type='text' name='location' :placeholder='locationPlaceholder' class='search-input location'>
             <input type='submit' value='Q' class='search-input submit-search'>
         </form>
 

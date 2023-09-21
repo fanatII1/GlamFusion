@@ -26,17 +26,26 @@ import image2 from '@/assets/img/background-2.webp';
 import image3 from '@/assets/img/background-3.jfif';
 import image4 from '@/assets/img/background-4.webp';
 
+//translation text
 const { t, locale } = useI18n();
 const homeIntroHeading = t('Homepage.home-intro-heading')
 const bookNowBtnText = t('Homepage.book-now-btn');
+const barberMainText = t('Homepage.barberMainText');
+const barberSubText = t('Homepage.barberSubText');
+const makeUpMainText = t('Homepage.makeUpMainText');
+const makeUpSubText = t('Homepage.makeUpSubText');
+const nailsMainText = t('Homepage.nailsMainText');
+const nailSubText = t('Homepage.nailSubText');
+const braidingMainText = t('Homepage.braidingMainText');
+const braidingSubText = t('Homepage.braidingSubText');
 
 
 const images = [image1, image2, image3, image4];
 const serviceDescription = [
-  { service: 'Barber', mainText: 'Fresh Cuts, Fresh Style -', subText: 'Embrace Your Fresh Look!' },
-  { service: 'Make-Up', mainText: 'Redefining Your Glamour -', subText: 'Unleash Your Radiance!' },
-  { service: 'Hair Braid', mainText: 'Dazzling Braids -', subText: 'Elevating Your Hairstyle!' },
-  { service: 'Nails', mainText: 'Polished Perfection -', subText: 'Polished Perfection -' },
+  { service: 'Barber', mainText: barberMainText, subText: barberSubText },
+  { service: 'Make-Up', mainText: makeUpMainText, subText: makeUpSubText },
+  { service: 'Hair Braid', mainText: braidingMainText, subText: braidingSubText },
+  { service: 'Nails', mainText: nailsMainText, subText: nailSubText },
 ];
 
 const currentIndex = ref(0);

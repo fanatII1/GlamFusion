@@ -3,6 +3,9 @@
         "home-intro-heading": "Débloquez votre glamour, réservez votre style",
         "intro-text": "Your all in one solution to",
         "book-now-btn": "Reserve maintenant",
+        "aboutHeading": "À propos",
+        "aboutTextHeadingMain": "Fusion glamour –",
+        "aboutTextHeadingSub": "Votre style, à votre façon !",
         "aboutTextDescription1": "Chez Glamorous Fusion, nous sommes passionnés par l'idée de faire ressortir la meilleure version de vous. Notre équipe de professionnels qualifiés se consacre à libérer votre glamour intérieur et à améliorer votre beauté naturelle.",
         "aboutTextDescription2": "Qu'il s'agisse d'une coupe de cheveux fraîche, de tresses éblouissantes, d'un maquillage impeccable ou d'ongles parfaitement polis, nous avons l'expertise pour vous faire briller. Avec un engagement envers l'excellence et une concentration sur la satisfaction du client, nous nous efforçons de fournir des services exceptionnels qui vous laissent confiant et fabuleux. Rejoignez-nous chez Glamorous Fusion et découvrez la magie de la transformation. Votre voyage glamour commence ici !",
         "barberMainText": "Coupes fraîches, style frais -",
@@ -13,5 +16,33 @@
         "nailSubText": "Affichez vos conseils parfaits !",
         "braidingMainText": "Tresses éblouissantes -",
         "braidingSubText": "Élevez votre coiffure!"
+    },
+    "Navbar": {
+        "homeHeading": "Maison",
+        "aboutHeading": "À propos",
+        "servicesHeading": "Prestations de service",
+        "blogHeading": "Blog",
+        "profile": "Profil"
+    },
+    "Services": {
+        "haircut": "LA COUPE DE CHEVEUX",
+        "hairSalon": "SALON DE COIFFURE",
+        "makeUp": "SE MAQUILLER",
+        "nails": "CLOUS",
+        "seeMoreBtnText": "VOIR PLUS"
+    },
+    "ServiceStores":{
+        "introBarberText": "Vous cherchez des salons de coiffure ?",
+        "introSalonText": "Vous cherchez des magasins de tressage ?",
+        "introMakeupText": "Vous cherchez des magasins de maquillage ?",
+        "introNailsText": "Vous cherchez des salons de manucure ?",
+        "CurrentLocationPlaceholder": "Emplacement actuel...",
+        "Store": "Magasin ?"
+    },
+    "ServiceStore":{
+        "time": "Temps",
+        "price": "Prix",
+        "viewMore": "Voir plus",
+        "bookNowBtnText": "Reserve maintenant"
     }
 }

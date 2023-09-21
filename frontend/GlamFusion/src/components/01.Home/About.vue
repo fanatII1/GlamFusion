@@ -1,6 +1,6 @@
 <template>
   <section id="About">
-    <h2 class="AboutHeading">About Us</h2>
+    <h2 class="AboutHeading">{{ aboutHeading }}</h2>
     <div class="underline"></div>
 
     <!-- ABOUT DESCRIPTION -->
@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="aboutText">
-        <h3 class="AboutTextHeading">Glamorous Fusion - <span class="textHeadingSpan">Your Style, Your Way!</span></h3>
+        <h3 class="AboutTextHeading">{{ aboutTextHeadingMain }} <span class="textHeadingSpan">{{ aboutTextHeadingSub }}</span></h3>
         <p class="aboutTextDescription"> {{ aboutTextDescription1 }} </p>
         <p class="aboutTextDescription"> {{ aboutTextDescription2 }} </p>
       </div>
@@ -25,9 +25,11 @@
 <script setup>
 import { useI18n } from 'vue-i18n';
 
+//translation text
 const { t, locale } = useI18n();
-
-const introText = t('Homepage.intro-text');
+const aboutHeading = t('Homepage.aboutHeading');
+const aboutTextHeadingMain = t('Homepage.aboutTextHeadingMain');
+const aboutTextHeadingSub = t('Homepage.aboutTextHeadingSub');
 const aboutTextDescription1 = t('Homepage.aboutTextDescription1');
 const aboutTextDescription2 = t('Homepage.aboutTextDescription2');
 </script>

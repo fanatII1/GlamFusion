@@ -5,30 +5,30 @@
         <div class='offered-services service-grid'>
             <div class='service s-1'>
                 <div class='service-overlay'></div>
-                <p>HAIRCUT</p>
+                <p>{{ haricut }}</p>
                 <button class='service-btn'>
-                    <RouterLink to='/services/barbers-stores'>SEE MORE</RouterLink>
+                    <RouterLink to='/services/barbers-stores'>{{ seeMoreBtnText }}</RouterLink>
                 </button>
             </div>
             <div class='service s-2'>
                 <div class='service-overlay'></div>
-                <p>HAIR SALON</p>
+                <p>{{ hairSalon }}</p>
                 <button class='service-btn'>
-                    <RouterLink to='/services/braiding-stores'>SEE MORE</RouterLink>
+                    <RouterLink to='/services/braiding-stores'>{{ seeMoreBtnText }}</RouterLink>
                 </button>
             </div>
             <div class='service s-3'>
                 <div class='service-overlay'></div>
-                <p>MAKE-UP</p>
+                <p>{{ makeUp }}</p>
                 <button class='service-btn'>
-                    <RouterLink to='/services/make-up-stores'>SEE MORE</RouterLink>
+                    <RouterLink to='/services/make-up-stores'>{{ seeMoreBtnText }}</RouterLink>
                 </button>
             </div>
             <div class='service s-4'>
                 <div class='service-overlay'></div>
-                <p>NAIL SALON</p>
+                <p>{{ nails }}</p>
                 <button class='service-btn'>
-                    <RouterLink to='/services/nail-tech-stores'>SEE MORE</RouterLink>
+                    <RouterLink to='/services/nail-tech-stores'>{{ seeMoreBtnText }}</RouterLink>
                 </button>
             </div>
         </div>
@@ -37,6 +37,15 @@
 
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+//translation text
+const { t, locale } = useI18n();
+const haricut = t('Services.haircut');
+const makeUp = t('Services.makeUp');
+const nails = t('Services.nails');
+const hairSalon = t('Services.hairSalon');
+const seeMoreBtnText = t('Services.seeMoreBtnText');
 
 
 </script>

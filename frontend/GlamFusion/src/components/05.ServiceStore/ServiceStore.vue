@@ -5,7 +5,7 @@ import { io } from 'socket.io-client';
 import mapboxgl from 'mapbox-gl';
 import { ZoomControl } from 'mapbox-gl-controls';
 import { CompassControl } from 'mapbox-gl-controls';
-
+import { useI18n } from 'vue-i18n';
 
 //websocket
 const socket = io('http://localhost:3000');
@@ -14,6 +14,12 @@ const storeInfo = JSON.parse(localStorage.getItem('storeInfo'));
 const { StoreName, StoreLocation, storeImage, StoreMembers, StoreServices, merchant_id, Longitude, Latitude } = storeInfo;
 
 let map = null;
+//translation text
+const { t, locale } = useI18n();
+const timeText = t('ServiceStore.time');
+const priceText = t('ServiceStore.price');
+const bookNowBtnText = t('ServiceStore.bookNowBtnText');
+
 const user = ref(authStore.user);
 const baseUrl = ref('http://localhost:1337');
 const serverUrl = ref('http://localhost:3000')
@@ -207,10 +213,10 @@ onMounted(() => {
             </div>
             <div class="service-details">
               <p class="service-name">{{ service.attributes.ServiceName }}</p>
-              <p class="duration">Time: 30 min</p>
-              <p class="price">Price: {{ service.attributes.ServicePrice }}</p>
+              <p class="duration">{{ timeText }}: 30 min</p>
+              <p class="price">{{ priceText }}: {{ service.attributes.ServicePrice }}</p>
               <div class="more-info-modal">
-                <span id="more-info">More Info</span>
+                <span id="more-info">{{ moreInfoText }}</span>
                 <button
                   id="more-info-btn"
                   :class="{ infoBtnOn: activeButton === index, infoBtnOff: activeButton !== null && activeButton !== index }"
@@ -226,7 +232,7 @@ onMounted(() => {
         <div class="booking-info-wrapper">
           <div class="booking-info">
             <div class="booking-btn-wrapper">
-              <button id="bookAppointment-btn" class="booking-btn-modal" @click.prevent="openModal">Book Now</button>
+              <button id="bookAppointment-btn" class="booking-btn-modal" @click.prevent="openModal">{{ bookNowBtnText }}</button>
             </div>
             <p class="operating-status"><span id="status">Closed</span> opens at <span id="operating-status-time"> 09:00</span></p>
             <a class="location" href="#">{{ location }}</a>

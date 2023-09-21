@@ -61,6 +61,12 @@
     "merchant_id": {
       "type": "string",
       "required": true
+    },
+    "Longitude": {
+      "type": "float"
+    },
+    "Latitude": {
+      "type": "float"
     }
   }
 }
