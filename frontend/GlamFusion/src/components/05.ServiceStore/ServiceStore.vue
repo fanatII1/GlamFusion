@@ -129,7 +129,6 @@ onBeforeMount(() => {
         const bookedCalendar = await getCalendar.text();
         const parsedBookedCalendar = JSON.parse(bookedCalendar);
         const formData = calendarFormToObj(parsedBookedCalendar);
-
         
         //if user has paid, we implement a gateway
         if(formData['Would you like to pay now (online)?'] === 'yes'){
@@ -281,6 +280,10 @@ onMounted(() => {
 
 #storeDetails, #map{
   width: 50%;
+}
+
+#map{
+  border-radius: 10px;
 }
 
 #storeDetails{

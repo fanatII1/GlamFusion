@@ -2,11 +2,11 @@
   <main id="main-content">
     <section id="intro-section">
       <div class="intro-info-lead">
-        <h1 class="intro-heading">Unlock Your Glamour - Book Your Style</h1>
+        <h1 class="intro-heading">{{ homeIntroHeading }}</h1>
         <!-- <p class="intro-text">{{ mainText }}</p>
         <p class="intro-text">{{ subText }}</p> -->
         <p class="intro-text">Your all in one solution to <span id="lead-text">{{ mainText }} {{ subText }}</span></p>
-        <button class="button">Book Now</button>
+        <button class="button">{{ bookNowBtnText }}</button>
       </div>
       <div class="intro-slide-pics">
         <div class="gradient"></div>
@@ -19,18 +19,24 @@
 
 <script setup>
 import { ref, onBeforeUnmount, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import About from './About.vue';
 import image1 from '@/assets/img/background-1.webp';
 import image2 from '@/assets/img/background-2.webp';
 import image3 from '@/assets/img/background-3.jfif';
 import image4 from '@/assets/img/background-4.webp';
 
+const { t, locale } = useI18n();
+const homeIntroHeading = t('Homepage.home-intro-heading')
+const bookNowBtnText = t('Homepage.book-now-btn');
+
+
 const images = [image1, image2, image3, image4];
 const serviceDescription = [
   { service: 'Barber', mainText: 'Fresh Cuts, Fresh Style -', subText: 'Embrace Your Fresh Look!' },
   { service: 'Make-Up', mainText: 'Redefining Your Glamour -', subText: 'Unleash Your Radiance!' },
   { service: 'Hair Braid', mainText: 'Dazzling Braids -', subText: 'Elevating Your Hairstyle!' },
-  { service: 'Nails', mainText: 'Polished Perfection -', subText: 'Flaunting Your Perfect Tips!' },
+  { service: 'Nails', mainText: 'Polished Perfection -', subText: 'Polished Perfection -' },
 ];
 
 const currentIndex = ref(0);
@@ -40,6 +46,7 @@ const show = ref(true);
 const serviceItemNo = ref(0);
 const mainText = ref(serviceDescription[serviceItemNo.value].mainText);
 const subText = ref(serviceDescription[serviceItemNo.value].subText);
+
 
 watch(show, (newValue) => {
   if (newValue) {

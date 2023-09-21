@@ -15,21 +15,22 @@
       </div>
       <div class="aboutText">
         <h3 class="AboutTextHeading">Glamorous Fusion - <span class="textHeadingSpan">Your Style, Your Way!</span></h3>
-        <p class="aboutTextDescription">
-          At Glamorous Fusion, we are passionate about bringing out the best version of you. Our team of skilled professionals is dedicated to
-          unlocking your inner glamour and enhancing your natural beauty.
-        </p>
-        <p class="aboutTextDescription">
-          Whether it's a fresh haircut, dazzling hair braids, flawless makeup, or perfectly polished nails, we have the expertise to make you shine.
-          With a commitment to excellence and a focus on customer satisfaction, we strive to provide exceptional services that leave you feeling
-          confident and fabulous. Join us at Glamorous Fusion and experience the magic of transformation. Your glamour journey starts here!
-        </p>
+        <p class="aboutTextDescription"> {{ aboutTextDescription1 }} </p>
+        <p class="aboutTextDescription"> {{ aboutTextDescription2 }} </p>
       </div>
     </div>
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import { useI18n } from 'vue-i18n';
+
+const { t, locale } = useI18n();
+
+const introText = t('Homepage.intro-text');
+const aboutTextDescription1 = t('Homepage.aboutTextDescription1');
+const aboutTextDescription2 = t('Homepage.aboutTextDescription2');
+</script>
 
 <style scoped>
 #About {
