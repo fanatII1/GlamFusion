@@ -1,0 +1,44 @@
+{
+    "Homepage": {
+        "home-intro-heading": "Hlokofala Hao - Boloka Staeleng",
+        "intro-text": "Mohlolo oa hau ke mohloli oa lehloenya ea",
+        "book-now-btn": "Boloka Joale",
+        "aboutHeading": "Pele Us",
+        "aboutTextHeadingMain": "Glamorous Fusion -",
+        "aboutTextHeadingSub": "Staeleng sa hau, Mosebetsi wa hau!",
+        "aboutTextDescription1": "Ha Glamorous Fusion, rea qalehella ho etsa lipuo tse matla tsa hao. Tlatsa ea baeti ba rona ke ea ho boela ho phallela le ntlafatsa kantle ho lefats'e la hau.",
+        "aboutTextDescription2": "Mme ke bophelo bofe bonolo, ho nkiletsa liqhapu tse khanye, ho fihlelleha lihlooho, kapa ho phahame liqala liqateng, re na le boete bo ke ba hlokolohang ho u phalla. Ka thuto ea mathata 'me ka matla a khonang ho bonolo, re nang le tsohle tse ntle ho u tsoha. Ka setso sa khokahano le ka ho hlolehileng ho sebetsa le ho amohela mosebetsi o mong le o mong hore o ne o hlokofale le ho hlokofale. Thuseha rona ka Glamorous Fusion 'me u qetela molomo oa litaba tsa phihlelo. Hlokomela mohlolo oa ho tsoha ho le hore o hlokofale oa hau o se hlokofale ho eona!",
+        "barberMainText": "Hlooho e Matla, Staeleng e Matla",
+        "barberSubText": "Hlokomela Staeleng ea hau ea Matla!",
+        "makeUpMainText": "Ho Khatholla Hloenya Ea hau",
+        "makeUpSubText": "Hlakola Matla Ao hau e 'neha!",
+        "nailsMainText": "Phoofolo e Pholileng -",
+        "nailSubText": "Hlakola Meqoqo Ea hao ea Tlhōlō!"
+    },
+    "Navbar": {
+        "homeHeading": "Ha Kea Hlokofala",
+        "aboutHeading": "Pele Us",
+        "servicesHeading": "Lisebelisoa",
+        "blogHeading": "Blog",
+        "profile": "Porofaili"
+    },
+    "Services": {
+        "haircut": "HAIRCUT",
+        "hairSalon": "LISEBELISOA TSA PHOOFOLONG",
+        "makeUp": "MAKE-UP",
+        "nails": "MEQOQO",
+        "seeMoreBtnText": "BONA HA HO 'NA"
+    },
+    "ServiceStores": {
+        "introBarberText": "O ile oa busetsa lisebelisoa tsa barber?",
+        "introSalonText": "O ile oa busetsa lisebelisoa tsa phoofolong?",
+        "introMakeupText": "O ile oa khatholla matla a hau?",
+        "introNailsText": "O ile oa phihama meqoqo?"
+    },
+    "ServiceStore": {
+        "time": "Nako",
+        "price": "Lipotso",
+        "viewMore": "Bona Joale",
+        "bookNowBtnText": "Boloka Joale"
+    }
+}

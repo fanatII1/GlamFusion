@@ -1,0 +1,48 @@
+{
+    "Homepage": {
+        "home-intro-heading": "Desbloquea tu glamour, reserva tu estilo",
+        "intro-text": "Tu solución todo en uno para",
+        "book-now-btn": "Reservar ahora",
+        "aboutHeading": "Acerca de",
+        "aboutTextHeadingMain": "Fusión glamorosa –",
+        "aboutTextHeadingSub": "¡Tu estilo, a tu manera!",
+        "aboutTextDescription1": "En Glamorous Fusion, estamos apasionados por sacar la mejor versión de ti. Nuestro equipo de profesionales calificados se dedica a liberar tu glamour interior y mejorar tu belleza natural.",
+        "aboutTextDescription2": "Ya sea un corte de pelo fresco, trenzas deslumbrantes, maquillaje impecable o uñas perfectamente pulidas, tenemos la experiencia para hacerte brillar. Con un compromiso con la excelencia y un enfoque en la satisfacción del cliente, nos esforzamos por ofrecer servicios excepcionales que te hagan sentir seguro y fabuloso. Únete a nosotros en Glamorous Fusion y descubre la magia de la transformación. ¡Tu viaje glamoroso comienza aquí!",
+        "barberMainText": "Cortes frescos, estilo fresco -",
+        "barberSubText": "¡Adopta tu nuevo look!",
+        "makeUpMainText": "Redescubre tu glamour -",
+        "makeUpSubText": "¡Libera tu brillo!",
+        "nailsMainText": "Perfección pulida -",
+        "nailSubText": "¡Muestra tus uñas perfectas!",
+        "braidingMainText": "Trenzas deslumbrantes -",
+        "braidingSubText": "¡Eleva tu peinado!"
+    },
+    "Navbar": {
+        "homeHeading": "Inicio",
+        "aboutHeading": "Acerca de",
+        "servicesHeading": "Servicios",
+        "blogHeading": "Blog",
+        "profile": "Perfil"
+    },
+    "Services": {
+        "haircut": "CORTE DE PELO",
+        "hairSalon": "SALÓN DE BELLEZA",
+        "makeUp": "MAQUILLAJE",
+        "nails": "UÑAS",
+        "seeMoreBtnText": "VER MÁS"
+    },
+    "ServiceStores": {
+        "introBarberText": "¿Buscas salones de belleza?",
+        "introSalonText": "¿Buscas salones de belleza?",
+        "introMakeupText": "¿Quieres maquillarte?",
+        "introNailsText": "¿Buscas salones de manicura?",
+        "CurrentLocationPlaceholder": "Ubicación actual...",
+        "Store": "Tienda?"
+    },
+    "ServiceStore": {
+        "time": "Hora",
+        "price": "Precio",
+        "viewMore": "Ver más",
+        "bookNowBtnText": "Reservar ahora"
+    }
+}

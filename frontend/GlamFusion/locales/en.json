@@ -33,10 +33,10 @@
         "seeMoreBtnText": "SEE MORE"
     },
     "ServiceStores":{
-        "introBarberText": "Looking for barbers-stores?",
-        "introSalonText": "Looking for barbers-stores?",
-        "introMakeupText": "Looking for barbers-stores?",
-        "introNailsText": "Looking for barbers-stores?",
+        "introBarberText": "Looking for barber stores?",
+        "introSalonText": "Looking for hair salons?",
+        "introMakeupText": "Looking to do your make up?",
+        "introNailsText": "Envie de vous faire les ongles ?",
         "CurrentLocationPlaceholder": "Current Location...",
         "Store": "Which Store are you looking for?"
     },

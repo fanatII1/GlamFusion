@@ -1,0 +1,46 @@
+{
+    "Homepage": {
+        "home-intro-heading": "Ontsluit Jou Glamour - Bespreek Jou Styl",
+        "intro-text": "Jou alles-in-een-oplossing vir",
+        "book-now-btn": "Bespreek Nou",
+        "aboutHeading": "Oor Ons",
+        "aboutTextHeadingMain": "Glamorous Fusion -",
+        "aboutTextHeadingSub": "Jou Styl, Jou Manier!",
+        "aboutTextDescription1": "By Glamorous Fusion is ons passievol daaroor om die beste weergawe van jou na vore te bring. Ons span van bedrewe professionele mense is toegewyd om jou innerlike glamour te ontsluit en jou natuurlike skoonheid te verbeter.",
+        "aboutTextDescription2": "Of dit nou 'n vars haarkap, verblindende harevlegsel, foutlose grimering, of perfek gepoleerde naels is, ons het die kundigheid om jou te laat skyn. Met 'n toewyding aan uitnemendheid en 'n fokus op kliëntetevredenheid, streef ons daarna om uitsonderlike dienste te lewer wat jou selfvertroue en pragtig laat voel. Sluit by ons aan by Glamorous Fusion en beleef die toorkrag van transformasie. Jou glamour-reis begin hier!",
+        "barberMainText": "Vars Snye, Vars Styl",
+        "barberSubText": "Omarm Jou Vars Voorkoms!",
+        "makeUpMainText": "Herdefinieer Jou Glamour",
+        "makeUpSubText": "Laat Jou Straling Vry!",
+        "nailsMainText": "Gepoleerde Perfeksie -",
+        "nailSubText": "Toon Jou Perfekte Punte!",
+        "braidingMainText": "Verblindende Vlegwerk -",
+        "braidingSubText": "Verhoog Jou Haarstyl!"
+    },
+    "Navbar": {
+        "homeHeading": "Huis",
+        "aboutHeading": "Oor",
+        "servicesHeading": "Dienste",
+        "blogHeading": "Blog",
+        "profile": "Profiel"
+    },
+    "Services": {
+        "haircut": "HAARKAP",
+        "hairSalon": "HAARSAKON",
+        "makeUp": "GRIMERING",
+        "nails": "NAELS",
+        "seeMoreBtnText": "SIE MEER"
+    },
+    "ServiceStores": {
+        "introBarberText": "Op soek na kapperwinkels?",
+        "introSalonText": "Op soek na haarsalonne?",
+        "introMakeupText": "Op soek om jou grimering te doen?",
+        "introNailsText": "Op soek om jou naels te laat doen?"
+    },
+    "ServiceStore": {
+        "time": "Tyd",
+        "price": "Prys",
+        "viewMore": "Bekyk Meer",
+        "bookNowBtnText": "Bespreek Nou"
+    }
+}

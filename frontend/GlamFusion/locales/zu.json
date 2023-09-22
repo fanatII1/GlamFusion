@@ -1,0 +1,48 @@
+{
+    "Homepage": {
+        "home-intro-heading": "Vula ikukhazimula ukugcina kwakho, thumelela inombolo yakho",
+        "intro-text": "Inzuzo yakho yokufaneleka yokufuna imishwana",
+        "book-now-btn": "Thumelela manje",
+        "aboutHeading": "Mayelana",
+        "aboutTextHeadingMain": "Ukuhlanga okukhanyayo -",
+        "aboutTextHeadingSub": "Istyela sakho, ngesizathu sakho!",
+        "aboutTextDescription1": "E-Glamorous Fusion, sifuna ukuthi ungakwenza umdwebo onjalo kunawe. Iteam yetimayini ethandekayo ithumelela ukuthi iqinise izikhala zakho zokuhlanza ngaphandle nokwethembeka kwezinhlelo zokuze kube yilula.",
+        "aboutTextDescription2": "Uma kudinga uhlanza olulula lwecingo, izicoco ezibukhali, ukuhlela okuhle kahle noma izinaili ezilula zilula, siyitholakala lomsebenzi womcimbi wakho. Ngekuhlonipha kohlelo lwenkululeko kanye nokucabangelela okuhamba phambili kwabashayeli, sithuthukisa ukuthuthukisa okufaneleka okukwenza ukuthi uqale ukuthembeka nesigaba. Hamba uhambo lwakho lokukhanya lwezokuhlanza lapha!",
+        "barberMainText": "Izikhala eziswagile, istayela esiswagile -",
+        "barberSubText": "Thumelela isitayela sakho esisha!",
+        "makeUpMainText": "Ithumelela ukuthuthukisa ukukhanya kwakho -",
+        "makeUpSubText": "Funga ukukhanya kwakho!",
+        "nailsMainText": "Ukuhlanza okuhle olulula -",
+        "nailSubText": "Bheka izinaili zakho ezilula!",
+        "braidingMainText": "Izicoco ezibukhali -",
+        "braidingSubText": "Wenza uhlelo lwakho!"
+    },
+    "Navbar": {
+        "homeHeading": "Onke",
+        "aboutHeading": "Mayelana",
+        "servicesHeading": "Izinsiza",
+        "blogHeading": "Ibhulogi",
+        "profile": "Iprofayela"
+    },
+    "Services": {
+        "haircut": "UKUHLANZA IZINKALA",
+        "hairSalon": "ISALON SEZINKALA",
+        "makeUp": "UKUKHLANZA",
+        "nails": "IZINAILI",
+        "seeMoreBtnText": "Bheka okukhona okunzima"
+    },
+    "ServiceStores": {
+        "introBarberText": "Uyafuna izindawo zokuhlanza?",
+        "introSalonText": "Uyafuna izindawo zokuhlanza?",
+        "introMakeupText": "Uthanda ukukhlanza?",
+        "introNailsText": "Uyafuna izindawo zezinaili?",
+        "CurrentLocationPlaceholder": "Indawo yokutholi okufanele...",
+        "Store": "Isitolo?"
+    },
+    "ServiceStore": {
+        "time": "Isikhathi",
+        "price": "Isilinganiso",
+        "viewMore": "Bheka okukhona okunzima",
+        "bookNowBtnText": "Thumelela manje"
+    }
+}
