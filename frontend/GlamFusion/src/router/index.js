@@ -35,12 +35,21 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: () => import('../views/ServicesView.vue')
-    },
-    
+    },   
     {
       path: '/blog',
       name: 'blog',
       component: () => import('../views/ServicesView.vue')
+    },
+    {
+      path: '/dashboard/home',
+      name: 'dashboard-home',
+      component: () => import('../views/DashboardHomeView.vue')
+    },
+    {
+      path: '/dashboard/bookings',
+      name: 'dashboard-bookings',
+      component: () => import('../views/DashboardBookingsView.vue')
     },
     // {
     //   path: '/services',
