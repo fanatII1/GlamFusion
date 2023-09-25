@@ -51,6 +51,16 @@ const router = createRouter({
       name: 'dashboard-bookings',
       component: () => import('../views/DashboardBookingsView.vue')
     },
+    {
+      path: '/dashboard/services',
+      name: 'dashboard-services',
+      component: () => import('../views/DashboardServicesView.vue')
+    },
+    // {
+    //   path: '/dashboard/profile',
+    //   name: 'dashboard-profile',
+    //   component: () => import('../views/DashboardProfileView.vue')
+    // },
     // {
     //   path: '/services',
     //   name: 'services',

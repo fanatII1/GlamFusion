@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 import BarberImg from '../../assets/img/barber.png';
+import DashboardNav from './DashboardNav.vue';
 
 const counter = ref(0);
 const leftRotation = ref(0);
@@ -24,14 +25,7 @@ const interval = setInterval(() => {
 
 <template>
     <div id="dashboard-wrapper">
-      <nav id="dash-navbar">
-        <div class="nav-item nav-logo">G F</div>
-        <div class="nav-item"><i class="fa-solid fa-house"></i></div>
-        <div class="nav-item"><i class="fa-solid fa-briefcase"></i></div>
-        <div class="nav-item"><i class="fa-solid fa-calendar-days"></i></div>
-        <div class="nav-item"><i class="fa-regular fa-user"></i></div>
-        <div class="nav-item"><i class="fa-solid fa-right-to-bracket"></i></div>
-      </nav>
+      <DashboardNav/>
   
       <main id="dashboard-main-content">
         <div class="bookings-styles-summary">
@@ -115,18 +109,6 @@ const interval = setInterval(() => {
 </template>
 
 <style>
-/* Force Hiding The Global Navbar */
-.navbar {
-    display: none !important;
-}
-
-body {
-    background-color: #fff !important;
-}
-
-#app {
-    padding: 0 !important;
-}
 
 #dashboard-wrapper, #dash-navbar, #dashboard-main-content{
     height: 100%
@@ -144,14 +126,14 @@ body {
 }
 
 #dashboard-main-content{
-    width: 95%;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    background-color: #fff;
-    position: absolute;
-    right: 0;
-    display: flex;
-    justify-content: center;
+  width: 95%;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  background-color: #fff;
+  position: absolute;
+  right: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .nav-item {
@@ -163,6 +145,10 @@ body {
     max-width: 50px;
     cursor: pointer;
     list-style-type: none;
+}
+
+.nav-item a{
+ color: #d69c4a;
 }
 
 .bookings-styles-summary{
@@ -193,6 +179,7 @@ body {
     align-items: baseline;
     list-style: none;
 }
+
 .view-all{
     margin-left: 2%;
     text-decoration: right;
@@ -218,7 +205,6 @@ body {
   width: 80px;
   margin: -40px 0 0 -40px;
   border-radius: 100%;
-
   box-shadow: 0 1px 0 rgba(0,0,0,0.2);
 }
 .circular .circle{
