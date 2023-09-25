@@ -47,4 +47,20 @@ export class ActuityController {
       console.log(userAppointmentData)
       return userAppointmentData;
     }
+
+    @Get('appointments')
+    async getAllCalendarAppointments() {
+      let baseUrl = "https://acuityscheduling.com/api/v1/appointments";
+      let options =  {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          'Authorization': 'Basic MzAwNDQ4MDM6MGY0YjM1N2U4NzQzYzQ4YzQ2MmI3ZDljZDMxYTU2ODU='
+        }
+      }
+      let response = await fetch(baseUrl, options);
+      let userAppointmentData = await response.json();
+      console.log(userAppointmentData)
+      return userAppointmentData;
+    }
 }

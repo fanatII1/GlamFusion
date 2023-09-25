@@ -22,7 +22,7 @@ const bookNowBtnText = t('ServiceStore.bookNowBtnText');
 
 const user = ref(authStore.user);
 const baseUrl = ref('http://localhost:1337');
-const serverUrl = ref('http://localhost:3000')
+const serverUrl = ref('http://localhost:3000');
 const calendarUrl = ref('https://app.acuityscheduling.com/schedule.php?owner=')
 const calendarOwnerId = ref('30044803');
 const calendarParams = ref(null)

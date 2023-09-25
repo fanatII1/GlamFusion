@@ -60,7 +60,7 @@ const interval = setInterval(() => {
         </div>
 
         <ul class="latest-bookings-summary">
-            <li id="latest-bookings-heading">Latest Bookings</li>
+            <li id="latest-bookings-heading"><RouterLink to="/dashboard/bookings">Latest Bookings <i class="fa-solid fa-arrow-up-right-from-square"></i></RouterLink></li>
             <li class="latest-bookings">
                 <p id="name"><span id="number">1</span>George Marwanqana</p>
                 <p id="time">08:00 - 10:00</p>
@@ -178,6 +178,14 @@ const interval = setInterval(() => {
     justify-content: center;
     align-items: baseline;
     list-style: none;
+    cursor: pointer;
+}
+
+#latest-bookings-heading a {
+  color: #000
+}
+.total-bookings-heading:hover, .top-styles-heading:hover, #latest-bookings-heading:hover{
+  text-decoration: underline;
 }
 
 .view-all{
