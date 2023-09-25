@@ -56,16 +56,11 @@ const router = createRouter({
       name: 'dashboard-services',
       component: () => import('../views/DashboardServicesView.vue')
     },
-    // {
-    //   path: '/dashboard/profile',
-    //   name: 'dashboard-profile',
-    //   component: () => import('../views/DashboardProfileView.vue')
-    // },
-    // {
-    //   path: '/services',
-    //   name: 'services',
-    //   component: () => import('../views/ServicesView.vue')
-    // }
+    {
+      path: '/dashboard/profile',
+      name: 'dashboard-profile',
+      component: () => import('../views/DashboardProfileView.vue')
+    }
   ]
 })
 
