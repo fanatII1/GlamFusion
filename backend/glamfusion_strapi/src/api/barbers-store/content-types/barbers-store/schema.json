@@ -13,10 +13,12 @@
   "pluginOptions": {},
   "attributes": {
     "StoreName": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "StoreLocation": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "StoreImage": {
       "type": "media",
@@ -67,6 +69,24 @@
     },
     "Latitude": {
       "type": "float"
+    },
+    "ActuityID": {
+      "type": "string",
+      "required": true
+    },
+    "ActuityLink": {
+      "type": "string"
+    },
+    "ActuityKey": {
+      "type": "string",
+      "required": true
+    },
+    "StoreEmail": {
+      "type": "string",
+      "required": true
+    },
+    "PhoneNumber": {
+      "type": "integer"
     }
   }
 }

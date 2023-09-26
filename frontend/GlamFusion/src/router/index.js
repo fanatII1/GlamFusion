@@ -60,6 +60,11 @@ const router = createRouter({
       path: '/dashboard/profile',
       name: 'dashboard-profile',
       component: () => import('../views/DashboardProfileView.vue')
+    },
+    {
+      path: '/dashboard-onboarding',
+      name: 'dashboard-onboarding',
+      component: () => import('../views/OnboardingView.vue')
     }
   ]
 })
