@@ -33,7 +33,7 @@ async function fetchBooking(){
         const parseFormData = parseFormsText(bookedCalendars);
         storeBookings.value = parseFormData;
         loading.value = false;
-        console.log('MOERRRRRRRRRRSKONT', parseFormData)
+        // console.log('MOERRRRRRRRRRSKONT', parseFormData)
 }
 
 function parseFormsText(formData) {

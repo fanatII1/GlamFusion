@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import router from '../router/index';
 
 // Define refs for form fields
 const fullName = ref('');
@@ -34,6 +35,7 @@ const submitForm = () => {
     ActuityKey: acuityKey.value,
     ActuityID: acuityId.value,
   };
+  console.log(strapi)
 
   formData.append('files.StoreImage', uploadPhoto.value);
   formData.append('data', JSON.stringify(strapi));
@@ -43,13 +45,25 @@ const submitForm = () => {
     // headers: { 'Content-Type': 'application/json' },
     body: formData,
   })
-  .then((res) => res.json())
-  .then((data) => console.log(data));
+  .then((res) => {
+    if(res.status === 200){
+      return res.json()
+    } else {
+      alert("there was an issue in the registration of the form. ")
+    }
+  })
+  .then((data) => {
+    //set the organisation id in storage so that it'll be used to retrieve organisation info on dashboard
+    localStorage.setItem("organisation", JSON.stringify({organisationId: data?.data?.id}));
+    const path = '/dashboard/home';
+    router.push(path);
+  });
 };
 </script>
 
 <template>
-  <section class="container">
+  <main id="onboarding-main-content">
+    <section class="container">
     <header>Registration Form</header>
     <form action="#" class="form">
       <div class="input-box">
@@ -79,20 +93,21 @@ const submitForm = () => {
       </div>
       <div class="input-box">
         <label>Acuity Link</label>
-        <input type="text" placeholder="Enter Acuity Calendar Link" v-model="actuityLink" required />
+        <input type="text" placeholder="Enter Acuity Calendar Link" v-model="acuityLink" required />
       </div>
       <div class="input-box">
         <label>Acuity ID</label>
-        <input type="text" placeholder="Enter Acuity ID" v-model="actuityId" required />
+        <input type="text" placeholder="Enter Acuity ID" v-model="acuityId" required />
       </div>
       <div class="input-box">
         <label>Acuity Key</label>
-        <input type="text" placeholder="Enter Acuity Key" v-model="actuityId" required />
+        <input type="text" placeholder="Enter Acuity Key" v-model="acuityKey" required />
       </div>
       <!-- End of New Fields -->
       <button @click.prevent="submitForm">Submit</button>
     </form>
   </section>
+  </main>
 </template>
 
 <style>
@@ -109,21 +124,18 @@ const submitForm = () => {
   display: none !important;
 }
 
-body {
-  background-color: #fff !important;
-}
 
 #app {
   padding: 0 !important;
 }
 
-body {
+#onboarding-main-content {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgb(130, 106, 251);
+  background: #fff;
 }
 .container {
   position: relative;
