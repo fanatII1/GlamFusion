@@ -37,7 +37,7 @@ const activeButton = ref(null);
 const calendarData = ref(null);
 const platformMerchantId = ref("10031040");
 const platformMerchantKey = ref("7eyrpgpdvwlgc");
-const amount = ref("30.00");
+const amount = ref("0.00");
 const passPhrase = ref('LionelMess10')
 const payFastSignature = ref(null);
 const splitPayment = ref(`{"split_payment": {"merchant_id": ${merchant_id}, "percentage": 10, "min": 10, "max": 100000}}`);
@@ -67,7 +67,7 @@ function updateDynamicImage(index, image) {
   changeImageNo.value = index;
   dynamicStoreImage.value = image;
 }
-console.log(calendarUrl.value+calendarOwnerId.value)
+
 const openModal = () => {
   if(bookedService.value !== null){
     isModalOpen.value = true;
@@ -76,7 +76,6 @@ const openModal = () => {
     alert('You need to select a service in order to book.')
   }
   activeButton.value = null;
-  bookedService.value = null;
 };
 
 const closeModal = (event) => {
@@ -95,7 +94,9 @@ const selectService = (index, service) => {
     activeButton.value = null;
   } else {
     activeButton.value = index;
+    // console.log(ServicePrice)
     bookedService.value = ServiceName;
+    amount.value = ServicePrice;
     const { displayName, email } = user.value;
     calendarParams.value = {firstName: displayName, email, bookedService: bookedService.value};
 
@@ -104,6 +105,7 @@ const selectService = (index, service) => {
 };
 
 const submitForm = async () => {
+  console.log('form submit')
   try {
     const response = await fetch(`${serverUrl.value}/payments/generate-signature`, {
       method: 'POST',
@@ -140,8 +142,9 @@ onBeforeMount(() => {
         
         //if user has paid, we implement a gateway
         if(formData['Would you like to pay now (online)?'] === 'yes'){
-          await submitForm();
+          // await submitForm();
           paymentForm.value.submit();
+          console.log(bookedService.value)
           bookedService.value =  null;
         }
       }
@@ -259,7 +262,7 @@ onMounted(() => {
           <input type="hidden" name="merchant_id" :value="platformMerchantId" />
           <input type="hidden" name="merchant_key" :value="platformMerchantKey" />
           <input type="hidden" name="amount" :value="amount" />
-          <input type="hidden" name="item_name" :value="bookedService.ServiceName" />
+          <input type="hidden" name="item_name" :value="bookedService" />
           <!-- <input type="hidden" name="return_url" value="https://9a7d-197-184-165-220.ngrok-free.app">
           <input type="hidden" name="cancel_url" value="https://9a7d-197-184-165-220.ngrok-free.app">
           <input type="hidden" name="notify_url" value="https://9a7d-197-184-165-220.ngrok-free.app"> -->
