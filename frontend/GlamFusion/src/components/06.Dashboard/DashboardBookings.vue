@@ -27,13 +27,39 @@ const serverUrl = ref('http://localhost:3000');
 //   }
 // }
 
-async function fetchBooking(){
-        const getCalendar = await fetch(`${serverUrl.value}/actuity/appointments`);
-        const bookedCalendars = await getCalendar.json();
-        const parseFormData = parseFormsText(bookedCalendars);
-        storeBookings.value = parseFormData;
-        loading.value = false;
-        // console.log('MOERRRRRRRRRRSKONT', parseFormData)
+async function fetchBooking() {
+  const baseStrapiURL = 'http://localhost:1337';
+  const baseServerURL = 'http://localhost:3000';
+  const service = 'barbers-stores';
+  const organisationData = JSON.parse(localStorage.getItem('organisation'));
+  const { organisationId } = organisationData;
+  console.log(organisationId);
+
+  try {
+    const response = await fetch(
+      `${baseStrapiURL}/api/${service}/${organisationId}/?populate[StoreImage]=*&populate[barber_services][populate]=*&populate[members][populate]=*&populate[services][populate]=*`
+    );
+    const data = await response.json();
+    const { attributes } = data.data;
+    const { ActuityID, ActuityKey } = attributes;
+    const calendarAccessData = { key: ActuityKey, id: ActuityID };
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(calendarAccessData),
+    };
+
+    //we  fetch bookings and parse(covert) the formsText string data to read the booking, using parseFormsText function
+    //we will display only latest five bookings
+    const getOrganisationBookings = await fetch(`${baseServerURL}/actuity/organisationBookings`, options);
+    const bookingsResults = await getOrganisationBookings.json();
+    const parseBookingsFormData = parseFormsText(bookingsResults);
+
+    storeBookings.value = parseBookingsFormData
+    loading.value = false;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
 }
 
 function parseFormsText(formData) {
