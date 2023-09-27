@@ -75,6 +75,8 @@ const openModal = () => {
   else{
     alert('You need to select a service in order to book.')
   }
+  activeButton.value = null;
+  bookedService.value = null;
 };
 
 const closeModal = (event) => {
@@ -290,6 +292,7 @@ onMounted(() => {
 
 #map{
   border-radius: 10px;
+  z-index: -1;
 }
 
 #storeDetails{
