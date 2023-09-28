@@ -35,7 +35,6 @@ const submitForm = () => {
     ActuityKey: acuityKey.value,
     ActuityID: acuityId.value,
   };
-  console.log(strapi)
 
   formData.append('files.StoreImage', uploadPhoto.value);
   formData.append('data', JSON.stringify(strapi));
@@ -53,8 +52,9 @@ const submitForm = () => {
     }
   })
   .then((data) => {
+    console.log(data)
     //set the organisation id in storage so that it'll be used to retrieve organisation info on dashboard
-    localStorage.setItem("organisation", JSON.stringify({organisationId: data?.data?.id}));
+    localStorage.setItem("organisation", JSON.stringify({organisationId: data?.data?.id, organisationName: data?.data?.attributes?.StoreName}));
     const path = '/dashboard/home';
     router.push(path);
   });

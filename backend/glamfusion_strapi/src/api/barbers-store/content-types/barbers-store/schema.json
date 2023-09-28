@@ -14,11 +14,11 @@
   "attributes": {
     "StoreName": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "StoreLocation": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "StoreImage": {
       "type": "media",
@@ -62,7 +62,7 @@
     },
     "merchant_id": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "Longitude": {
       "type": "float"
@@ -72,18 +72,18 @@
     },
     "ActuityID": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "ActuityLink": {
       "type": "string"
     },
     "ActuityKey": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "StoreEmail": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "PhoneNumber": {
       "type": "integer"

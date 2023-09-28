@@ -6,21 +6,59 @@ const storeServices = ref([]);
 const loading = ref(true);
 const strapiBaseURL = ref('http://localhost:1337');
 const showModal = ref(false);
+const serviceName = ref('');
+const servicePrice = ref('');
+const servicePhoto = ref(null);
+const organisationData = JSON.parse(localStorage.getItem('organisation'));
 
 const toggleModal = () => {
   showModal.value = !showModal.value;
 };
 
-const closeModal = () => {
-  if (showModal.value) {
-    showModal.value = false;
-  }
+const handleFileChange = (event) => {
+  servicePhoto.value = event.target.files[0];
+  console.log(servicePhoto.value)
+};
+
+//we will create a new servie here.
+//in order to create entries with files and relations read the docs here: 
+// https://docs.strapi.io/dev-docs/api/rest#requests  https://docs.strapi.io/dev-docs/api/rest/relations
+const submitForm = () => {
+  // Create a FormData object to send the form data
+  const formData = new FormData();
+  const storeId = organisationData.organisationId;
+  const strapiServiceData = {
+    ServiceName: serviceName.value,
+    ServicePrice: servicePrice.value,
+    ServiceImage: servicePhoto.value,
+    owning_barber: {
+      connect: [storeId]
+    }
+  };
+  formData.append('files.ServiceImage', servicePhoto.value);
+  formData.append('data', JSON.stringify(strapiServiceData));
+
+  //create a new service
+  fetch('http://localhost:1337/api/store-services?populate[owning_barber][populate]=*', {
+    method: 'post',
+    body: formData,
+  })
+  .then((res) => {
+    if(res.status === 200){
+      return res.json()
+    } else {
+      console.log(res.json())
+      alert("there was an issue in the creation of a new service. Contact Support ")
+    }
+  })
+  .then(async(serviceData) => {
+    console.log(serviceData)
+  });
 };
 
 async function fetchData() {
   const baseURL = 'http://localhost:1337';
   const service = 'barbers-stores';
-  const organisationData = JSON.parse(localStorage.getItem('organisation'));
   const { organisationId } = organisationData;
   console.log(organisationId);
 
