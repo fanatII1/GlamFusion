@@ -29,17 +29,20 @@
         "audios"
       ]
     },
-    "nail_tech_services": {
+    "services": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::nail-tech-service.nail-tech-service",
-      "inversedBy": "owning_technicians"
+      "inversedBy": "owner"
     },
     "members": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::nail-tech-store-member.nail-tech-store-member",
       "mappedBy": "nail_tech_store"
+    },
+    "StoreType": {
+      "type": "string"
     }
   }
 }

@@ -31,34 +31,17 @@
         "audios"
       ]
     },
-    "barber_services": {
+    "services": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::store-service.store-service",
-      "inversedBy": "owning_barber"
+      "inversedBy": "owner"
     },
     "members": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::barber-store-member.barber-store-member",
       "mappedBy": "barbers_store"
-    },
-    "bserv": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::bserv.bserv",
-      "mappedBy": "barbers_store"
-    },
-    "snd": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
     },
     "merchant_id": {
       "type": "string",
@@ -87,6 +70,9 @@
     },
     "PhoneNumber": {
       "type": "integer"
+    },
+    "StoreType": {
+      "type": "string"
     }
   }
 }

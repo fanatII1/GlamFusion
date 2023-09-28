@@ -18,11 +18,11 @@
     "Price": {
       "type": "decimal"
     },
-    "owning_braiders": {
+    "owner": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::braiding-store.braiding-store",
-      "mappedBy": "braiding_services"
+      "mappedBy": "services"
     }
   }
 }

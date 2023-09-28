@@ -27,11 +27,11 @@
     "ServicePrice": {
       "type": "decimal"
     },
-    "owning_barber": {
+    "owner": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::barbers-store.barbers-store",
-      "mappedBy": "barber_services"
+      "mappedBy": "services"
     }
   }
 }

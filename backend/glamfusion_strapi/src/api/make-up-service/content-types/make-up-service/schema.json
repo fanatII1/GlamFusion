@@ -29,11 +29,11 @@
         "audios"
       ]
     },
-    "owning_artists": {
+    "owner": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::make-up-store.make-up-store",
-      "mappedBy": "make_up_services"
+      "mappedBy": "services"
     }
   }
 }

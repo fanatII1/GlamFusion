@@ -31,15 +31,15 @@ const submitForm = () => {
   // Create a FormData object to send the form data
   const formData = new FormData();
   const storeId = organisationData.organisationId;
-  const createServiceUrl = `${strapiBaseURL.value}/api/store-services?populate[owning_barber][populate]=*&populate[ServiceImage]=*`;
-  const updateServiceUrl = `${strapiBaseURL.value}/api/store-services/${service.value}?populate[owning_barber][populate]=*&populate[ServiceImage]=*`
+  const createServiceUrl = `${strapiBaseURL.value}/api/store-services?populate[owner][populate]=*&populate[ServiceImage]=*`;
+  const updateServiceUrl = `${strapiBaseURL.value}/api/store-services/${service.value}?populate[owner][populate]=*&populate[ServiceImage]=*`
   const requestUrl = requestMethod.value === 'POST' ? createServiceUrl : updateServiceUrl;
 
   const strapiServiceData = {
     ServiceName: serviceName.value,
     ServicePrice: servicePrice.value,
     ServiceImage: servicePhoto.value,
-    owning_barber: {
+    owner: {
       connect: [storeId],
     },
   };
@@ -86,12 +86,12 @@ async function fetchData() {
 
   try {
     const response = await fetch(
-      `${strapiBaseURL.value}/api/${service}/${organisationId}/?populate[StoreImage]=*&populate[barber_services][populate]=*&populate[members][populate]=*&populate[services][populate]=*`
+      `${strapiBaseURL.value}/api/${service}/${organisationId}/?populate[StoreImage]=*&populate[services][populate]=*&populate[members][populate]=*&populate[services][populate]=*`
     );
     const data = await response.json();
     const { attributes } = data.data;
-    const { barber_services } = attributes;
-    storeServices.value = barber_services.data;
+    const { services } = attributes;
+    storeServices.value = services.data;
     loading.value = false;
   } catch (error) {
     console.error('Error fetching data:', error);

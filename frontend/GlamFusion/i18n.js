@@ -19,7 +19,7 @@ const messages = {
 
 const i18n = createI18n({
   legacy: false,
-  locale: 'fr-FR', // Set the initial locale to English
+  locale: 'en-US', // Set the initial locale to English
   messages,
 });
 

@@ -29,17 +29,20 @@
         "audios"
       ]
     },
-    "braiding_services": {
+    "services": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::braiding-service.braiding-service",
-      "inversedBy": "owning_braiders"
+      "inversedBy": "owner"
     },
     "members": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::braiding-store-member.braiding-store-member",
       "mappedBy": "braiding_store"
+    },
+    "StoreType": {
+      "type": "string"
     }
   }
 }

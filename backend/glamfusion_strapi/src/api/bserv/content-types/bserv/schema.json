@@ -11,12 +11,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "barbers_store": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::barbers-store.barbers-store",
-      "inversedBy": "bserv"
-    },
     "sd": {
       "allowedTypes": [
         "images",

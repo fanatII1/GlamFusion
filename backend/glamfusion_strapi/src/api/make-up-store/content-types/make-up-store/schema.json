@@ -29,17 +29,20 @@
         "audios"
       ]
     },
-    "make_up_services": {
+    "services": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::make-up-service.make-up-service",
-      "inversedBy": "owning_artists"
+      "inversedBy": "owner"
     },
     "members": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::make-up-store-member.make-up-store-member",
       "mappedBy": "make_up_store"
+    },
+    "StoreType": {
+      "type": "string"
     }
   }
 }

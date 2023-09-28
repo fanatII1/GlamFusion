@@ -21,11 +21,11 @@ const queryStorePlaceholder = t('ServiceStores.Store');
 
 function viewStore(store) {
   const { id, attributes } = store;
-  const { StoreName, StoreLocation, StoreImage, members, services, merchant_id, Longitude, Latitude } = attributes;
-  console.log(attributes)
+  const { StoreName, StoreLocation, StoreImage, members, storeServices, merchant_id, Longitude, Latitude } = attributes;
+  console.log(attributes, storeServices)
   const storeImage = baseURL.value + StoreImage.data.attributes.url;
   const StoreMembers = members.data;
-  const StoreServices = services.data;
+  const StoreServices = storeServices.data;
 
   //all store information that wll be accessed in the ServiceStore.vue(the specific store that was clicked)
   //the merchant_id is used to identify the payfast account that will will split payments
@@ -42,7 +42,7 @@ function viewStore(store) {
 
   localStorage.setItem('storeInfo', JSON.stringify(storeInfo));
 
-  const path = `/services/${service}/${StoreName}`;
+  const path = `/services/${route.params.id}/${StoreName}`;
   router.push({ path });
 }
 
@@ -57,20 +57,21 @@ async function fetchData() {
   const service = 'barbers-stores';
 
   try {
-    const response = await fetch(`${baseURL}/api/${service}?populate[StoreImage]=*&populate[barber_services][populate]=*&populate[members][populate]=*&populate[services][populate]=*`);
+    const response = await fetch(`${baseURL}/api/${service}?populate[StoreImage]=*&populate[services][populate]=*&populate[members][populate]=*&populate[services][ServiceImage][populate]=*`);
     const data = await response.json();
     const barberShops = data.data;
+    console.log(data.data)
 
     const cleanedBarberShops = barberShops.map(({ id, attributes }) => {
       const {
         createdAt, updatedAt, publishedAt,
-        barber_services, nail_tech_services, make_up_services, braiding_services,
+        services,
         ...cleanedAttributes
       } = attributes;
 
-      const services = barber_services || nail_tech_services || make_up_services || braiding_services;
+      const storeServices = services ;
 
-      return { id, attributes: { ...cleanedAttributes, services }};
+      return { id, attributes: { ...cleanedAttributes, storeServices }};
     });
     console.log(cleanedBarberShops)
     stores.value = cleanedBarberShops;
@@ -127,7 +128,7 @@ onMounted(() => {
                     <li class='star'><i class='fa-solid fa-star'></i></li>
                 </ul>
                 <ul class='top-services'>
-                    <li v-for="service in store.attributes.services.data" class='service'>{{service.attributes.ServiceName}}</li>
+                    <li v-for="service in store.attributes.storeServices.data" class='service'>{{service.attributes.ServiceName}}</li>
                 </ul>
             </div>
         </section>

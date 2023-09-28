@@ -29,11 +29,11 @@
         "audios"
       ]
     },
-    "owning_technicians": {
+    "owner": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::nail-tech-store.nail-tech-store",
-      "mappedBy": "nail_tech_services"
+      "mappedBy": "services"
     }
   }
 }

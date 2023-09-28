@@ -12,6 +12,7 @@ const socket = io('http://localhost:3000');
 const authStore = useAuthStore();
 const storeInfo = JSON.parse(localStorage.getItem('storeInfo'));
 const { StoreName, StoreLocation, storeImage, StoreMembers, StoreServices, merchant_id, Longitude, Latitude } = storeInfo;
+console.log(StoreServices)
 
 let map = null;
 //translation text

@@ -37,7 +37,7 @@ async function fetchBooking() {
 
   try {
     const response = await fetch(
-      `${baseStrapiURL}/api/${service}/${organisationId}/?populate[StoreImage]=*&populate[barber_services][populate]=*&populate[members][populate]=*&populate[services][populate]=*`
+      `${baseStrapiURL}/api/${service}/${organisationId}/?populate[StoreImage]=*&populate[services][populate]=*&populate[members][populate]=*&populate[services][populate]=*`
     );
     const data = await response.json();
     const { attributes } = data.data;
