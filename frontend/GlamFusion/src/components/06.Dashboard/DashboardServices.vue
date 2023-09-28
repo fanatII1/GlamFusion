@@ -38,7 +38,7 @@ const submitForm = () => {
   formData.append('data', JSON.stringify(strapiServiceData));
 
   //create a new service
-  fetch(`${strapiBaseURL.value}/api/store-services?populate[owning_barber][populate]=*`, {
+  fetch(`${strapiBaseURL.value}/api/store-services?populate[owning_barber][populate]=*&populate[ServiceImage]=*`, {
     method: 'post',
     body: formData,
   })
@@ -51,17 +51,19 @@ const submitForm = () => {
       }
     })
     .then(async (serviceData) => {
-      console.log(serviceData);
+      storeServices.value.push(serviceData.data);
+      console.log(storeServices.value)
     });
 };
 
 //deletes a service
 const deleteService = async (serviceId) => {
-  console.log(serviceId)
   const options = { method: 'DELETE' };
   const response = await fetch(`${strapiBaseURL.value}/api/store-services/${serviceId}`, options);
   const deletedService = await response.json();
-  console.log(deletedService)
+
+  storeServices.value = storeServices.value.filter((service) => service.id !== deletedService.data.id )
+  console.log(deletedService, storeServices.value)
 }
 
 async function fetchData() {
@@ -76,7 +78,6 @@ async function fetchData() {
     const data = await response.json();
     const { attributes } = data.data;
     const { barber_services } = attributes;
-
     storeServices.value = barber_services.data;
     loading.value = false;
   } catch (error) {
@@ -100,13 +101,13 @@ onMounted(() => {
 
       <div class="services">
         <div class="service" v-for="service in storeServices">
-          <p class="service-name">{{ service.attributes?.ServiceName }}</p>
-          <p class="service-price">Price: R{{ service.attributes?.ServicePrice }}</p>
+          <p class="service-name">{{ service.attributes?.ServiceName || service.data.attributes?.ServiceName}} {{ service.id || service.data.id }}</p>
+          <p class="service-price">Price: R{{ service.attributes?.ServicePrice|| service.data.attributes?.ServiceName }}</p>
           <div class="service-display-edit">
-            <img :src="strapiBaseURL + service.attributes?.ServiceImage?.data?.attributes?.url" alt="" class="service-img-display" />
+            <img :src="strapiBaseURL + service.attributes?.ServiceImage?.data?.attributes?.url ||  service.data?.attributes?.ServiceImage?.data?.attributes?.url " alt="" class="service-img-display" />
             <div class="manage-service">
               <i class="fa-solid fa-pen"></i>
-              <i class="fa-solid fa-trash" @click="deleteService(service.id)"></i>
+              <i class="fa-solid fa-trash" @click="deleteService(service.id || service.data.id)"></i>
             </div>
           </div>
         </div>
