@@ -9,10 +9,15 @@ const showModal = ref(false);
 const serviceName = ref('');
 const servicePrice = ref('');
 const servicePhoto = ref(null);
+const requestMethod = ref('');
+const service = ref('');
 const organisationData = JSON.parse(localStorage.getItem('organisation'));
 
-const toggleModal = () => {
+const toggleModal = (method, serviceId) => {
   showModal.value = !showModal.value;
+  console.log(method)
+  requestMethod.value = method;
+  service.value = serviceId;
 };
 
 const handleFileChange = (event) => {
@@ -26,6 +31,10 @@ const submitForm = () => {
   // Create a FormData object to send the form data
   const formData = new FormData();
   const storeId = organisationData.organisationId;
+  const createServiceUrl = `${strapiBaseURL.value}/api/store-services?populate[owning_barber][populate]=*&populate[ServiceImage]=*`;
+  const updateServiceUrl = `${strapiBaseURL.value}/api/store-services/${service.value}?populate[owning_barber][populate]=*&populate[ServiceImage]=*`
+  const requestUrl = requestMethod.value === 'POST' ? createServiceUrl : updateServiceUrl;
+
   const strapiServiceData = {
     ServiceName: serviceName.value,
     ServicePrice: servicePrice.value,
@@ -37,9 +46,9 @@ const submitForm = () => {
   formData.append('files.ServiceImage', servicePhoto.value);
   formData.append('data', JSON.stringify(strapiServiceData));
 
-  //create a new service
-  fetch(`${strapiBaseURL.value}/api/store-services?populate[owning_barber][populate]=*&populate[ServiceImage]=*`, {
-    method: 'post',
+  //create/updates a new service
+  fetch(requestUrl, {
+    method: requestMethod.value,
     body: formData,
   })
     .then((res) => {
@@ -51,7 +60,11 @@ const submitForm = () => {
       }
     })
     .then(async (serviceData) => {
-      storeServices.value.push(serviceData.data);
+      //adds the latest service to the storeServices array or if a service exists we update it
+      const updateItemById = (serviceId, updatedData) => {
+        return storeServices.value.map((item) => (item.id === serviceId ? { ...item, ...updatedData } : item));
+      }
+      storeServices.value = updateItemById(serviceData.data.id, serviceData.data);
       console.log(storeServices.value)
     });
 };
@@ -96,7 +109,7 @@ onMounted(() => {
     <DashboardNav />
 
     <main id="dashboard-services-main-content">
-      <button class="toggle-modal-button" @click="toggleModal">{{ showModal ? '-' : '+' }}</button>
+      <button class="toggle-modal-button" @click="toggleModal('POST')">{{ showModal ? '-' : '+' }}</button>
       <h1 id="dashboard-services-heading">Services</h1>
 
       <div class="services">
@@ -106,7 +119,7 @@ onMounted(() => {
           <div class="service-display-edit">
             <img :src="strapiBaseURL + service.attributes?.ServiceImage?.data?.attributes?.url ||  service.data?.attributes?.ServiceImage?.data?.attributes?.url " alt="" class="service-img-display" />
             <div class="manage-service">
-              <i class="fa-solid fa-pen"></i>
+              <i class="fa-solid fa-pen" @click="toggleModal('PUT', service.id || service.data.id)"></i>
               <i class="fa-solid fa-trash" @click="deleteService(service.id || service.data.id)"></i>
             </div>
           </div>
@@ -115,7 +128,7 @@ onMounted(() => {
 
       <div id="services-modal" v-show="showModal" @click.stop>
         <section class="services-container">
-          <header>Registration Form</header>
+          <header>Create Service</header>
           <form action="#" class="form">
             <!-- New Fields -->
             <div class="input-box">
