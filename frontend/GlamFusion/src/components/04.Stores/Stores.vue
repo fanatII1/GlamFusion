@@ -21,8 +21,8 @@ const queryStorePlaceholder = t('ServiceStores.Store');
 
 function viewStore(store) {
   const { id, attributes } = store;
-  const { StoreName, StoreLocation, StoreImage, members, storeServices, merchant_id, Longitude, Latitude } = attributes;
-  console.log(attributes, storeServices)
+  const { StoreName, StoreLocation, StoreImage, members, StoreType, storeServices, merchant_id, Longitude, Latitude } = attributes;
+  console.log(attributes, storeServices, store)
   const storeImage = baseURL.value + StoreImage.data.attributes.url;
   const StoreMembers = members.data;
   const StoreServices = storeServices.data;
@@ -34,6 +34,7 @@ function viewStore(store) {
     StoreLocation,
     storeImage,
     StoreMembers,
+    StoreType,
     StoreServices,
     merchant_id, 
     Longitude,
@@ -41,8 +42,7 @@ function viewStore(store) {
   };
 
   localStorage.setItem('storeInfo', JSON.stringify(storeInfo));
-
-  const path = `/services/${route.params.id}/${StoreName}`;
+  const path = `/services/${StoreType}/${StoreName}`;
   router.push({ path });
 }
 
@@ -53,11 +53,10 @@ function viewStore(store) {
 //https://stackoverflow.com/a/70251184/17908449
 //https://stackoverflow.com/questions/76905893/image-url-not-showing-in-strapinested-data/76922008#76922008
 async function fetchData() {
-  const baseURL = 'http://localhost:1337';
-  const service = 'barbers-stores';
+  const baseURL = `http://localhost:1337/api/${route.params.id}`;
 
   try {
-    const response = await fetch(`${baseURL}/api/${service}?populate[StoreImage]=*&populate[services][populate]=*&populate[members][populate]=*&populate[services][ServiceImage][populate]=*`);
+    const response = await fetch(`${baseURL}?populate[StoreImage]=*&populate[services][populate]=*&populate[members][populate]=*&populate[services][ServiceImage][populate]=*`);
     const data = await response.json();
     const barberShops = data.data;
     console.log(data.data)

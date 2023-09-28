@@ -1,9 +1,10 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import router from '../router/index';
 
 // Define refs for form fields
 const fullName = ref('');
+const selectedStoreType = ref('');
 const emailAddress = ref('');
 const phoneNumber = ref('');
 const uploadPhoto = ref(null);
@@ -26,6 +27,7 @@ const submitForm = () => {
   const formData = new FormData();
   const strapi = {
     StoreName: fullName.value,
+    StoreType: selectedStoreType.value,
     StoreLocation: location.value,
     StoreImage: uploadPhoto.value,
     StoreEmail: emailAddress.value,
@@ -36,10 +38,11 @@ const submitForm = () => {
     ActuityID: acuityId.value,
   };
 
+
   formData.append('files.StoreImage', uploadPhoto.value);
   formData.append('data', JSON.stringify(strapi));
 
-  fetch('http://localhost:1337/api/barbers-stores', {
+  fetch(`http://localhost:1337/api/${selectedStoreType.value}`, {
     method: 'post',
     // headers: { 'Content-Type': 'application/json' },
     body: formData,
@@ -54,7 +57,7 @@ const submitForm = () => {
   .then((data) => {
     console.log(data)
     //set the organisation id in storage so that it'll be used to retrieve organisation info on dashboard
-    localStorage.setItem("organisation", JSON.stringify({organisationId: data?.data?.id, organisationName: data?.data?.attributes?.StoreName}));
+    localStorage.setItem("organisation", JSON.stringify({organisationId: data?.data?.id, organisationName: data?.data?.attributes?.StoreName, StoreType: data?.data?.attributes?.StoreType}));
     const path = '/dashboard/home';
     router.push(path);
   });
@@ -70,6 +73,15 @@ const submitForm = () => {
         <label>Organisation Name</label>
         <input type="text" placeholder="Enter Organisation Name" v-model="fullName" required />
       </div>
+      <div class="input-box">
+          <label>Select an Option</label>
+          <select v-model="selectedStoreType" class="select-box" required>
+            <option value="barbers-stores">Barber Store</option>
+            <option value="braiding-stores">Braiding Store</option>
+            <option value="make-up-stores">Make Up Store</option>
+            <option value="nail-tech-stores">Nail Tech Store</option>
+          </select>
+        </div>
       <div class="input-box">
         <label>Organisation Email</label>
         <input type="text" placeholder="Enter Organisation Email" v-model="emailAddress" required />
@@ -200,5 +212,23 @@ const submitForm = () => {
   .form :where(.gender-option, .gender) {
     row-gap: 15px;
   }
+}
+
+.select-box {
+  /* Add your dropdown styles here */
+  width: 100%;
+  height: 50px;
+  outline: none;
+  font-size: 1rem;
+  color: #707070;
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0 15px;
+}
+
+/* Additional styles for the dropdown (customize as needed) */
+.select-box:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
 }
 </style>

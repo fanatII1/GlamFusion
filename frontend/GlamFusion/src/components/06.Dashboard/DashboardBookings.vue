@@ -2,43 +2,18 @@
 import DashboardNav from './DashboardNav.vue';
 import { ref, onMounted } from 'vue';
 
-
 const storeBookings = ref([]);
 const loading = ref(true);
-const strapiBaseURL = ref('http://localhost:1337');
-const serverUrl = ref('http://localhost:3000');
-
-// async function fetchContentData() {
-//   const baseURL = 'http://localhost:1337';
-//   const booking = 'barbers-stores';
-//   const storeId = 1
-
-//   try {
-//     const response = await fetch(`${baseURL}/api/${booking}/${storeId}/?populate[StoreImage]=*&populate[barber_bookings][populate]=*&populate[members][populate]=*&populate[bookings][populate]=*`);
-//     const data = await response.json();
-//     const { attributes } = data.data;
-//     const { barber_bookings } = attributes
-//     console.log(barber_bookings.data)
-
-//     storebookings.value = barber_bookings.data;
-//     loading.value = false;
-//   } catch (error) {
-//     console.error('Error fetching data:', error);
-//   }
-// }
 
 async function fetchBooking() {
-  const baseStrapiURL = 'http://localhost:1337';
-  const baseServerURL = 'http://localhost:3000';
-  const service = 'barbers-stores';
   const organisationData = JSON.parse(localStorage.getItem('organisation'));
-  const { organisationId } = organisationData;
+  const { organisationId, StoreType } = organisationData;
   console.log(organisationId);
+  const baseStrapiURL = `http://localhost:1337/api/${StoreType}/${organisationId}/`;
+  const baseServerURL = 'http://localhost:3000';
 
   try {
-    const response = await fetch(
-      `${baseStrapiURL}/api/${service}/${organisationId}/?populate[StoreImage]=*&populate[services][populate]=*&populate[members][populate]=*&populate[services][populate]=*`
-    );
+    const response = await fetch(`${baseStrapiURL}?populate[StoreImage]=*&populate[services][populate]=*&populate[members][populate]=*&populate[services][populate]=*`);
     const data = await response.json();
     const { attributes } = data.data;
     const { ActuityID, ActuityKey } = attributes;

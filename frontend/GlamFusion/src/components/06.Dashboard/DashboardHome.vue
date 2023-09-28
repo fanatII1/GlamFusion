@@ -24,17 +24,14 @@ const interval = setInterval(() => {
 }, 80);
 
 async function fetchData() {
-  const baseStrapiURL = 'http://localhost:1337';
-  const baseServerURL = 'http://localhost:3000';
-  const service = 'barbers-stores';
   const organisationData = JSON.parse(localStorage.getItem('organisation'));
-  const { organisationId } = organisationData;
+  const { organisationId, StoreType } = organisationData;
   console.log(organisationId);
+  const baseStrapiURL = `http://localhost:1337/api/${StoreType}/${organisationId}/`;
+  const baseServerURL = 'http://localhost:3000';
 
   try {
-    const response = await fetch(
-      `${baseStrapiURL}/api/${service}/${organisationId}/?populate[StoreImage]=*&populate[services][populate]=*&populate[members][populate]=*&populate[services][populate]=*`
-    );
+    const response = await fetch(`${baseStrapiURL}?populate[StoreImage]=*&populate[services][populate]=*&populate[members][populate]=*&populate[services][populate]=*`);
     const data = await response.json();
     const { attributes } = data.data;
     const { ActuityID, ActuityKey } = attributes;

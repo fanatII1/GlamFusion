@@ -30,9 +30,14 @@ const handleFileChange = (event) => {
 const submitForm = () => {
   // Create a FormData object to send the form data
   const formData = new FormData();
-  const storeId = organisationData.organisationId;
-  const createServiceUrl = `${strapiBaseURL.value}/api/store-services?populate[owner][populate]=*&populate[ServiceImage]=*`;
-  const updateServiceUrl = `${strapiBaseURL.value}/api/store-services/${service.value}?populate[owner][populate]=*&populate[ServiceImage]=*`
+  
+  const organisationData = JSON.parse(localStorage.getItem('organisation'));
+  const { organisationId, StoreType } = organisationData;
+  const storeType = StoreType === "barbers-stores" ? 'store-services': StoreType === 'braiding-stores' ? 'braiding-services' : StoreType === 'nail-tech-stores' ? 'nail-tech-services' : StoreType === 'make-up-stores' ? 'make-up-services' : '';
+  // console.log(organisationId);
+
+  const createServiceUrl = `${strapiBaseURL.value}/api/${storeType}?populate[owner][populate]=*&populate[ServiceImage]=*`;
+  const updateServiceUrl = `${strapiBaseURL.value}/api/${storeType}/${service.value}?populate[owner][populate]=*&populate[ServiceImage]=*`
   const requestUrl = requestMethod.value === 'POST' ? createServiceUrl : updateServiceUrl;
 
   const strapiServiceData = {
@@ -40,7 +45,7 @@ const submitForm = () => {
     ServicePrice: servicePrice.value,
     ServiceImage: servicePhoto.value,
     owner: {
-      connect: [storeId],
+      connect: [organisationId],
     },
   };
   formData.append('files.ServiceImage', servicePhoto.value);
@@ -60,11 +65,17 @@ const submitForm = () => {
       }
     })
     .then(async (serviceData) => {
+      console.log(serviceData.data)
       //adds the latest service to the storeServices array or if a service exists we update it
-      const updateItemById = (serviceId, updatedData) => {
-        return storeServices.value.map((item) => (item.id === serviceId ? { ...item, ...updatedData } : item));
+      if(requestMethod.value === 'POST'){
+        storeServices.value.push(serviceData.data)
       }
-      storeServices.value = updateItemById(serviceData.data.id, serviceData.data);
+      else{
+        const updateItemById = (serviceId, updatedData) => {
+          return storeServices.value.map((item) => (item.id === serviceId ? { ...item, ...updatedData } : item));
+        }
+        storeServices.value = updateItemById(serviceData.data.id, serviceData.data);
+      }
       console.log(storeServices.value)
     });
 };
@@ -80,15 +91,17 @@ const deleteService = async (serviceId) => {
 }
 
 async function fetchData() {
-  const service = 'barbers-stores';
-  const { organisationId } = organisationData;
+  const organisationData = JSON.parse(localStorage.getItem('organisation'));
+  const { organisationId, StoreType } = organisationData;
   console.log(organisationId);
+  const baseStrapiURL = `http://localhost:1337/api/${StoreType}/${organisationId}/`;
+  const baseServerURL = 'http://localhost:3000';
 
   try {
-    const response = await fetch(
-      `${strapiBaseURL.value}/api/${service}/${organisationId}/?populate[StoreImage]=*&populate[services][populate]=*&populate[members][populate]=*&populate[services][populate]=*`
-    );
+    const response = await fetch(`${baseStrapiURL}?populate[StoreImage]=*&populate[services][populate]=*&populate[members][populate]=*&populate[services][ServiceImage][populate]=*&populate=*`);
+
     const data = await response.json();
+    console.log(data)
     const { attributes } = data.data;
     const { services } = attributes;
     storeServices.value = services.data;
