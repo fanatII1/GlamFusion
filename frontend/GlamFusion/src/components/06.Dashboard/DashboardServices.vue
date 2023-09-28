@@ -17,11 +17,10 @@ const toggleModal = () => {
 
 const handleFileChange = (event) => {
   servicePhoto.value = event.target.files[0];
-  console.log(servicePhoto.value)
 };
 
 //we will create a new servie here.
-//in order to create entries with files and relations read the docs here: 
+//in order to create entries with files and relations read the docs here:
 // https://docs.strapi.io/dev-docs/api/rest#requests  https://docs.strapi.io/dev-docs/api/rest/relations
 const submitForm = () => {
   // Create a FormData object to send the form data
@@ -32,44 +31,51 @@ const submitForm = () => {
     ServicePrice: servicePrice.value,
     ServiceImage: servicePhoto.value,
     owning_barber: {
-      connect: [storeId]
-    }
+      connect: [storeId],
+    },
   };
   formData.append('files.ServiceImage', servicePhoto.value);
   formData.append('data', JSON.stringify(strapiServiceData));
 
   //create a new service
-  fetch('http://localhost:1337/api/store-services?populate[owning_barber][populate]=*', {
+  fetch(`${strapiBaseURL.value}/api/store-services?populate[owning_barber][populate]=*`, {
     method: 'post',
     body: formData,
   })
-  .then((res) => {
-    if(res.status === 200){
-      return res.json()
-    } else {
-      console.log(res.json())
-      alert("there was an issue in the creation of a new service. Contact Support ")
-    }
-  })
-  .then(async(serviceData) => {
-    console.log(serviceData)
-  });
+    .then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        console.log(res.json());
+        alert('there was an issue in the creation of a new service. Contact Support ');
+      }
+    })
+    .then(async (serviceData) => {
+      console.log(serviceData);
+    });
 };
 
+//deletes a service
+const deleteService = async (serviceId) => {
+  console.log(serviceId)
+  const options = { method: 'DELETE' };
+  const response = await fetch(`${strapiBaseURL.value}/api/store-services/${serviceId}`, options);
+  const deletedService = await response.json();
+  console.log(deletedService)
+}
+
 async function fetchData() {
-  const baseURL = 'http://localhost:1337';
   const service = 'barbers-stores';
   const { organisationId } = organisationData;
   console.log(organisationId);
 
   try {
     const response = await fetch(
-      `${baseURL}/api/${service}/${organisationId}/?populate[StoreImage]=*&populate[barber_services][populate]=*&populate[members][populate]=*&populate[services][populate]=*`
+      `${strapiBaseURL.value}/api/${service}/${organisationId}/?populate[StoreImage]=*&populate[barber_services][populate]=*&populate[members][populate]=*&populate[services][populate]=*`
     );
     const data = await response.json();
     const { attributes } = data.data;
     const { barber_services } = attributes;
-    console.log(barber_services.data);
 
     storeServices.value = barber_services.data;
     loading.value = false;
@@ -100,7 +106,7 @@ onMounted(() => {
             <img :src="strapiBaseURL + service.attributes?.ServiceImage?.data?.attributes?.url" alt="" class="service-img-display" />
             <div class="manage-service">
               <i class="fa-solid fa-pen"></i>
-              <i class="fa-solid fa-trash"></i>
+              <i class="fa-solid fa-trash" @click="deleteService(service.id)"></i>
             </div>
           </div>
         </div>
