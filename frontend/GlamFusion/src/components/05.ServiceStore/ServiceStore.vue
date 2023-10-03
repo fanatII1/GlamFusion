@@ -8,7 +8,7 @@ import { CompassControl } from 'mapbox-gl-controls';
 import { useI18n } from 'vue-i18n';
 
 //websocket
-const socket = io('http://localhost:3000');
+const socket = io(import.meta.env.VITE_SERVER_URL);
 const authStore = useAuthStore();
 const storeInfo = JSON.parse(localStorage.getItem('storeInfo'));
 const { StoreName, StoreLocation, storeImage, StoreMembers, StoreServices, merchant_id, Longitude, Latitude } = storeInfo;
@@ -22,9 +22,9 @@ const priceText = t('ServiceStore.price');
 const bookNowBtnText = t('ServiceStore.bookNowBtnText');
 
 const user = ref(authStore.user);
-const baseUrl = ref('http://localhost:1337');
-const serverUrl = ref('http://localhost:3000');
-const calendarUrl = ref('https://app.acuityscheduling.com/schedule.php?owner=')
+const baseUrl = ref(import.meta.env.VITE_STRAPI_URL);
+const serverUrl = ref(import.meta.env.VITE_SERVER_URL);
+const calendarUrl = ref(import.meta.env.VITE_CALENDAR_URL)
 const calendarOwnerId = ref('30044803');
 const calendarParams = ref(null)
 const changeImageNo = ref(0);
@@ -36,10 +36,10 @@ const bookingBtn = ref('booking-btn-off');
 const bookedService = ref(null);
 const activeButton = ref(null);
 const calendarData = ref(null);
-const platformMerchantId = ref("10031040");
-const platformMerchantKey = ref("7eyrpgpdvwlgc");
+const platformMerchantId = ref(import.meta.env.VITE_MERCHANT_ID);
+const platformMerchantKey = ref(import.meta.env.VITE_MERCHANT_KEY);
 const amount = ref("0.00");
-const passPhrase = ref('LionelMess10')
+const passPhrase = ref(import.meta.env.VITE_PASS_PHRASE)
 const payFastSignature = ref(null);
 const splitPayment = ref(`{"split_payment": {"merchant_id": ${merchant_id}, "percentage": 10, "min": 10, "max": 100000}}`);
 const paymentForm = ref(null);

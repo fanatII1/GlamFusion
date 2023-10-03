@@ -9,7 +9,7 @@ const route = useRoute();
 const service = ref(route.params.id);
 const stores = ref([]);
 const loading = ref(true);
-const baseURL = ref('http://localhost:1337');
+const strapiURL = ref(import.meta.env.VITE_STRAPI_URL);
 
 //translation text
 const introBarberText = t('ServiceStores.introBarberText');
@@ -23,7 +23,7 @@ function viewStore(store) {
   const { id, attributes } = store;
   const { StoreName, StoreLocation, StoreImage, members, StoreType, storeServices, merchant_id, Longitude, Latitude } = attributes;
   console.log(attributes, storeServices, store)
-  const storeImage = baseURL.value + StoreImage.data.attributes.url;
+  const storeImage = strapiURL.value + StoreImage.data.attributes.url;
   const StoreMembers = members.data;
   const StoreServices = storeServices.data;
 
@@ -53,7 +53,7 @@ function viewStore(store) {
 //https://stackoverflow.com/a/70251184/17908449
 //https://stackoverflow.com/questions/76905893/image-url-not-showing-in-strapinested-data/76922008#76922008
 async function fetchData() {
-  const baseURL = `http://localhost:1337/api/${route.params.id}`;
+  const baseURL = `${strapiURL.value}/api/${route.params.id}`;
 
   try {
     const response = await fetch(`${baseURL}?populate[StoreImage]=*&populate[services][populate]=*&populate[members][populate]=*&populate[services][ServiceImage][populate]=*`);
@@ -117,7 +117,7 @@ onMounted(() => {
         <section id='stores' v-if="!loading">
             <div class='store' v-for="store in stores" @click='viewStore(store)'>
                 <div class='store-img-wrapper'>
-                    <img :src="baseURL + store.attributes?.StoreImage?.data?.attributes?.url" alt='' class='store-img'>
+                    <img :src="strapiURL + store.attributes?.StoreImage?.data?.attributes?.url" alt='' class='store-img'>
                 </div>
                 <p ref='storeName' class='store-name'>{{ store?.attributes?.StoreName }}</p>
                 <p ref='storeLocation' class='store-location'>{{ store?.attributes?.StoreLocation }} <span id='distance'>1.2km</span></p>

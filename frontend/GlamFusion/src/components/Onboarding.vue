@@ -13,6 +13,7 @@ const merchantId = ref('');
 const acuityLink = ref('');
 const acuityId = ref('');
 const acuityKey = ref('');
+const strapiUrl = import.meta.env.VITE_STRAPI_URL;
 
 // Function to handle file input change
 const handleFileChange = (event) => {
@@ -42,7 +43,7 @@ const submitForm = () => {
   formData.append('files.StoreImage', uploadPhoto.value);
   formData.append('data', JSON.stringify(strapi));
 
-  fetch(`http://localhost:1337/api/${selectedStoreType.value}`, {
+  fetch(`${strapiUrl}/api/${selectedStoreType.value}`, {
     method: 'post',
     // headers: { 'Content-Type': 'application/json' },
     body: formData,

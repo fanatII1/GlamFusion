@@ -8,6 +8,8 @@ const leftRotation = ref(0);
 const rightRotation = ref(0);
 const organisationBookings = ref([]);
 const loading = ref(true);
+const strapiUrl = import.meta.env.VITE_STRAPI_URL;
+const baseServerURL = import.meta.env.VITE_SERVER_URL;
 
 watch(counter, (newValue) => {
   if (newValue === 80) {
@@ -27,9 +29,7 @@ async function fetchData() {
   const organisationData = JSON.parse(localStorage.getItem('organisation'));
   const { organisationId, StoreType } = organisationData;
   console.log(organisationId);
-  const baseStrapiURL = `http://localhost:1337/api/${StoreType}/${organisationId}/`;
-  const baseServerURL = 'http://localhost:3000';
-
+  const baseStrapiURL = `${strapiUrl}/api/${StoreType}/${organisationId}/`;
   try {
     const response = await fetch(`${baseStrapiURL}?populate[StoreImage]=*&populate[services][populate]=*&populate[members][populate]=*&populate[services][populate]=*`);
     const data = await response.json();

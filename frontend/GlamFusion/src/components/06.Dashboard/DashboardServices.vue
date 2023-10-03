@@ -4,7 +4,7 @@ import { ref, onMounted } from 'vue';
 
 const storeServices = ref([]);
 const loading = ref(true);
-const strapiBaseURL = ref('http://localhost:1337');
+const strapiBaseURL = ref(import.meta.env.VITE_STRAPI_URL);
 const showModal = ref(false);
 const serviceName = ref('');
 const servicePrice = ref('');
@@ -94,8 +94,7 @@ async function fetchData() {
   const organisationData = JSON.parse(localStorage.getItem('organisation'));
   const { organisationId, StoreType } = organisationData;
   console.log(organisationId);
-  const baseStrapiURL = `http://localhost:1337/api/${StoreType}/${organisationId}/`;
-  const baseServerURL = 'http://localhost:3000';
+  const baseStrapiURL = `${strapiBaseURL.value}/api/${StoreType}/${organisationId}/`;
 
   try {
     const response = await fetch(`${baseStrapiURL}?populate[StoreImage]=*&populate[services][populate]=*&populate[members][populate]=*&populate[services][ServiceImage][populate]=*&populate=*`);
