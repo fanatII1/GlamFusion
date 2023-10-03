@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useAuthStore } from '../stores/authentication';
 import { auth } from '../../firebase';
 import { signOut } from 'firebase/auth';
@@ -18,7 +18,7 @@ const profile = t('Navbar.profile')
 
 //check authentication 
 function checkAuth(){
-  console.log(authStore.user)
+  console.log(authStore.user, authStore.loginState)
   authStore.setLoginState(authStore.user);
 }
 
@@ -35,6 +35,10 @@ function logout(){
 function setActiveNavItem(item) {
   activeNavItem.value = item;
 }
+
+onMounted(() => {
+  
+})
 
 </script>
 
