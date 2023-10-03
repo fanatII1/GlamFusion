@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useAuthStore } from '../stores/authentication';
 import { auth } from '../../firebase';
 import { signOut } from 'firebase/auth';
@@ -10,11 +10,25 @@ const activeNavItem = ref('home');
 const authStore = useAuthStore();
 const { t, locale } = useI18n();
 
-const homeHeading = t('Navbar.homeHeading');
-const aboutHeading = t('Navbar.aboutHeading');
-const servicesHeading = t('Navbar.servicesHeading');
-const blogHeading = t('Navbar.blogHeading');
-const profile = t('Navbar.profile')
+const homeHeading = ref(t('Navbar.homeHeading'));
+const aboutHeading = ref(t('Navbar.aboutHeading'));
+const servicesHeading = ref(t('Navbar.servicesHeading'));
+const blogHeading = ref(t('Navbar.blogHeading'));
+const profile = ref(t('Navbar.profile'));
+const reRenderNav = ref(false);
+
+const changeLanguage = (selectedLanguage) => {
+  console.log(selectedLanguage)
+  locale.value = selectedLanguage; // Switch to Language
+  reRenderNav.value = !reRenderNav.value;
+};
+
+watch(reRenderNav, () =>{
+  homeHeading.value = t('Navbar.homeHeading');
+  aboutHeading.value = t('Navbar.aboutHeading');
+  servicesHeading.value = t('Navbar.servicesHeading');
+  blogHeading.value = t('Navbar.blogHeading');
+})
 
 //check authentication 
 function checkAuth(){
@@ -62,10 +76,22 @@ onMounted(() => {
       </div>
     </div>
     <div class="nav-item-3">
+    <button @click="checkAuth" class="profile-btn">Language</button>
+    <div class="dropdown">
+      <a href="#" @click="changeLanguage('en-US');">English</a>
+      <a href="#" @click="changeLanguage('fr-FR');">French</a>
+      <a href="#" @click="changeLanguage('zu-ZU');">Zulu</a>
+      <a href="#" @click="changeLanguage('afr-AFR');">Afrikaans</a>
+      <a href="#" @click="changeLanguage('es-ES');">Spanish</a>
+      <a href="#" @click="changeLanguage('so-SO');">Sesotho</a>
+    </div>
+  </div>
+    <div class="nav-item-3">
     <button @click="checkAuth" class="profile-btn">{{  profile }}</button>
     <div class="dropdown">
       <a href="#">{{ profile }}</a>
-      <a href="#" @click="logout">Logout</a>
+      <a href="#" v-if="authStore.loginState" @click="logout">Logout</a>
+      <Router-link v-else to="/auth">Log In</Router-link>
     </div>
   </div>
   </nav>
