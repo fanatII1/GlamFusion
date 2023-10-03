@@ -53,13 +53,13 @@ export class ActuityController {
   @Post('appointments')
   async getCalendarAppointments(@Body() data: any) {
     const { id } = data;
-    let baseUrl = `https://acuityscheduling.com/api/v1/appointments/${id}`;
+    let baseUrl = `${process.env.CALENDAR_URL}/api/v1/appointments/${id}`;
     let options = {
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization:
-          'Basic MzAwNDQ4MDM6MGY0YjM1N2U4NzQzYzQ4YzQ2MmI3ZDljZDMxYTU2ODU=',
+          `Basic ${process.env.CALENDAR_API_KEY}`,
       },
     };
     let response = await fetch(`${baseUrl}`, options);
