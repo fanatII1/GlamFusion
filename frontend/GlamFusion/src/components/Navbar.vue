@@ -42,7 +42,10 @@ function logout(){
     auth.setLoginState(authStore.user);
     alert('You have logged out')
   })
-  .catch((error) => alert('error logging out' + " " + error.code ))
+  .catch((error) => {
+    // alert('error logging out' + " " + error.code )
+    console.log('error logging out' + " " + error.code)
+  })
 }
 
 
