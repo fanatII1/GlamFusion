@@ -218,52 +218,6 @@ onMounted(() => {
   background-color: transparent;
 }
 
-.bookings {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(195px, 330px));
-  grid-auto-rows: 25%;
-  grid-gap: 3%;
-  height: 100%;
-}
-
-.booking {
-  border-radius: 45px;
-  -webkit-box-shadow: 3px 3px 10px 3px #d69c4a;
-  -moz-box-shadow: 3px 3px 10px 3px #d69c4a;
-  box-shadow: 3px 3px 10px 3px #d69c4a;
-  height: fit-content;
-  padding: 4%;
-  margin-left: 5%;
-  cursor: pointer;
-  transition: 0.4s;
-}
-
-.booking:hover {
-  transform: scale(1.02);
-}
-.booking-service {
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin: 1.5% 0 0 0;
-}
-
-.booking-price,
-.booking-name {
-  font-size: 1.2rem;
-}
-
-.booking-name {
-  font-weight: 500;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-}
-
-.booking-display-edit {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
 #paid,
 #not-paid {

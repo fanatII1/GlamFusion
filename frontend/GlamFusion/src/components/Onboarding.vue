@@ -58,7 +58,7 @@ const submitForm = () => {
   .then((data) => {
     console.log(data)
     //set the organisation id in storage so that it'll be used to retrieve organisation info on dashboard
-    localStorage.setItem("organisation", JSON.stringify({organisationId: data?.data?.id, organisationName: data?.data?.attributes?.StoreName, StoreType: data?.data?.attributes?.StoreType}));
+    localStorage.setItem("organisation", JSON.stringify({organisationId: data?.data?.id, organisationName: data?.data?.attributes?.StoreName, StoreType: data?.data?.attributes?.StoreType, StoreLocation:data?.data?.attributes?.StoreLocation, merchant_id: data?.data?.attributes?.merchant_id, StoreId: data?.data?.attributes?.ActuityID,  StoreLink: data?.data?.attributes?.ActuityLink}));
     const path = '/dashboard/home';
     router.push(path);
   });

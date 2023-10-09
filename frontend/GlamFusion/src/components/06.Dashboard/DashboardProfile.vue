@@ -1,5 +1,11 @@
 <script setup>
 import DashboardNav from './DashboardNav.vue';
+import { useAuthStore } from '../../stores/authentication';
+
+const authStore = useAuthStore();
+const { displayName, photoURL, email, phoneNumber } = authStore.user;
+const organisation = JSON.parse(localStorage.getItem('organisation'));
+const { organisationName, StoreType, organisationId, merchant_id, StoreLink, StoreLocation, StoreId } = organisation;
 </script>
 
 <template>
@@ -12,14 +18,15 @@ import DashboardNav from './DashboardNav.vue';
 
       <div class="dashboard-profile">
         <div class="profile">
-          <img src="" alt="" class="user-profile-image" />
-          <p class="profile-info storeName">Name: <span id="info">Mandla</span></p>
-          <p class="profile-info storeName">Email: <span id="info">Mandla</span></p>
-          <p class="profile-info storeName">Phone No.: <span id="info">Mandla</span></p>
-          <p class="profile-info storeName">Location: <span id="info">Mandla</span></p>
-          <p class="profile-info storeName">Calendar URL: <span id="info">Mandla</span></p>
-          <p class="profile-info storeName">Merchant ID: <span id="info">Mandla</span></p>
-          <p class="profile-info storeName">Calendar/Actuity ID: <span id="info">Mandla</span></p>
+          <img :src="photoURL" alt="" class="user-profile-image" />
+          <p class="profile-info storeName">Name: <span id="info">{{ organisationName }}</span></p>
+          <p class="profile-info storeName">Email: <span id="info">{{ email }}</span></p>
+          <p class="profile-info storeName">Phone No.: <span id="info">{{ phoneNumber ? phoneNumber : '-' }}</span></p>
+          <p class="profile-info storeName">Location: <span id="info">{{ StoreLocation }}</span></p>
+          <p class="profile-info storeName">Calendar URL: <span id="info">{{ StoreLink }}</span></p>
+          <p class="profile-info storeName">Merchant ID: <span id="info">{{ merchant_id }}</span></p>
+          <br>
+          <a :href="StoreLink" id="info">Manage Members</a>
         </div>
       </div>
     </main>
@@ -56,9 +63,10 @@ import DashboardNav from './DashboardNav.vue';
 }
 
 .profile{
-    height: 40%;
-    width: 30%;
-    max-width: 220px;
+  height: 40%;
+  width: 70%;
+  max-width: 880px;
+  line-height: 1.5;
 }
 
 .user-profile-image{
@@ -75,5 +83,6 @@ import DashboardNav from './DashboardNav.vue';
 
 #info{
     font-weight: 400;
+    text-decoration: underline;
 }
 </style>
